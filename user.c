@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "user.h"
 
 struct user {
@@ -8,7 +9,7 @@ struct user {
 
 USER create_user(char* bio, long* post_history) {
   int i;
-  USER u = malloc(sizeof(user)); 
+  USER u = malloc(sizeof(struct user)); 
   u->bio = strdup(bio);
   memcpy(u->posts, post_history, sizeof(long) * 10);
   return u;
@@ -22,7 +23,7 @@ char* get_bio(USER u) {
 
 long* get_10_latest_posts(USER u) {
   long* r = malloc(sizeof(long)*10);
-  memcpy(r, u->posts; sizof(long)*10);
+  memcpy(r, u->posts, sizeof(long)*10);
   return r;
 }
 
