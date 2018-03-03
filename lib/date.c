@@ -12,6 +12,7 @@ Date createDate(int day, int month, int year) {
     d->day = day;
     d->month = month;
     d->year = year;
+    return d;
 }
 
 int get_day(Date d) {
