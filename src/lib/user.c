@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "user.h"
+#include "common.h"
 
 struct user {
   char* bio;
@@ -9,7 +10,7 @@ struct user {
 
 USER create_user(char* bio, long* post_history) {
   USER u = malloc(sizeof(struct user)); 
-  u->bio = strdup(bio);
+  u->bio = mystrdup(bio);
   memcpy(u->posts, post_history, sizeof(long) * 10);
   return u;
 }
