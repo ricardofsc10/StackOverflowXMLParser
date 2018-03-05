@@ -42,3 +42,5 @@ LONG_list better_answer(TAD_community com, int id);
 
 // query 11
 LONG_LIST most_used_best_rep(TAD_community com, int N, Date begin, Date end);
+
+TAD_community clean(TAD_community com);
