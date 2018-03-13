@@ -4,7 +4,7 @@
 #include "common.h"
 
 struct user {
-  char* bio;
+  char* bio; // nome do user
   long posts[10];
 };
 

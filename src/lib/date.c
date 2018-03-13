@@ -7,7 +7,7 @@ struct date {
   int year;
 };
 
-Date createDate(int day, int month, int year) {
+Date createDate(int day, int month, int year) { // cria data
     Date d = malloc(sizeof(struct date));
     d->day = day;
     d->month = month;
@@ -15,7 +15,7 @@ Date createDate(int day, int month, int year) {
     return d;
 }
 
-int get_day(Date d) {
+int get_day(Date d) { 
     return d->day; 
 }
 

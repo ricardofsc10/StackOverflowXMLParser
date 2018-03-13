@@ -18,7 +18,7 @@ long get_list(LONG_list l, int index) {
     return l->list[index]; 
 }
 
-void set_list(LONG_list l, int index, long value) {
+void set_list(LONG_list l, int index, long value) { // muda valores da lista
     l->list[index] = value;
 }
 void free_list(LONG_list l) {
