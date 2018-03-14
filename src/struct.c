@@ -9,7 +9,7 @@ typedef struct TCD_community{
 typedef struct utilizador{
  	char* nome;
  	char* id;
- 	user utilizador; // bio e array para 10 posts
+ 	user user; // bio e array para 10 posts
 	int n_posts;
 	char* reputacao;
 	POSTS posts[];
