@@ -2,6 +2,7 @@
 #include "pair.h"
 #include "list.h"
 #include "user.h"
+#include "struct.h"
 
 
 typedef struct TCD_community * TAD_community;
