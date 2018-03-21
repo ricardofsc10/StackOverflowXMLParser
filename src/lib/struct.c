@@ -22,7 +22,7 @@ struct posts{
 	char* id_post;
 	char* score;
 	char* title;
-	char* post;
+	char* body;
 	int tipo; // 1-pergunta 2-resposta
 	char** tags;
 };

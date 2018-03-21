@@ -26,7 +26,7 @@ TAD_community init(){
 			tad->utilizador[i]->posts[j]->id_post = NULL;
 			tad->utilizador[i]->posts[j]->score = NULL;
 			tad->utilizador[i]->posts[j]->title = NULL;
-			tad->utilizador[i]->posts[j]->post = NULL;
+			tad->utilizador[i]->posts[j]->body = NULL;
 			tad->utilizador[i]->posts[j]->tipo = 0;
 			
 			tad->utilizador[i]->posts[j]->tags = malloc(sizeof(10));
