@@ -3,7 +3,7 @@
 #include "date.h"
 #include "struct.h"
 
-struct TAD_community{
+struct TCD_community{
 	UTILIZADOR* utilizador;
 	int n_utilizadores;
 };
