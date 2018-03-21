@@ -2,7 +2,8 @@
 #include <stdio.h>
 
 int main(){
-  Date d = createDate(1,2,2017);
-  printf("Dia: %i\n", get_day(d));
+  TAD_community tda = NULL;
+  tda = init();
+  printf("Done.. grande estrutura parceiros.\n");
   return 0;
 } 
