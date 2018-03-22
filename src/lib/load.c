@@ -88,7 +88,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
                com->utilizador[indice_utilizador]->n_posts += 1; // ao adicionar este post, o numero de posts aumenta
                com->utilizador[indice_utilizador]->posts[num_posts]->id_post = id_l;
-
+               com->utilizador[indice_utilizador]->posts[num_posts]->score = score_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->title = title_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->body = body_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->tipo = post_type_id_l;
