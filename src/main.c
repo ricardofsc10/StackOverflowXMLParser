@@ -4,10 +4,12 @@
 int main(){
   TAD_community tda = NULL;
   
-  printf("................Ainda não dá erro...............\n");
-  
   tda = init();
+  printf("A estrutura já foi inicializada...\n");
+
+  char* path = "../../dumpexemplo/askubuntu.com/";
+  tda = load(tda, path);
   
-  printf("Done.. grande estrutura parceiros.\n");
+  printf("Done.. grande load.\n");
   return 0;
 } 

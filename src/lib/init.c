@@ -8,10 +8,10 @@
 
 TAD_community init(){
 	TAD_community tad = malloc(sizeof(struct TCD_community));
-	tad->utilizador = malloc(sizeof(struct utilizador)*700); // inicializei com 700000 podia ser com outro qqr
+	tad->utilizador = malloc(sizeof(struct utilizador)*700000); // inicializei com 700000 podia ser com outro qqr
 	tad->n_utilizadores = 0;
 	
-	for(int i = 0 ; i!=700 ; i++){
+	for(int i = 0 ; i!=700000 ; i++){
 		tad->utilizador[i] = malloc(sizeof(struct utilizador));
 		tad->utilizador[i]->nome = NULL; ////////
 		tad->utilizador[i]->id = NULL;
@@ -19,8 +19,8 @@ TAD_community init(){
 		tad->utilizador[i]->user = create_user(NULL,array);
 		tad->utilizador[i]->reputacao = NULL;
 		tad->utilizador[i]->n_posts = 0;
-		tad->utilizador[i]->posts = malloc(sizeof(struct posts)*10);
-		for(int j = 0 ; j != 10 ; j++){
+		tad->utilizador[i]->posts = malloc(sizeof(struct posts)*50);
+		for(int j = 0 ; j != 50 ; j++){
 			tad->utilizador[i]->posts[j] = malloc(sizeof(struct posts));
 			tad->utilizador[i]->posts[j]->data = createDate(0,0,0);
 			tad->utilizador[i]->posts[j]->id_post = NULL;
