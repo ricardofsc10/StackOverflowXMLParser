@@ -14,13 +14,13 @@ TAD_community init(){
 	for(int i = 0 ; i!=700000 ; i++){
 		tad->utilizador[i] = malloc(sizeof(struct utilizador));
 		tad->utilizador[i]->nome = NULL; ////////
-		tad->utilizador[i]->id = NULL;
+		tad->utilizador[i]->id = 0;
 		long array[10] = {0};
 		tad->utilizador[i]->user = create_user(NULL,array);
 		tad->utilizador[i]->reputacao = NULL;
 		tad->utilizador[i]->n_posts = 0;
-		tad->utilizador[i]->posts = malloc(sizeof(struct posts)*50);
-		for(int j = 0 ; j != 50 ; j++){
+		tad->utilizador[i]->posts = malloc(sizeof(struct posts)*10);
+		for(int j = 0 ; j != 10 ; j++){
 			tad->utilizador[i]->posts[j] = malloc(sizeof(struct posts));
 			tad->utilizador[i]->posts[j]->data = createDate(0,0,0);
 			tad->utilizador[i]->posts[j]->id_post = NULL;

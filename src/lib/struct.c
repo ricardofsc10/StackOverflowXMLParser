@@ -10,7 +10,7 @@ struct TCD_community{
 
 struct utilizador{
  	char* nome;
- 	char* id;
+ 	int id;
  	USER user; // bio e array para 10 posts
 	int n_posts;
 	char* reputacao;

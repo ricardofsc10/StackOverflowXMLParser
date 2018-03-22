@@ -20,7 +20,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            reputacao_l = xmlGetProp(cur, "Reputation");
            
            // preenche os parametros do utilizador
-           com->utilizador[i]->id = id_l;
+           com->utilizador[i]->id = atoi(id_l); // usa-se o atoi porque na estrutura o id é um int
            com->utilizador[i]->nome = nome_l;
            com->utilizador[i]->user = create_user(bio_l,array);
            com->utilizador[i]->reputacao = reputacao_l;
@@ -37,11 +37,26 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
     printf("%d Users\n", i);
 }
 
+
+int procuraBinaria (TAD_community com, int id, int Tam){
+    int inf = 0;
+    int sup = Tam-1;
+    int meio;
+    while (inf <= sup){
+        meio = (inf + sup)/2;
+
+        if (id == com->utilizador[meio]->id) return meio;
+
+        if (id < com->utilizador[meio]->id) sup = meio - 1;
+        
+        else inf = meio + 1;
+    }
+    return -1;   // não encontrado
+}
+
+
 /*
 -- ainda há muito a melhorar
--- o owner_user_id_l não é a posiçao onde está o utilizador, so o estou a usar para testar
-    -- podemos fazer um genero de probing para encontrar mais há frente caso nao esteja na posiçao(sugestão)
-    -- podemos fazer procura binaria (para este caso nao acho q seja o ideal)
 -- falta inserir datas
 -- falta redimensionar tamanhos do array de posts quando necessário
 -- provavelmente faltam mais cenas ...........
@@ -51,7 +66,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *title_l, *tags_l;
    cur = cur->xmlChildrenNode;
-   int i=0;
+   int i=0, indice_utilizador;
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
@@ -66,15 +81,18 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
            if(owner_user_id_l == NULL); // há um post que nao tem userid daí ter esta condição
            else{  // preenche os parametros dos posts
-               int num_posts = com->utilizador[atoi(owner_user_id_l)]->n_posts;
 
-               com->utilizador[atoi(owner_user_id_l)]->n_posts += 1;
-               com->utilizador[atoi(owner_user_id_l)]->posts[num_posts]->id_post = id_l;
-               com->utilizador[atoi(owner_user_id_l)]->posts[num_posts]->score = score_l;
-               com->utilizador[atoi(owner_user_id_l)]->posts[num_posts]->title = title_l;
-               com->utilizador[atoi(owner_user_id_l)]->posts[num_posts]->body = body_l;
-               com->utilizador[atoi(owner_user_id_l)]->posts[num_posts]->tipo = post_type_id_l;
-               com->utilizador[atoi(owner_user_id_l)]->posts[num_posts]->tags[0] = tags_l;
+               indice_utilizador = procuraBinaria(com, atoi(owner_user_id_l), com->n_utilizadores); // ao fazer isto descobre-se qual o indice do array
+
+               int num_posts = com->utilizador[indice_utilizador]->n_posts; // coloca-se numa variavel para ser mais facil em baixo
+
+               com->utilizador[indice_utilizador]->n_posts += 1; // ao adicionar este post, o numero de posts aumenta
+               com->utilizador[indice_utilizador]->posts[num_posts]->id_post = id_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->score = score_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->title = title_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->body = body_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->tipo = post_type_id_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->tags[0] = tags_l;
 
                xmlFree(id_l);
                xmlFree(post_type_id_l);
@@ -129,7 +147,6 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_user);
 
     printf("O parse do documento Users.xml foi feito com sucesso........\n");
-
 
     ////////////////////////////////// Faz-se o parse do Posts
     char path_posts[50];
