@@ -28,6 +28,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            xmlFree(id_l);
            xmlFree(nome_l);
            xmlFree(bio_l);
+           xmlFree(reputacao_l);
            i++;
            com->n_utilizadores++;
         }
