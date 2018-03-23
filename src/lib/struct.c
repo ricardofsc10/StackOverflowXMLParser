@@ -25,5 +25,4 @@ struct posts{
 	char* body;
 	int tipo; // 1-pergunta 2-resposta
 	char** tags;
-	fcgvbhjnmk,l
 };
