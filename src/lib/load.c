@@ -97,9 +97,9 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                com->utilizador[indice_utilizador]->posts[num_posts]->score = score_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->title = title_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->body = body_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->tipo = post_type_id_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->tipo = atoi(post_type_id_l);
                com->utilizador[indice_utilizador]->posts[num_posts]->tags[0] = tags_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = answer_count_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = atoi(answer_count_l);
 
                xmlFree(id_l);
                xmlFree(post_type_id_l);
