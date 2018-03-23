@@ -6,6 +6,7 @@
 struct TCD_community{
 	UTILIZADOR* utilizador;
 	int n_utilizadores;
+	int espaco_estrutura;
 };
 
 struct utilizador{

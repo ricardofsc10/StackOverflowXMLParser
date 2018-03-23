@@ -29,6 +29,11 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            xmlFree(nome_l);
            xmlFree(bio_l);
            xmlFree(reputacao_l);
+           
+           if ((com->espaco_estrutura - com->n_utilizadores) == 1){ // testa se ainda tem espaço para alocar o proximo
+               redimensiona_utilizadores(com);
+           }
+
            i++;
            com->n_utilizadores++;
         }
@@ -143,6 +148,8 @@ TAD_community load(TAD_community com, char* dump_path){
         return 0;
     }
 
+    printf("Loading: Parse do documento Users.xml........\n");
+
     getReferenceUser (doc_user,cur_user,com);
     xmlFreeDoc(doc_user);
 
@@ -173,6 +180,8 @@ TAD_community load(TAD_community com, char* dump_path){
         xmlFreeDoc(doc_posts);
         return 0;
     }
+
+    printf("Loading: Parse do documento Posts.xml........\n");
 
     getReferencePosts (doc_posts,cur_posts,com);
     xmlFreeDoc(doc_posts);
