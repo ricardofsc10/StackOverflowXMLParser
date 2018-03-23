@@ -1,14 +1,27 @@
+/**
+@file init.c
+@author Grupo21
+@brief Ficheiro que contém funções de inicialização de memória, para a estrutura usada.
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "struct.c"
 #include "date.h"
 #include "user.h"
 
-// o user e o date sao inicializados segundo os metodos dados no .c pq são tipos abstratos
+/**
+@brief Função que faz a primeira inicialização da estrutura.
+
+Inicializa cada parâmetro da estrutura definida em 
+
+@returns Estrutura TAD_community inicializada.
+*/
 
 TAD_community init(){
+
 	TAD_community tad = malloc(sizeof(struct TCD_community));
-	tad->utilizador = malloc(sizeof(struct utilizador)*50000); // inicializei com 700000 podia ser com outro qqr
+	tad->utilizador = malloc(sizeof(struct utilizador)*50000);
 	tad->n_utilizadores = 0;
 	tad->espaco_estrutura = 50000;
 	
@@ -40,9 +53,24 @@ TAD_community init(){
 	}
 	return tad;
 }
+
+/**
+@brief Função utilizada para redimensionar a estrutura quando esta se encontra sem espaço.
+
+Usa o <b>realloc()</b> que está definido na biblioteca <b>stdlib.h</b>, para realocar mais memória 
+para que possam ser inseridos mais utilizadores, sem perder a informação 
+que ja la estava.
+
+Inicializa os campos da estrutura relativos ao novo espaço alocado.
+
+@param com Estrutura onde será alocada memória.
+
+@returns Estrutura com os mesmos dados, mas com mais espaço.
+*/
+
 void redimensiona_utilizadores(TAD_community com){
 
-	//redimensiona e coloca em 'com' tudo o que ja estava, e mais espaço
+	//redimensiona e coloca em 'com' tudo o que ja estava, com mais espaço
 	com->utilizador = realloc(com->utilizador, sizeof(struct utilizador) * (com->espaco_estrutura + 50000));
 
 	// faz igual à init
@@ -73,6 +101,4 @@ void redimensiona_utilizadores(TAD_community com){
 		}
 	}
 	com->espaco_estrutura += 50000; // so faz este passo no fim por causa do primeiro for
-	
-	//return com;
 }

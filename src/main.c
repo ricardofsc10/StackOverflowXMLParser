@@ -8,8 +8,9 @@ int main(){
   tda = init();
   printf("A estrutura já foi inicializada...\n");
 
-  char* path = "../../dumpexemplo/askubuntu.com/";
-  tda = load(tda, path);
+  char* path1 = "../../dumpexemplo/askubuntu.com/";
+  char* path2 = "../../dumpexemplo/android/";
+  tda = load(tda, path1);
 
   free(tda);
   
