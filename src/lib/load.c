@@ -69,7 +69,7 @@ int procuraBinaria (TAD_community com, int id, int Tam){
 
 void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
-   xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *title_l, *tags_l;
+   xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *title_l, *tags_l, *answer_count_l;
    cur = cur->xmlChildrenNode;
    int i=0, indice_utilizador;
 
@@ -83,6 +83,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            owner_user_id_l = xmlGetProp(cur, "OwnerUserId");
            title_l = xmlGetProp(cur, "Title");
            tags_l = xmlGetProp(cur, "Tags");
+           answer_count_l = xmlGetProp(cur, "AnswerCount");
 
            if(owner_user_id_l == NULL); // há um post que nao tem userid daí ter esta condição
            else{  // preenche os parametros dos posts
@@ -98,6 +99,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                com->utilizador[indice_utilizador]->posts[num_posts]->body = body_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->tipo = post_type_id_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->tags[0] = tags_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = answer_count_l;
 
                xmlFree(id_l);
                xmlFree(post_type_id_l);
@@ -107,6 +109,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                xmlFree(owner_user_id_l);
                xmlFree(title_l);
                xmlFree(tags_l);
+               xmlFree(answer_count_l);
                i++;
            }
        }
@@ -116,10 +119,12 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 }
 
 
+
+
 TAD_community load(TAD_community com, char* dump_path){
     
     xmlDocPtr doc_user, doc_posts;
-	xmlNodePtr cur_user, cur_posts;
+	  xmlNodePtr cur_user, cur_posts;
 
     ////////////////////////////////// Faz-se o parse do Users
     char path_users[50];
@@ -154,6 +159,8 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_user);
 
     printf("O parse do documento Users.xml foi feito com sucesso........\n");
+
+
 
     ////////////////////////////////// Faz-se o parse do Posts
     char path_posts[50];

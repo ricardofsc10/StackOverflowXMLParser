@@ -35,6 +35,7 @@ TAD_community init(){
 					tad->utilizador[i]->posts[j]->tags[k] = malloc(sizeof(1));
 					tad->utilizador[i]->posts[j]->tags[k] = NULL;
 				}
+			tad->utilizador[i]->posts[j]->answer_count = 0;
 		}
 	}
 	return tad;
@@ -68,6 +69,7 @@ void redimensiona_utilizadores(TAD_community com){
 					com->utilizador[i]->posts[j]->tags[k] = malloc(sizeof(1));
 					com->utilizador[i]->posts[j]->tags[k] = NULL;
 				}
+			com->utilizador[i]->posts[j]->answer_count = 0;
 		}
 	}
 	com->espaco_estrutura += 50000; // so faz este passo no fim por causa do primeiro for

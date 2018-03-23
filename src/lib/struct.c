@@ -26,4 +26,5 @@ struct posts{
 	char* body;
 	int tipo; // 1-pergunta 2-resposta
 	char** tags;
+	int answer_count;
 };
