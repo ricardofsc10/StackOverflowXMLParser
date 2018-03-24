@@ -142,8 +142,8 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                com->utilizador[indice_utilizador]->posts[num_posts]->post_type_id = post_type_id_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->tags[0] = tags_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = answer_count_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = comment_count_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = favorite_count_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->comment_count = comment_count_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->favorite_count = favorite_count_l;
 
                xmlFree(id_l);
                xmlFree(post_type_id_l);

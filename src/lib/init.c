@@ -21,7 +21,7 @@ Inicializa cada parâmetro da estrutura definida em
 TAD_community init(){
 
 	TAD_community tad = malloc(sizeof(struct TCD_community));
-	tad->utilizador = malloc(sizeof(struct utilizador)*50000);
+	tad->utilizador = malloc(sizeof(struct utilizador)*5000000);
 	tad->n_utilizadores = 0;
 	tad->espaco_estrutura = 50000;
 	
@@ -79,7 +79,7 @@ void redimensiona_utilizadores(TAD_community com){
 	for(int i = com->espaco_estrutura ; i < (com->espaco_estrutura + 50000) ; i++){
 		com->utilizador[i] = malloc(sizeof(struct utilizador));
 		com->utilizador[i]->nome = NULL; ////////
-		com->utilizador[i]->id = 0;
+		com->utilizador[i]->id = NULL;
 		long array[10] = {0};
 		com->utilizador[i]->user = create_user(NULL,array);
 		com->utilizador[i]->reputacao = NULL;
