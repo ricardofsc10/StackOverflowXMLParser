@@ -10,7 +10,7 @@ int main(){
 
   char* path1 = "../../dumpexemplo/askubuntu.com/";
   char* path2 = "../../dumpexemplo/android/";
-  tda = load(tda, path1);
+  tda = load(tda, path2);
 
   free(tda);
   

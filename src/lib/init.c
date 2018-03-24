@@ -28,7 +28,7 @@ TAD_community init(){
 	for(int i = 0 ; i!=50000 ; i++){
 		tad->utilizador[i] = malloc(sizeof(struct utilizador));
 		tad->utilizador[i]->nome = NULL; ////////
-		tad->utilizador[i]->id = 0;
+		tad->utilizador[i]->id = NULL;
 		long array[10] = {0};
 		tad->utilizador[i]->user = create_user(NULL,array);
 		tad->utilizador[i]->reputacao = NULL;
@@ -41,14 +41,16 @@ TAD_community init(){
 			tad->utilizador[i]->posts[j]->score = NULL;
 			tad->utilizador[i]->posts[j]->title = NULL;
 			tad->utilizador[i]->posts[j]->body = NULL;
-			tad->utilizador[i]->posts[j]->tipo = 0;
+			tad->utilizador[i]->posts[j]->post_type_id = NULL;
 			
 			tad->utilizador[i]->posts[j]->tags = malloc(sizeof(10));
 				for(int k = 0 ; k != 10 ; k++){
 					tad->utilizador[i]->posts[j]->tags[k] = malloc(sizeof(1));
 					tad->utilizador[i]->posts[j]->tags[k] = NULL;
 				}
-			tad->utilizador[i]->posts[j]->answer_count = 0;
+			tad->utilizador[i]->posts[j]->answer_count = NULL;
+			tad->utilizador[i]->posts[j]->comment_count = NULL;
+			tad->utilizador[i]->posts[j]->favorite_count = NULL;
 		}
 	}
 	return tad;
@@ -90,14 +92,16 @@ void redimensiona_utilizadores(TAD_community com){
 			com->utilizador[i]->posts[j]->score = NULL;
 			com->utilizador[i]->posts[j]->title = NULL;
 			com->utilizador[i]->posts[j]->body = NULL;
-			com->utilizador[i]->posts[j]->tipo = 0;
+			com->utilizador[i]->posts[j]->post_type_id = NULL;
 			
 			com->utilizador[i]->posts[j]->tags = malloc(sizeof(10));
 				for(int k = 0 ; k != 10 ; k++){
 					com->utilizador[i]->posts[j]->tags[k] = malloc(sizeof(1));
 					com->utilizador[i]->posts[j]->tags[k] = NULL;
 				}
-			com->utilizador[i]->posts[j]->answer_count = 0;
+			com->utilizador[i]->posts[j]->answer_count = NULL;
+			com->utilizador[i]->posts[j]->comment_count = NULL;
+			com->utilizador[i]->posts[j]->favorite_count = NULL;
 		}
 	}
 	com->espaco_estrutura += 50000; // so faz este passo no fim por causa do primeiro for

@@ -37,7 +37,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            reputacao_l = xmlGetProp(cur, "Reputation");
            
            // preenche os parametros do utilizador
-           com->utilizador[i]->id = atoi(id_l); // usa-se o atoi porque na estrutura o id é um int
+           com->utilizador[i]->id = id_l; // usa-se o atoi porque na estrutura o id é um int
            com->utilizador[i]->nome = nome_l;
            com->utilizador[i]->user = create_user(bio_l,array);
            com->utilizador[i]->reputacao = reputacao_l;
@@ -109,7 +109,7 @@ array está o criador do post.
 
 void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
-   xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *title_l, *tags_l, *answer_count_l;
+   xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
    cur = cur->xmlChildrenNode;
    int i=0, indice_utilizador;
 
@@ -124,11 +124,13 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            title_l = xmlGetProp(cur, "Title");
            tags_l = xmlGetProp(cur, "Tags");
            answer_count_l = xmlGetProp(cur, "AnswerCount");
+           comment_count_l = xmlGetProp(cur, "CommentCount");
+           favorite_count_l = xmlGetProp(cur, "FavoriteCount");
 
            if(owner_user_id_l == NULL); // há um post que nao tem userid daí ter esta condição
            else{  // preenche os parametros dos posts
 
-               indice_utilizador = procuraBinaria(com, atoi(owner_user_id_l), com->n_utilizadores); // ao fazer isto descobre-se qual o indice do array
+               indice_utilizador = procuraBinaria(com, owner_user_id_l, com->n_utilizadores); // ao fazer isto descobre-se qual o indice do array
 
                int num_posts = com->utilizador[indice_utilizador]->n_posts; // coloca-se numa variavel para ser mais facil em baixo
 
@@ -137,9 +139,11 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                com->utilizador[indice_utilizador]->posts[num_posts]->score = score_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->title = title_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->body = body_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->tipo = atoi(post_type_id_l);
+               com->utilizador[indice_utilizador]->posts[num_posts]->post_type_id = post_type_id_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->tags[0] = tags_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = atoi(answer_count_l);
+               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = answer_count_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = comment_count_l;
+               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = favorite_count_l;
 
                xmlFree(id_l);
                xmlFree(post_type_id_l);
@@ -150,6 +154,8 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                xmlFree(title_l);
                xmlFree(tags_l);
                xmlFree(answer_count_l);
+               xmlFree(comment_count_l);
+               xmlFree(favorite_count_l);
                i++;
            }
        }
