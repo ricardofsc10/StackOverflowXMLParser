@@ -37,7 +37,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            reputacao_l = xmlGetProp(cur, "Reputation");
            
            // preenche os parametros do utilizador
-           com->utilizador[i]->id = id_l; // usa-se o atoi porque na estrutura o id é um int
+           com->utilizador[i]->id = atoi(id_l); // usa-se o atoi porque na estrutura o id é um int
            com->utilizador[i]->nome = nome_l;
            com->utilizador[i]->user = create_user(bio_l,array);
            com->utilizador[i]->reputacao = reputacao_l;
@@ -130,7 +130,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            if(owner_user_id_l == NULL); // há um post que nao tem userid daí ter esta condição
            else{  // preenche os parametros dos posts
 
-               indice_utilizador = procuraBinaria(com, owner_user_id_l, com->n_utilizadores); // ao fazer isto descobre-se qual o indice do array
+               indice_utilizador = procuraBinaria(com, atoi(owner_user_id_l), com->n_utilizadores); // ao fazer isto descobre-se qual o indice do array
 
                int num_posts = com->utilizador[indice_utilizador]->n_posts; // coloca-se numa variavel para ser mais facil em baixo
 

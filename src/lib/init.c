@@ -28,7 +28,7 @@ TAD_community init(){
 	for(int i = 0 ; i!=50000 ; i++){
 		tad->utilizador[i] = malloc(sizeof(struct utilizador));
 		tad->utilizador[i]->nome = NULL; ////////
-		tad->utilizador[i]->id = NULL;
+		tad->utilizador[i]->id = 0;
 		long array[10] = {0};
 		tad->utilizador[i]->user = create_user(NULL,array);
 		tad->utilizador[i]->reputacao = NULL;
@@ -79,7 +79,7 @@ void redimensiona_utilizadores(TAD_community com){
 	for(int i = com->espaco_estrutura ; i < (com->espaco_estrutura + 50000) ; i++){
 		com->utilizador[i] = malloc(sizeof(struct utilizador));
 		com->utilizador[i]->nome = NULL; ////////
-		com->utilizador[i]->id = NULL;
+		com->utilizador[i]->id = 0;
 		long array[10] = {0};
 		com->utilizador[i]->user = create_user(NULL,array);
 		com->utilizador[i]->reputacao = NULL;

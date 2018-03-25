@@ -12,7 +12,7 @@ struct TCD_community{
 
 struct utilizador{
  	xmlChar* nome;
- 	xmlChar* id;
+ 	int id;
  	USER user; // bio e array para 10 posts
 	int n_posts;
 	xmlChar* reputacao;
