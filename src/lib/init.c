@@ -21,7 +21,7 @@ Inicializa cada parâmetro da estrutura definida em
 TAD_community init(){
 
 	TAD_community tad = malloc(sizeof(struct TCD_community));
-	tad->utilizador = malloc(sizeof(struct utilizador)*5000000);
+	tad->utilizador = malloc(sizeof(struct utilizador)*50000);
 	tad->n_utilizadores = 0;
 	tad->espaco_estrutura = 50000;
 	
