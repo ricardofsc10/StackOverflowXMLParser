@@ -132,8 +132,10 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
                indice_utilizador = procuraBinaria(com, atoi(owner_user_id_l), com->n_utilizadores); // ao fazer isto descobre-se qual o indice do array
 
-               int num_posts = com->utilizador[indice_utilizador]->n_posts; // coloca-se numa variavel para ser mais facil em baixo
+               printf("ID: %d\nÍndice no array: %d\n\n", atoi(owner_user_id_l), indice_utilizador );
 
+               int num_posts = com->utilizador[indice_utilizador]->n_posts; // coloca-se numa variavel para ser mais facil em baixo
+               /*
                com->utilizador[indice_utilizador]->n_posts += 1; // ao adicionar este post, o numero de posts aumenta
                com->utilizador[indice_utilizador]->posts[num_posts]->id_post = id_l;
                com->utilizador[indice_utilizador]->posts[num_posts]->score = score_l;
@@ -155,7 +157,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                xmlFree(tags_l);
                xmlFree(answer_count_l);
                xmlFree(comment_count_l);
-               xmlFree(favorite_count_l);
+               xmlFree(favorite_count_l);*/
                i++;
            }
        }
@@ -181,7 +183,6 @@ de algum documento ou erros na atribuição da raiz do documento às variáveis
 @returns Estrutura totamente carregada com os dados filtrados de cada ficheiro.
 */
 
-
 TAD_community load(TAD_community com, char* dump_path){
     
     xmlDocPtr doc_user, doc_posts;
@@ -198,7 +199,6 @@ TAD_community load(TAD_community com, char* dump_path){
           fprintf(stderr,"Document not parsed successfully. \n");
           return 0;
     }
-
 
     cur_user = xmlDocGetRootElement(doc_user);
 
@@ -220,7 +220,6 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_user);
 
     printf("O parse do documento Users.xml foi feito com sucesso........\n");
-
 
 
     ////////////////////////////////// Faz-se o parse do Posts
