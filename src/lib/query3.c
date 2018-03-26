@@ -6,6 +6,7 @@
 #include "date.h"
 #include "pair.h"
 #include "struct.c"
+#include "query3.h"
 
 
 LONG_pair total_posts(TAD_community com, Date begin, Date end){
@@ -16,7 +17,7 @@ LONG_pair total_posts(TAD_community com, Date begin, Date end){
 	long n_respostas=0;
 
 	for (int i=0; i<com->posts_t; i++) {
-		if (difDatas(com->posts[i]->data)==0) {
+		if (difDatas(com->posts[i]->data,begin,end)==0) {
 			if(com->posts[i]->post_type_id==1) n_perguntas++;
 			else n_respostas++;
 		}

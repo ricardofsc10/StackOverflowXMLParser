@@ -5,6 +5,7 @@
 #include <libxml/parser.h>
 #include "struct.c"
 #include "list.h"
+#include "query2.h"
 
 LONG_list top_most_active(TAD_community com, int N){
 	LONG_list l = create_list(N);

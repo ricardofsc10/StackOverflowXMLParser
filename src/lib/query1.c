@@ -5,6 +5,7 @@
 #include <libxml/parser.h>
 #include "struct.c"
 #include "pair.h"
+#include "query1.h"
 
 int procura_binaria_u (TAD_community com, int id, int Tam){
     int inf = 0;
