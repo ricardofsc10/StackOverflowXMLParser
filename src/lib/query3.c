@@ -16,7 +16,7 @@ LONG_pair total_posts(TAD_community com, Date begin, Date end){
 	long n_respostas=0;
 
 	for (int i=0; i<com->posts_t; i++) {
-		if (difDatas(stringToDias(com->posts[i]->data))==0) {
+		if (difDatas(com->posts[i]->data)==0) {
 			if(com->posts[i]->post_type_id==1) n_perguntas++;
 			else n_respostas++;
 		}
@@ -57,3 +57,4 @@ int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas o
 	if (inicio== 0 && fim ==0) return 0;
 	else return -1;
 }
+

@@ -11,6 +11,24 @@
 #include <libxml/parser.h>
 #include "struct.c"
 
+
+Date stringToDias (char* data) { // "2011-11-11"
+    
+    char ano[4];
+    char mes[2];
+    char dia[2];
+    int i;
+    for (i=0;i<4;i++)
+        ano[i]=data[i];
+    for(i=5; i<7;i++)
+        mes[i]=data[i];
+    for(i=8; i<10;i++)
+        dia[i]=data[i];
+    Date ndata = (atoi(dia),atoi(mes),atoi(ano));
+}
+
+
+
 /**
 @brief Função que filtra os dados que são necessários do documento Users.xml 
 e coloca nos campos da estrutura.
@@ -21,6 +39,8 @@ e coloca nos campos da estrutura.
 
 @returns Estrutura com os dados referentes a cada utilizador.
 */
+
+
 
 void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // acho que está tudo bem nesta função
 
@@ -103,7 +123,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            if(owner_user_id_l == NULL);
            else{
                id_bin = procura_binaria_u(com, atoi(owner_user_id_l),com->n_utilizadores);
-               //com->posts[i]->data=creation_date_l;
+               com->posts[i]->data=stringToDias(creation_date_l);
                com->utilizador[id_bin]->posts_u++;
                com->posts[i]->id_post = atoi(id_l);
                com->posts[i]->score = score_l;
