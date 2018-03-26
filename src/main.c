@@ -28,6 +28,7 @@ int main(){
       int tamanho;
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
+      printf("Resposta:\n");
       LONG_list l = create_list(tamanho);
       l = top_most_active(tda,tamanho);
       menu = 0;
