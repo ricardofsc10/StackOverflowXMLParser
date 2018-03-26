@@ -30,7 +30,7 @@ LONG_pair total_posts(TAD_community com, Date begin, Date end){
 
 int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas ou n
 	int inicio,fim;
-	if(get_year(x) < get_year(begin)) begin=-1;
+	if(get_year(x) < get_year(begin)) inicio=-1;
 	else if (get_year(x) == get_year(begin)) {
 
 		if (get_month(x) < get_month(begin)) inicio=-1;

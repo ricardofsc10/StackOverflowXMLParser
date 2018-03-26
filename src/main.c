@@ -36,8 +36,9 @@ int main(){
       menu = 0;
     }
     if(menu == 3){
-      printf("Ainda nao está acabada.\n");
-      //par = info_from_post(tda,4567);
+      Date begin = createDate(03,10,2014);
+      Date end = createDate(05,03,2016);
+      total_posts(tda,begin,end);
       menu = 0;
     }
     if(menu == 4){
