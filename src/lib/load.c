@@ -15,15 +15,12 @@ Date stringToDias (char* data) { // "2011-11-11"
     for (i=0,j=0;i<4;i++,j++)
         ano[j]=data[i];
         ano[j]='\0';
-        printf("ano:%s\n", ano);
     for(i=5,j=0; i<7;i++,j++)
         mes[j]=data[i];
         mes[j]='\0';
-        printf("mes:%s\n", mes);
     for(i=8,j=0; i<10;i++,j++)
         dia[j]=data[i];
         dia[j]='\0';
-        printf("dia:%s\n", dia);
     Date ndata = (atoi(dia),atoi(mes),atoi(ano));
     return ndata;
 }
