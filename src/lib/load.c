@@ -212,12 +212,12 @@ TAD_community load(TAD_community com, char* dump_path){
         return 0;
     }
 
-    printf("Loading: Parse do documento Users.xml........\n");
+    printf("[load.c] Ínicio do parse do documento Users.xml........\n");
 
     getReferenceUser (doc_user,cur_user,com);
     xmlFreeDoc(doc_user);
 
-    printf("O parse do documento Users.xml foi feito com sucesso........\n");
+    printf("[load.c] Parse do documento Users.xml foi feito com sucesso ...\n");
 
 
     ////////////////////////////////// Faz-se o parse do Posts
@@ -246,12 +246,12 @@ TAD_community load(TAD_community com, char* dump_path){
         return 0;
     }
 
-    printf("Loading: Parse do documento Posts.xml........\n");
+    printf("[load.c] Ínicio do parse do documento Posts.xml........\n");
 
     getReferencePosts (doc_posts,cur_posts,com);
     xmlFreeDoc(doc_posts);
 
-    printf("O parse do documento Posts.xml foi feito com sucesso........\n");
+    printf("[load.c] Parse do documento Posts.xml foi feito com sucesso ...\n");
 
     return com;
 }
