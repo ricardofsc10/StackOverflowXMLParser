@@ -82,7 +82,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
    cur = cur->xmlChildrenNode;
-   int i=0;
+   int i=0,id_bin;
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
@@ -100,8 +100,11 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            favorite_count_l = xmlGetProp(cur, "FavoriteCount");
 
            // preenche os parametros dos posts
-
+           if(owner_user_id_l == NULL);
+           else{
+               id_bin = procura_binaria_u(com, atoi(owner_user_id_l),com->n_utilizadores);
                //com->posts[i]->data=creation_date_l;
+               com->utilizador[id_bin]->posts_u++;
                com->posts[i]->id_post = atoi(id_l);
                com->posts[i]->score = score_l;
                com->posts[i]->owner_user_id= owner_user_id_l;
@@ -115,7 +118,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                com->posts[i]->answer_count = answer_count_l;
                com->posts[i]->comment_count = comment_count_l;
                com->posts[i]->favorite_count = favorite_count_l;
-
+              }
                xmlFree(id_l);
                xmlFree(post_type_id_l);
                xmlFree(creation_date_l);
