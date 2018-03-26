@@ -15,7 +15,7 @@ int main(){
   char* path2 = "../../dumpexemplo/android/";
   printf("[load.c] Ínicio do load ...\n");
   tda = load(tda, path2);
-  printf("[load.c] load done ...\n", );
+  printf("[load.c] load done ...\n");
 
   while(menu == 0){
     printf("Que questão deseja resolver? (-1, para sair do programa)\n");
