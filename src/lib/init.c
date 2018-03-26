@@ -40,11 +40,13 @@ TAD_community init(){
 	for (int j = 0; j != 75000; j++) {
 		tad->posts[j] = malloc(sizeof(struct posts));
 		tad->posts[j]->data= createDate(0,0,0);
-		tad->posts[j]->id_post = NULL;
+		tad->posts[j]->id_post = 0;
 		tad->posts[j]->score = NULL;
+		tad->posts[j]->owner_user_id=NULL;
 		tad->posts[j]->title = NULL;
 		tad->posts[j]->body = NULL;
 		tad->posts[j]->post_type_id = NULL;
+		tad->posts[j]->parent_id=0;
 		tad->posts[j]->tags = malloc(sizeof(10));
 		tad->posts[j]->answer_count = NULL;
 		tad->posts[j]->comment_count = NULL;
@@ -91,11 +93,13 @@ void redimensiona_posts(TAD_community com) {
 	for (int j = com->espaco_posts; j <(com->espaco_posts + 75000); j++) {
 		com->posts[j] = malloc(sizeof(struct posts));
 		com->posts[j]->data= createDate(0,0,0);
-		com->posts[j]->id_post = NULL;
+		com->posts[j]->id_post = 0;
 		com->posts[j]->score = NULL;
+		com->posts[j]->owner_user_id=NULL;
 		com->posts[j]->title = NULL;
 		com->posts[j]->body = NULL;
 		com->posts[j]->post_type_id = NULL;
+		com->posts[j]->parent_id=0;
 		com->posts[j]->tags = malloc(sizeof(10));
 		com->posts[j]->answer_count = NULL;
 		com->posts[j]->comment_count = NULL;

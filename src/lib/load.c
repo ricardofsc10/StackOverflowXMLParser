@@ -80,7 +80,7 @@ array está o criador do post.
 
 void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
-   xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
+   xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
    cur = cur->xmlChildrenNode;
    int i=0;
 
@@ -92,6 +92,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
        	   score_l = xmlGetProp(cur, "Score");
        	   body_l = xmlGetProp(cur, "Body");
            owner_user_id_l = xmlGetProp(cur, "OwnerUserId");
+           parent_id_l=xmlGetProp(cur,"ParentId");
            title_l = xmlGetProp(cur, "Title");
            tags_l = xmlGetProp(cur, "Tags");
            answer_count_l = xmlGetProp(cur, "AnswerCount");
@@ -101,11 +102,15 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            // preenche os parametros dos posts
 
                //com->posts[i]->data=creation_date_l;
-               com->posts[i]->id_post = id_l;
+               com->posts[i]->id_post = atoi(id_l);
                com->posts[i]->score = score_l;
+               com->posts[i]->owner_user_id= owner_user_id_l;
                com->posts[i]->title = title_l;
                com->posts[i]->body = body_l;
                com->posts[i]->post_type_id = post_type_id_l;
+               if(com->posts[i]->post_type_id==2) {
+                  com->posts[i]->parent_id = atoi(parent_id_l);
+               }
                com->posts[i]->tags[0] = tags_l;
                com->posts[i]->answer_count = answer_count_l;
                com->posts[i]->comment_count = comment_count_l;
@@ -117,6 +122,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                xmlFree(score_l);
                xmlFree(body_l);
                xmlFree(owner_user_id_l);
+               xmlFree(parent_id_l);
                xmlFree(title_l);
                xmlFree(tags_l);
                xmlFree(answer_count_l);

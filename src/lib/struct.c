@@ -11,7 +11,6 @@ struct TCD_community{
 	POSTS* posts;
 	int posts_t;
 	int espaco_posts;
-
 };
 
 struct utilizador{
@@ -24,11 +23,13 @@ struct utilizador{
 
 struct posts{
 	Date data;
-	xmlChar* id_post;
+	int id_post;
 	xmlChar* score;
+	xmlChar* owner_user_id;
 	xmlChar* title;
 	xmlChar* body;
 	xmlChar* post_type_id; // 1-pergunta 2-resposta
+	int parent_id;
 	xmlChar** tags;
 	xmlChar* answer_count;
 	xmlChar* comment_count;
