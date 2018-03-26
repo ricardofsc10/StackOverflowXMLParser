@@ -47,7 +47,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            xmlFree(bio_l);
            xmlFree(reputacao_l);
            
-           if ((com->espaco_estrutura - com->n_utilizadores) == 1){ // testa se ainda tem espaço para alocar o proximo
+           if ((com->espaco_users - com->n_utilizadores) == 1){ // testa se ainda tem espaço para alocar o proximo
                redimensiona_utilizadores(com);
            }
 
@@ -58,35 +58,6 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
     }
     printf("%d Users\n", i);
 }
-
-/**
-@brief Função que implementa a procura binária, aplicada ao 
-Id de cada utilizador.
-
-@param com Estrutura com os dados.
-@param id Parâmetro de comparação.
-@param Tam Tamanho do array.
-
-@returns Índice do array utilizadores da estrutura onde um dado utilizador
-se encontra.
-*/
-
-int procuraBinaria (TAD_community com, int id, int Tam){
-    int inf = 0;
-    int sup = Tam-1;
-    int meio;
-    while (inf <= sup){
-        meio = (inf + sup)/2;
-
-        if (id == com->utilizador[meio]->id) return meio;
-
-        if (id < com->utilizador[meio]->id) sup = meio - 1;
-        
-        else inf = meio + 1;
-    }
-    return -1;   // não encontrado
-}
-
 
 /**
 @brief Função que filtra os dados que são necessários do documento Posts.xml 
@@ -111,7 +82,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
    cur = cur->xmlChildrenNode;
-   int i=0, indice_utilizador;
+   int i=0;
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
@@ -127,25 +98,18 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            comment_count_l = xmlGetProp(cur, "CommentCount");
            favorite_count_l = xmlGetProp(cur, "FavoriteCount");
 
-           if(owner_user_id_l == NULL); // há um post que nao tem userid daí ter esta condição
-           else{  // preenche os parametros dos posts
+           // preenche os parametros dos posts
 
-               indice_utilizador = procuraBinaria(com, atoi(owner_user_id_l), com->n_utilizadores); // ao fazer isto descobre-se qual o indice do array
-
-               printf("ID: %d\nÍndice no array: %d\n\n", atoi(owner_user_id_l), indice_utilizador );
-
-               int num_posts = com->utilizador[indice_utilizador]->n_posts; // coloca-se numa variavel para ser mais facil em baixo
-               /*
-               com->utilizador[indice_utilizador]->n_posts += 1; // ao adicionar este post, o numero de posts aumenta
-               com->utilizador[indice_utilizador]->posts[num_posts]->id_post = id_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->score = score_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->title = title_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->body = body_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->post_type_id = post_type_id_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->tags[0] = tags_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->answer_count = answer_count_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->comment_count = comment_count_l;
-               com->utilizador[indice_utilizador]->posts[num_posts]->favorite_count = favorite_count_l;
+               //com->posts[i]->data=creation_date_l;
+               com->posts[i]->id_post = id_l;
+               com->posts[i]->score = score_l;
+               com->posts[i]->title = title_l;
+               com->posts[i]->body = body_l;
+               com->posts[i]->post_type_id = post_type_id_l;
+               com->posts[i]->tags[0] = tags_l;
+               com->posts[i]->answer_count = answer_count_l;
+               com->posts[i]->comment_count = comment_count_l;
+               com->posts[i]->favorite_count = favorite_count_l;
 
                xmlFree(id_l);
                xmlFree(post_type_id_l);
@@ -157,10 +121,15 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                xmlFree(tags_l);
                xmlFree(answer_count_l);
                xmlFree(comment_count_l);
-               xmlFree(favorite_count_l);*/
+               xmlFree(favorite_count_l);
+
+               if ((com->espaco_posts - com->posts_t)== 1) {
+                redimensiona_posts(com);
+
+               }
+               com->posts_t++;
                i++;
            }
-       }
        cur = cur->next;
    }
    printf("%d Posts\n", i);

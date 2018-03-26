@@ -7,16 +7,19 @@
 struct TCD_community{
 	UTILIZADOR* utilizador;
 	int n_utilizadores;
-	int espaco_estrutura;
+	int espaco_users;
+	POSTS* posts;
+	int posts_t;
+	int espaco_posts;
+
 };
 
 struct utilizador{
  	xmlChar* nome;
  	int id;
  	USER user; // bio e array para 10 posts
-	int n_posts;
+	int posts_u;
 	xmlChar* reputacao;
-	POSTS* posts;
 };
 
 struct posts{
