@@ -8,18 +8,26 @@
 
 Date stringToDias (char* data) { // "2011-11-11"
     
-    char ano[4];
-    char mes[2];
-    char dia[2];
-    int i;
-    for (i=0;i<4;i++)
-        ano[i]=data[i];
-    for(i=5; i<7;i++)
-        mes[i]=data[i];
-    for(i=8; i<10;i++)
-        dia[i]=data[i];
+    char ano[5];
+    char mes[3];
+    char dia[3];
+    int i,j;
+    for (i=0,j=0;i<4;i++,j++)
+        ano[j]=data[i];
+        ano[j]='\0';
+        printf("ano:%s\n", ano);
+    for(i=5,j=0; i<7;i++,j++)
+        mes[j]=data[i];
+        mes[j]='\0';
+        printf("mes:%s\n", mes);
+    for(i=8,j=0; i<10;i++,j++)
+        dia[j]=data[i];
+        dia[j]='\0';
+        printf("dia:%s\n", dia);
     Date ndata = (atoi(dia),atoi(mes),atoi(ano));
+    return ndata;
 }
+
 
 
 void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // acho que está tudo bem nesta função
