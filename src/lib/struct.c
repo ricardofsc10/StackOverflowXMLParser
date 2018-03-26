@@ -25,10 +25,10 @@ struct posts{
 	Date data;
 	int id_post;
 	xmlChar* score;
-	xmlChar* owner_user_id;
-	xmlChar* title;
+	int owner_user_id;
+	char* title;
 	xmlChar* body;
-	xmlChar* post_type_id; // 1-pergunta 2-resposta
+	int post_type_id; // 1-pergunta 2-resposta
 	int parent_id;
 	xmlChar** tags;
 	xmlChar* answer_count;

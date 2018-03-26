@@ -27,9 +27,9 @@ int main(){
     scanf("%d", &menu);
 
     if(menu == 1){
-      printf("Ainda nao está acabada.\n");
+      printf("Resposta:\n");
       start = clock();
-      //par = info_from_post(tda,4567);
+      par = info_from_post(tda,71800);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
@@ -49,6 +49,7 @@ int main(){
     if(menu == 3){
       Date begin = createDate(03,10,2014);
       Date end = createDate(05,03,2016);
+      printf("Resposta:\n");
       start = clock();
       total_posts(tda,begin,end);
       stop = clock();
@@ -57,6 +58,7 @@ int main(){
     }
     if(menu == 4){
       printf("Ainda nao está acabada.\n");
+      printf("Resposta:\n");
       start = clock();
       //par = info_from_post(tda,4567);
       stop = clock();
@@ -65,6 +67,7 @@ int main(){
     }
     if(menu == 5){
       printf("Ainda nao está acabada.\n");
+      printf("Resposta:\n");
       start = clock();
       //par = info_from_post(tda,4567);
       stop = clock();
@@ -73,6 +76,7 @@ int main(){
     }
     if(menu == 6){
       printf("Ainda nao está acabada.\n");
+      printf("Resposta:\n");
       start = clock();
       //par = info_from_post(tda,4567);
       stop = clock();
@@ -81,6 +85,7 @@ int main(){
     }
     if(menu == 7){
       printf("Ainda nao está acabada.\n");
+      printf("Resposta:\n");
       start = clock();
       //par = info_from_post(tda,4567);
       stop = clock();
@@ -89,6 +94,7 @@ int main(){
     }
     if(menu == 8){
       printf("Ainda nao está acabada.\n");
+      printf("Resposta:\n");
       start = clock();
       //par = info_from_post(tda,4567);
       stop = clock();
@@ -97,6 +103,7 @@ int main(){
     }
     if(menu == 9){
       printf("Ainda nao está acabada.\n");
+      printf("Resposta:\n");
       start = clock();
       //par = info_from_post(tda,4567);
       stop = clock();
@@ -105,6 +112,7 @@ int main(){
     }
     if(menu == 10){
       printf("Ainda nao está acabada.\n");
+      printf("Resposta:\n");
       start = clock();
       //par = info_from_post(tda,4567);
       stop = clock();
@@ -113,6 +121,7 @@ int main(){
     }
     if(menu == 11){
       printf("Ainda nao está acabada.\n");
+      printf("Resposta:\n");
       start = clock();
       //par = info_from_post(tda,4567);
       stop = clock();

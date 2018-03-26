@@ -93,10 +93,10 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                com->utilizador[id_bin]->posts_u++;
                com->posts[i]->id_post = atoi(id_l);
                com->posts[i]->score = score_l;
-               com->posts[i]->owner_user_id= owner_user_id_l;
+               com->posts[i]->owner_user_id= atoi(owner_user_id_l);
                com->posts[i]->title = title_l;
                com->posts[i]->body = body_l;
-               com->posts[i]->post_type_id = post_type_id_l;
+               com->posts[i]->post_type_id = atoi(post_type_id_l);
                if(com->posts[i]->post_type_id==2) {
                   com->posts[i]->parent_id = atoi(parent_id_l);
                }
