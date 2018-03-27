@@ -43,28 +43,28 @@ STR_pair info_from_post(TAD_community com, int id) {
 	STR_pair par= create_str_pair(NULL,NULL);
 	int user_id;
 	int l;
+    char* t;
+    char* n;
 
-    l = procura_binaria_p(com, id, com->posts_t); // indice do array posts onde esta o post com oo id dado
-    printf("%d\n", l);
+    l = procura_binaria_p(com, id, com->posts_t); // indice do array posts onde esta o post com o id dado
 
 	if (com->posts[l]->post_type_id == 1){	
-		set_fst_str(par, com->posts[l]->title);
-        printf("titlo: %s\n", com->posts[l]->title);
+		//set_fst_str(par, com->posts[l]->title);
+        t = com->posts[l]->title;
 		user_id = procura_binaria_u(com, com->posts[l]->owner_user_id, com->n_utilizadores);
-        printf("%d\n", user_id);
-		set_snd_str(par, com->utilizador[user_id]->nome);
-        //printf("nome: %s\n", com->utilizador[user_id]->nome);
+		//set_snd_str(par, com->utilizador[user_id]->nome);
+        n = com->utilizador[user_id]->nome;
     }
 	else { //é uma resposta
 		int x = procura_binaria_p(com, com->posts[l]->parent_id, com->posts_t);
-        printf("%s\n", com->posts[l]->parent_id);
-		set_fst_str(par, (char*) com->posts[x]->title);
+		set_fst_str(par, com->posts[x]->title);
 		user_id= procura_binaria_u(com, com->posts[x]->owner_user_id, com->n_utilizadores);
-        printf("%d\n", user_id);
-	    set_snd_str(par, (char*) com->utilizador[user_id]->nome);
+	    set_snd_str(par, com->utilizador[user_id]->nome);
 	}
     //printf("%s\n", get_fst_str(par) );
     //printf("%s\n", get_snd_str(par) );
+    printf("%s\n", t);
+    printf("%s\n", n);
 	return par;
 }
 

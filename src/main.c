@@ -6,7 +6,6 @@
 int main(){
   TAD_community tda = NULL;
   STR_pair par = create_str_pair(NULL,NULL);
-  LONG_list l = create_list(10);
   int menu = 0;
   
   tda = init();
@@ -29,7 +28,7 @@ int main(){
     if(menu == 1){
       printf("Resposta:\n");
       start = clock();
-      par = info_from_post(tda,71800);
+      par = info_from_post(tda,141044);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;

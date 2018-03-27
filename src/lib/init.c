@@ -30,10 +30,10 @@ TAD_community init(){
 		tad->posts[j]->data= createDate(0,0,0);
 		tad->posts[j]->id_post = 0;
 		tad->posts[j]->score = NULL;
-		tad->posts[j]->owner_user_id=NULL;
+		tad->posts[j]->owner_user_id= 0;
 		tad->posts[j]->title = NULL;
 		tad->posts[j]->body = NULL;
-		tad->posts[j]->post_type_id = NULL;
+		tad->posts[j]->post_type_id = 0;
 		tad->posts[j]->parent_id=0;
 		tad->posts[j]->tags = malloc(sizeof(10));
 		tad->posts[j]->answer_count = NULL;
@@ -69,10 +69,10 @@ void redimensiona_posts(TAD_community com) {
 		com->posts[j]->data= createDate(0,0,0);
 		com->posts[j]->id_post = 0;
 		com->posts[j]->score = NULL;
-		com->posts[j]->owner_user_id=NULL;
+		com->posts[j]->owner_user_id= 0;
 		com->posts[j]->title = NULL;
 		com->posts[j]->body = NULL;
-		com->posts[j]->post_type_id = NULL;
+		com->posts[j]->post_type_id = 0;
 		com->posts[j]->parent_id=0;
 		com->posts[j]->tags = malloc(sizeof(10));
 		com->posts[j]->answer_count = NULL;
