@@ -1,7 +1,6 @@
 #ifndef __LOAD__
 #define __LOAD__
 
-
 /**
 @file load.h
 @author Grupo21
@@ -9,8 +8,12 @@
 */
 
 
-/*
---- falta documentacao
+/**
+@brief Função que filtra as datas, transformando-as em elementos da struct date.
+
+@param data Data que vai ser transformada.
+
+@returns Data compatível com a struct date.
 */
 Date stringToDias (char* data);
 
