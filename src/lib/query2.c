@@ -25,8 +25,10 @@ LONG_list top_most_active(TAD_community com, int N){
 					set_list(lid,j,com->utilizador[i]->id);
 					break;
 				}
-				set_list(l,j,get_list(l,j+1));
-				set_list(lid,j,get_list(lid,j+1));
+				else{
+					set_list(l,j,get_list(l,j+1));
+					set_list(lid,j,get_list(lid,j+1));
+				}
 			}
 			else{
 				set_list(l,j-1,com->utilizador[i]->posts_u);
@@ -41,5 +43,8 @@ LONG_list top_most_active(TAD_community com, int N){
 		printf("número total de posts: %ld\n", get_list(l,i));
 		printf("id utilizador: %ld\n\n", get_list(lid,i));
 	}*/
+
+	free_list(l);
+
 	return lid;
 }

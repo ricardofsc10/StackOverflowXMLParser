@@ -104,7 +104,12 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                   com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
                }
                com->posts[i]->tags[0] = tags_l;
-               com->posts[i]->answer_count = answer_count_l;
+               if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
+                  com->posts[i]->answer_count = 0;
+               }
+               else{
+                  com->posts[i]->answer_count = atoi( (const char *) answer_count_l);
+               }
                com->posts[i]->comment_count = comment_count_l;
                com->posts[i]->favorite_count = favorite_count_l;
               }

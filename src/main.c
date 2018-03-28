@@ -6,7 +6,6 @@
 
 int main(){
   TAD_community tda = NULL;
-  STR_pair par = create_str_pair(NULL,NULL);
   int menu = 0;
   
   tda = init();
@@ -27,11 +26,13 @@ int main(){
     scanf("%d", &menu);
 
     if(menu == 1){
+      STR_pair par = create_str_pair(NULL,NULL);
       printf("Resposta:\n");
       start = clock();
       par = info_from_post(tda,141044);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      free_str_pair(par);
       menu = 0;
     }
     if(menu == 2){
@@ -44,16 +45,21 @@ int main(){
       l = top_most_active(tda,tamanho);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      free_list(l);
       menu = 0;
     }
     if(menu == 3){
+      LONG_pair lp = create_long_pair(0,0);
       Date begin = createDate(03,10,2014);
       Date end = createDate(05,03,2016);
       printf("Resposta:\n");
       start = clock();
-      total_posts(tda,begin,end);
+      lp = total_posts(tda,begin,end);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      free_long_pair(lp);
+      free_date(begin);
+      free_date(end);
       menu = 0;
     }
     if(menu == 4){
@@ -84,12 +90,20 @@ int main(){
       menu = 0;
     }
     if(menu == 7){
-      printf("Ainda nao está acabada.\n");
+      int tamanho;
+      Date begin = createDate(01,01,2010);
+      Date end = createDate(31,12,2017);
+      printf("Qual o número de utilizadores que pretende?\n");
+      scanf("%d",&tamanho);
+      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
       start = clock();
-      //par = info_from_post(tda,4567);
+      l = most_answered_questions(tda, tamanho, begin, end);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      free_date(begin);
+      free_date(end);
+      free_list(l);
       menu = 0;
     }
     if(menu == 8){
@@ -130,6 +144,7 @@ int main(){
     }
     if(menu==-1) break;
   }
+
 
   free(tda);
   

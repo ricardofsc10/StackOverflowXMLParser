@@ -36,7 +36,7 @@ TAD_community init(){
 		tad->posts[j]->post_type_id = 0;
 		tad->posts[j]->parent_id=0;
 		tad->posts[j]->tags = malloc(sizeof(10));
-		tad->posts[j]->answer_count = NULL;
+		tad->posts[j]->answer_count = 0;
 		tad->posts[j]->comment_count = NULL;
 		tad->posts[j]->favorite_count = NULL;
 	}
@@ -75,7 +75,7 @@ void redimensiona_posts(TAD_community com) {
 		com->posts[j]->post_type_id = 0;
 		com->posts[j]->parent_id=0;
 		com->posts[j]->tags = malloc(sizeof(10));
-		com->posts[j]->answer_count = NULL;
+		com->posts[j]->answer_count = 0;
 		com->posts[j]->comment_count = NULL;
 		com->posts[j]->favorite_count = NULL;
 	}

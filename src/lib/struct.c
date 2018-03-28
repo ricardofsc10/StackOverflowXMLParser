@@ -32,7 +32,7 @@ struct posts{
 	int post_type_id; // 1-pergunta 2-resposta
 	int parent_id;
 	xmlChar** tags;
-	xmlChar* answer_count;
+	int answer_count;
 	xmlChar* comment_count;
 	xmlChar* favorite_count;
 };
