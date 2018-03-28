@@ -3,6 +3,7 @@
 #include "date.h"
 #include "struct.h"
 #include <libxml/parser.h>
+#include "funções.h"
 
 struct TCD_community{
 	UTILIZADOR* utilizador;
@@ -26,7 +27,7 @@ struct posts{
 	int id_post;
 	xmlChar* score;
 	int owner_user_id;
-	char* title;
+	xmlChar* title;
 	xmlChar* body;
 	int post_type_id; // 1-pergunta 2-resposta
 	int parent_id;

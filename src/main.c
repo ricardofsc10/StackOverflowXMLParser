@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 int main(){
   TAD_community tda = NULL;
@@ -11,7 +12,7 @@ int main(){
   tda = init();
   printf("[init.c] Estrutura já foi inicializada...\n");
 
-  char* path1 = "../../dumpexemplo/askubuntu.com/";
+  char* path1 __unused = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
   char* path2 = "../../dumpexemplo/android/";
   printf("[load.c] Ínicio do load...\n");
 

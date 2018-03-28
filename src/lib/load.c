@@ -5,6 +5,8 @@
 #include <libxml/parser.h>
 #include "struct.c"
 #include "load.h"
+#include "init.h"
+#include "funções.h"
 
 Date stringToDias (char* data) { // "2011-11-11"
     
@@ -21,7 +23,7 @@ Date stringToDias (char* data) { // "2011-11-11"
     for(i=8,j=0; i<10;i++,j++)
         dia[j]=data[i];
         dia[j]='\0';
-    Date ndata = (atoi(dia),atoi(mes),atoi(ano));
+    Date ndata = createDate (atoi(dia),atoi(mes),atoi(ano));
     return ndata;
 }
 
@@ -36,15 +38,15 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
 
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-       	   id_l = xmlGetProp(cur, "Id");
-           nome_l = xmlGetProp(cur, "DisplayName");
-           bio_l = xmlGetProp(cur, "AboutMe");
-           reputacao_l = xmlGetProp(cur, "Reputation");
+       	   id_l = xmlGetProp(cur, (const xmlChar *) "Id");
+           nome_l = xmlGetProp(cur, (const xmlChar *) "DisplayName");
+           bio_l = xmlGetProp(cur, (const xmlChar *) "AboutMe");
+           reputacao_l = xmlGetProp(cur, (const xmlChar *) "Reputation");
            
            // preenche os parametros do utilizador
-           com->utilizador[i]->id = atoi(id_l); // usa-se o atoi porque na estrutura o id é um int
+           com->utilizador[i]->id = atoi( (const char *) id_l); // usa-se o atoi porque na estrutura o id é um int
            com->utilizador[i]->nome = nome_l;
-           com->utilizador[i]->user = create_user(bio_l,array);
+           com->utilizador[i]->user = create_user( (char *) bio_l,array);
            com->utilizador[i]->reputacao = reputacao_l;
 
            xmlFree(id_l);
@@ -65,10 +67,6 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
 }
 
 
-// -- ainda há muito a melhorar
-// -- falta inserir datas
-// -- falta redimensionar tamanhos do array de posts quando necessário
-// -- provavelmente faltam mais cenas ...........
 void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
@@ -77,33 +75,33 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-       	   id_l = xmlGetProp(cur, "Id");
-       	   post_type_id_l = xmlGetProp(cur, "PostTypeId");
-       	   creation_date_l = xmlGetProp(cur, "CreationDate");
-       	   score_l = xmlGetProp(cur, "Score");
-       	   body_l = xmlGetProp(cur, "Body");
-           owner_user_id_l = xmlGetProp(cur, "OwnerUserId");
-           parent_id_l=xmlGetProp(cur,"ParentId");
-           title_l = xmlGetProp(cur, "Title");
-           tags_l = xmlGetProp(cur, "Tags");
-           answer_count_l = xmlGetProp(cur, "AnswerCount");
-           comment_count_l = xmlGetProp(cur, "CommentCount");
-           favorite_count_l = xmlGetProp(cur, "FavoriteCount");
+       	   id_l = xmlGetProp(cur, (const xmlChar *) "Id");
+       	   post_type_id_l = xmlGetProp(cur, (const xmlChar *) "PostTypeId");
+       	   creation_date_l = xmlGetProp(cur, (const xmlChar *) "CreationDate");
+       	   score_l = xmlGetProp(cur, (const xmlChar *) "Score");
+       	   body_l = xmlGetProp(cur, (const xmlChar *) "Body");
+           owner_user_id_l = xmlGetProp(cur, (const xmlChar *) "OwnerUserId");
+           parent_id_l=xmlGetProp(cur, (const xmlChar *) "ParentId");
+           title_l = xmlGetProp(cur, (const xmlChar *) "Title");
+           tags_l = xmlGetProp(cur, (const xmlChar *) "Tags");
+           answer_count_l = xmlGetProp(cur, (const xmlChar *) "AnswerCount");
+           comment_count_l = xmlGetProp(cur, (const xmlChar *) "CommentCount");
+           favorite_count_l = xmlGetProp(cur, (const xmlChar *) "FavoriteCount");
 
            // preenche os parametros dos posts
            if(owner_user_id_l == NULL);
            else{
-               id_bin = procura_binaria_u(com, atoi(owner_user_id_l),com->n_utilizadores);
-               com->posts[i]->data=stringToDias(creation_date_l);
+               id_bin = procura_binaria_u(com, atoi( (const char *) owner_user_id_l),com->n_utilizadores);
+               com->posts[i]->data=stringToDias( (char *) creation_date_l);
                com->utilizador[id_bin]->posts_u++;
-               com->posts[i]->id_post = atoi(id_l);
+               com->posts[i]->id_post = atoi( (const char *) id_l);
                com->posts[i]->score = score_l;
-               com->posts[i]->owner_user_id= atoi(owner_user_id_l);
+               com->posts[i]->owner_user_id= atoi( (const char *) owner_user_id_l);
                com->posts[i]->title = title_l;
                com->posts[i]->body = body_l;
-               com->posts[i]->post_type_id = atoi(post_type_id_l);
+               com->posts[i]->post_type_id = atoi( (const char *) post_type_id_l);
                if(com->posts[i]->post_type_id==2) {
-                  com->posts[i]->parent_id = atoi(parent_id_l);
+                  com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
                }
                com->posts[i]->tags[0] = tags_l;
                com->posts[i]->answer_count = answer_count_l;
@@ -125,7 +123,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
                if ((com->espaco_posts - com->posts_t)== 1) {
                 redimensiona_posts(com);
-
                }
                com->posts_t++;
                i++;
