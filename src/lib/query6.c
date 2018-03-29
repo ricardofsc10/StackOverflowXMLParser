@@ -1,6 +1,7 @@
 #include "list.h"
 #include "struct.c"
 #include "funções.h"
+#include "query6.h"
 
 LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ // da com mais respostas para a q tem menos
 	LONG_list l = create_list(N);

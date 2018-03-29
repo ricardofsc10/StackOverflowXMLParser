@@ -2,6 +2,7 @@
 #include "struct.c"
 #include "funções.h"
 #include "list.h"
+#include "query8.h"
 
 
 LONG_list contains_word(TAD_community com, char* word, int N){

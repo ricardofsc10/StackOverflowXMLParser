@@ -6,6 +6,7 @@
 #include "user.h"
 #include "struct.c"
 #include "funções.h"
+#include "query5.h"
 
 
 USER get_user_info(TAD_community com, long id){
