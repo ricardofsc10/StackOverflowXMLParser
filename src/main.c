@@ -72,14 +72,14 @@ int main(){
       menu = 0;
     }
     if(menu == 5){
-      USER new_user = create_user(NULL,NULL);
+      //USER new_user = create_user(NULL,0);
       printf("Ainda nao está acabada.\n");
       printf("Resposta:\n");
       start = clock();
-      new_user = get_user_info(tda,2705);
+      get_user_info(tda,2705);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
-      free_user(new_user);
+      //free_user(new_user);
       menu = 0;
     }
     if(menu == 6){
@@ -109,10 +109,10 @@ int main(){
       menu = 0;
     }
     if(menu == 8){
-      printf("Ainda nao está acabada.\n");
+      LONG_list l = create_list(10);
       printf("Resposta:\n");
       start = clock();
-      //par = info_from_post(tda,4567);
+      l = contains_word(tda, "xml", 10);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;

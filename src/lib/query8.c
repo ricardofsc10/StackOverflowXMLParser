@@ -1,4 +1,4 @@
-
+#include <string.h>
 #include "struct.c"
 #include "funções.h"
 #include "list.h"
@@ -18,25 +18,29 @@ LONG_list contains_word(TAD_community com, char* word, int N){
 	for(int i=0; i < com->posts_t ; i++){
 		if (com->posts[i]->post_type_id == 1){ // se é pergunta
 
-			if (strstr(com->posts->title,word)!=NULL) {// se o titulo contem a palavra
+			//if (strstr( (const char *) com->posts[i]->title,word)!=NULL) {// se o titulo contem a palavra
 
-				if(i==N-1){ // se está na ultima posição
-					set_list(l,i,com->posts[i]->id_post);
-					break;
-				}
+				
+					set_list(l,i,50);
 
-				else set_list(l,i,com->posts[i]->id_post);
-
-			}
+			//}
 		}
 	}
 
 	// no fim do 'for' a lista l tem os id's das perguntas por ordem cronologica normal, necessário inverter a ordem
-	int j = N-1;
+	/*int j = N-1;
 	for (int i = 0 ; i < N ; i++){
 		set_list(res, i, get_list(l, j)); 
 		j--;
+	}*/
+	
+	// para testar
+	int j = N-1;
+	for(int i = 0; i < N; i++){
+		printf("nº respostas: %ld\n", get_list(l,j) );
+		j--;
 	}
+
 	return res;	
 }
 
