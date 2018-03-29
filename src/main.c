@@ -71,7 +71,7 @@ int main(){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
     }
-    if(menu == 5){
+    if(menu == 5){ /////////////////////////perguntar ao stor
       //USER new_user = create_user(NULL,0);
       printf("Ainda nao está acabada.\n");
       printf("Resposta:\n");
@@ -110,9 +110,12 @@ int main(){
     }
     if(menu == 8){
       LONG_list l = create_list(10);
+      int tamanho;
+      printf("Qual o número de perguntas que pretende?\n");
+      scanf("%d",&tamanho);
       printf("Resposta:\n");
       start = clock();
-      l = contains_word(tda, "xml", 10);
+      l = contains_word(tda, "Ho", tamanho);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;

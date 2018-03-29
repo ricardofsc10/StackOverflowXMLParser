@@ -97,11 +97,13 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                com->posts[i]->id_post = atoi( (const char *) id_l);
                com->posts[i]->score = score_l;
                com->posts[i]->owner_user_id= atoi( (const char *) owner_user_id_l);
-               com->posts[i]->title = title_l;
                com->posts[i]->body = body_l;
                com->posts[i]->post_type_id = atoi( (const char *) post_type_id_l);
                if(com->posts[i]->post_type_id==2) {
                   com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
+               }
+               else{
+                  com->posts[i]->title = title_l;
                }
                com->posts[i]->tags[0] = tags_l;
                if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição

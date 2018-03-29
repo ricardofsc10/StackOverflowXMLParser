@@ -46,4 +46,6 @@ int procura_binaria_p (TAD_community com, int id, int Tam);
 */
 int difDatas(Date x,Date begin, Date end);
 
+int elem(char* palavra, char* texto);
+
 #endif
