@@ -139,8 +139,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
    printf("[load.c] %d Posts...\n", i);
 }
 
-void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // acho que está tudo bem nesta função
-
+void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
     xmlChar *votes_l, *postid_l;
     cur = cur->xmlChildrenNode;
 
