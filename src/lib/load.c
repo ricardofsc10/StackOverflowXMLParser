@@ -139,11 +139,38 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
    printf("[load.c] %d Posts...\n", i);
 }
 
+void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // acho que está tudo bem nesta função
+
+    xmlChar *votes_l, *postid_l;
+    cur = cur->xmlChildrenNode;
+
+    while (cur != NULL) {
+        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
+           votes_l = xmlGetProp(cur, (const xmlChar *) "VoteTypeId");
+           postid_l = xmlGetProp(cur, (const xmlChar *) "PostId");
+           
+           int id_bin = procura_binaria_p(com,atoi((const char *)postid_l), com->posts_t);
+           
+           // preenche os parametros do utilizador
+           if(atoi((const char *) (votes_l)) == 2){
+            com->posts[id_bin]->up_votes++;
+           }
+           if(atoi((const char *) (votes_l)) == 3){
+            com->posts[id_bin]->down_votes++;
+           }
+
+           xmlFree(votes_l);
+           xmlFree(postid_l);
+        }
+        cur = cur->next;
+    }
+}
+
 
 TAD_community load(TAD_community com, char* dump_path){
     
-    xmlDocPtr doc_user, doc_posts;
-	  xmlNodePtr cur_user, cur_posts;
+    xmlDocPtr doc_user, doc_posts, doc_votes;
+	  xmlNodePtr cur_user, cur_posts, cur_votes;
 
     ////////////////////////////////// Faz-se o parse do Users
     char path_users[50];
@@ -211,6 +238,39 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_posts);
 
     printf("[load.c] Parse do documento Posts.xml foi feito com sucesso...\n");
+
+    ////////////////////////////////// Faz-se o parse do Votes
+    char path_votes[50];
+    strcpy(path_votes, dump_path);
+    strcat(path_votes,"./Votes.xml");
+
+    doc_votes = xmlParseFile(path_votes);
+
+    if (doc_votes == NULL) {
+          fprintf(stderr,"Document not parsed successfully. \n");
+          return 0;
+    }
+
+    cur_votes = xmlDocGetRootElement(doc_votes);
+
+    if (cur_votes == NULL) {
+        fprintf(stderr,"empty document\n");
+        xmlFreeDoc(doc_votes);
+        return 0;
+    }
+
+    if (xmlStrcmp(cur_votes->name, (const xmlChar *) "votes")) {
+        fprintf(stderr,"document of the wrong type, root node != votes\n");
+        xmlFreeDoc(doc_votes);
+        return 0;
+    }
+
+    printf("[load.c] Ínicio do parse do documento Votes.xml...\n");
+
+    getReferenceVotes (doc_votes,cur_votes,com);
+    xmlFreeDoc(doc_votes);
+
+    printf("[load.c] Parse do documento Votes.xml foi feito com sucesso...\n");
 
     return com;
 }

@@ -20,6 +20,7 @@ struct utilizador{
  	USER user; // bio e array para 10 posts
 	int posts_u;
 	xmlChar* reputacao;
+
 };
 
 struct posts{
@@ -35,4 +36,6 @@ struct posts{
 	int answer_count;
 	xmlChar* comment_count;
 	xmlChar* favorite_count;
+	int up_votes;
+	int down_votes;
 };

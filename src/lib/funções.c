@@ -69,14 +69,3 @@ int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas o
     if (inicio== 0 && fim ==0) return 0;
     else return -1;
 }
-
-int elem(char* palavra, char* texto){
-    int i,j;
-    for(i = 0; texto[i] != '\0'; i++){
-        for(j=0; palavra[j] != '\0'; j++){
-            if(texto[i] != palavra[j]) break;
-        }
-        if(j == strlen(palavra)) return 1;
-    }
-    return 0;
-}
