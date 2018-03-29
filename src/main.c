@@ -72,12 +72,14 @@ int main(){
       menu = 0;
     }
     if(menu == 5){
+      USER new_user = create_user(NULL,NULL);
       printf("Ainda nao está acabada.\n");
       printf("Resposta:\n");
       start = clock();
-      //par = info_from_post(tda,4567);
+      new_user = get_user_info(tda,2705);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      free_user(new_user);
       menu = 0;
     }
     if(menu == 6){
