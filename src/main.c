@@ -25,7 +25,7 @@ int main(){
     printf("Que questão deseja resolver? (-1, para sair do programa)\n");
     scanf("%d", &menu);
 
-    if(menu == 1){
+    if(menu == 1){ /////////////////////////////////// erros
       STR_pair par = create_str_pair(NULL,NULL);
       printf("Resposta:\n");
       start = clock();
@@ -35,7 +35,7 @@ int main(){
       free_str_pair(par);
       menu = 0;
     }
-    if(menu == 2){
+    if(menu == 2){ /////////////////////////////////// feita
       int tamanho;
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
@@ -48,7 +48,7 @@ int main(){
       free_list(l);
       menu = 0;
     }
-    if(menu == 3){
+    if(menu == 3){ ///////////////////////////////// feita
       LONG_pair lp = create_long_pair(0,0);
       Date begin = createDate(03,10,2014);
       Date end = createDate(05,03,2016);
@@ -71,18 +71,20 @@ int main(){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
     }
-    if(menu == 5){ /////////////////////////perguntar ao stor
-      //USER new_user = create_user(NULL,0);
-      printf("Ainda nao está acabada.\n");
+    if(menu == 5){ ///////////////////////////////// feita
+      USER new_user;
+      int id;
+      printf("Qual o Id do utilizador?\n");
+      scanf("%d", &id);
       printf("Resposta:\n");
       start = clock();
-      get_user_info(tda,2705);
+      new_user = get_user_info(tda,id);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
-      //free_user(new_user);
+      free_user(new_user);
       menu = 0;
     }
-    if(menu == 6){
+    if(menu == 6){ ////////////////////////////////// feita
       int tamanho;
       Date begin = createDate(01,01,2010);
       Date end = createDate(31,12,2017);
@@ -99,7 +101,7 @@ int main(){
       free_list(l);
       menu = 0;
     }
-    if(menu == 7){
+    if(menu == 7){ ////////////////////////////////// feita
       int tamanho;
       Date begin = createDate(01,01,2010);
       Date end = createDate(31,12,2017);
@@ -116,7 +118,7 @@ int main(){
       free_list(l);
       menu = 0;
     }
-    if(menu == 8){
+    if(menu == 8){ /////////////////////////////////// erros
       LONG_list l = create_list(10);
       int tamanho;
       printf("Qual o número de perguntas que pretende?\n");

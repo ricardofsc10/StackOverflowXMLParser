@@ -31,9 +31,9 @@ USER get_user_info(TAD_community com, long id){
 	}
 
 	USER new_user = create_user(nbio,posts);
-
+	/*
 	printf("%s\n", nbio);
-	for(i=0;i<10;i++) printf("%ld\n", posts[i]);
+	for(i=0;i<10;i++) printf("%ld\n", posts[i]);*/
 		
 	return new_user;
 }
