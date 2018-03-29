@@ -36,6 +36,5 @@ struct posts{
 	int answer_count;
 	xmlChar* comment_count;
 	xmlChar* favorite_count;
-	int up_votes;
-	int down_votes;
+	int dif_votes;
 };

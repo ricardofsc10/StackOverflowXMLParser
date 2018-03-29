@@ -150,17 +150,18 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // a
            postid_l = xmlGetProp(cur, (const xmlChar *) "PostId");
            
            int id_bin = procura_binaria_p(com,atoi((const char *)postid_l), com->posts_t);
-           
-           // preenche os parametros do utilizador
-           if(atoi((const char *) (votes_l)) == 2){
-            com->posts[id_bin]->up_votes++;
-           }
-           if(atoi((const char *) (votes_l)) == 3){
-            com->posts[id_bin]->down_votes++;
-           }
+           if(id_bin != -1){
+              // preenche os parametros do utilizador
+              if(atoi((const char *) (votes_l)) == 2){
+                com->posts[id_bin]->dif_votes++;
+              }
+              if(atoi((const char *) (votes_l)) == 3){
+                com->posts[id_bin]->dif_votes--;
+              }
+            }
 
-           xmlFree(votes_l);
-           xmlFree(postid_l);
+          xmlFree(votes_l);
+          xmlFree(postid_l);
         }
         cur = cur->next;
     }

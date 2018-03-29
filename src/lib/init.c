@@ -39,8 +39,7 @@ TAD_community init(){
 		tad->posts[j]->answer_count = 0;
 		tad->posts[j]->comment_count = NULL;
 		tad->posts[j]->favorite_count = NULL;
-		tad->posts[j]->up_votes = 0;
-		tad->posts[j]->down_votes = 0;
+		tad->posts[j]->dif_votes = 0;
 	}
 	return tad;
 }
@@ -80,8 +79,7 @@ void redimensiona_posts(TAD_community com) {
 		com->posts[j]->answer_count = 0;
 		com->posts[j]->comment_count = NULL;
 		com->posts[j]->favorite_count = NULL;
-		com->posts[j]->up_votes = 0;
-		com->posts[j]->down_votes = 0;
+		com->posts[j]->dif_votes = 0;
 
 	}
 	com->espaco_posts+=75000;
