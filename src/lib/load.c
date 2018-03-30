@@ -89,51 +89,49 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            favorite_count_l = xmlGetProp(cur, (const xmlChar *) "FavoriteCount");
 
            // preenche os parametros dos posts
-           if(owner_user_id_l == NULL);
-           else{
-               id_bin = procura_binaria_u(com, atoi( (const char *) owner_user_id_l),com->n_utilizadores);
-               com->posts[i]->data=stringToDias( (char *) creation_date_l);
-               com->utilizador[id_bin]->posts_u++;
-               com->posts[i]->id_post = atoi( (const char *) id_l);
-               com->posts[i]->score = score_l;
-               com->posts[i]->owner_user_id= atoi( (const char *) owner_user_id_l);
-               com->posts[i]->body = body_l;
-               com->posts[i]->post_type_id = atoi( (const char *) post_type_id_l);
-               if(com->posts[i]->post_type_id==2) {
-                  com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
-               }
-               else{
-                  com->posts[i]->title = title_l;
-               }
-               com->posts[i]->tags[0] = tags_l;
-               if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
-                  com->posts[i]->answer_count = 0;
-               }
-               else{
-                  com->posts[i]->answer_count = atoi( (const char *) answer_count_l);
-               }
-               com->posts[i]->comment_count = comment_count_l;
-               com->posts[i]->favorite_count = favorite_count_l;
-              }
-               xmlFree(id_l);
-               xmlFree(post_type_id_l);
-               xmlFree(creation_date_l);
-               xmlFree(score_l);
-               xmlFree(body_l);
-               xmlFree(owner_user_id_l);
-               xmlFree(parent_id_l);
-               xmlFree(title_l);
-               xmlFree(tags_l);
-               xmlFree(answer_count_l);
-               xmlFree(comment_count_l);
-               xmlFree(favorite_count_l);
-
-               if ((com->espaco_posts - com->posts_t)== 1) {
-                redimensiona_posts(com);
-               }
-               com->posts_t++;
-               i++;
+           id_bin = procura_binaria_u(com, atoi( (const char *) owner_user_id_l),com->n_utilizadores);
+           com->posts[i]->data=stringToDias( (char *) creation_date_l);
+           com->utilizador[id_bin]->posts_u++;
+           com->posts[i]->id_post = atoi( (const char *) id_l);
+           com->posts[i]->score = score_l;
+           com->posts[i]->owner_user_id= atoi( (const char *) owner_user_id_l);
+           com->posts[i]->body = body_l;
+           com->posts[i]->post_type_id = atoi( (const char *) post_type_id_l);
+           if(com->posts[i]->post_type_id==2) {
+              com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
            }
+           else{
+              com->posts[i]->title = title_l;
+           }
+           com->posts[i]->tags[0] = tags_l;
+           if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
+              com->posts[i]->answer_count = 0;
+           }
+           else{
+              com->posts[i]->answer_count = atoi( (const char *) answer_count_l);
+           }
+           com->posts[i]->comment_count = comment_count_l;
+           com->posts[i]->favorite_count = favorite_count_l;
+              
+           xmlFree(id_l);
+           xmlFree(post_type_id_l);
+           xmlFree(creation_date_l);
+           xmlFree(score_l);
+           xmlFree(body_l);
+           xmlFree(owner_user_id_l);
+           xmlFree(parent_id_l);
+           xmlFree(title_l);
+           xmlFree(tags_l);
+           xmlFree(answer_count_l);
+           xmlFree(comment_count_l);
+           xmlFree(favorite_count_l);
+
+           if ((com->espaco_posts - com->posts_t)== 1) {
+               redimensiona_posts(com);
+           }
+           com->posts_t++;
+           i++;
+       }
        cur = cur->next;
    }
    printf("[load.c] %d Posts...\n", i);

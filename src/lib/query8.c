@@ -11,6 +11,7 @@ LONG_list contains_word(TAD_community com, char* word, int N){
 	long posts[N];
 	int temp;
 
+	// inicialização do posts a 0
 	for(int i = 0; i<N ; i++){
 		posts[i] = 0;
 	}
@@ -24,13 +25,12 @@ LONG_list contains_word(TAD_community com, char* word, int N){
 			char* ret;
 			ret = strstr((const char *) com->posts[i]->title,word);
 			if (ret!=NULL) { // se o titulo contem a palavra
-				printf("cheguei aqui\n");
-					for(int j=N-2;j>=0;j--){
-						temp = posts[j+1];
-						posts[j+1] = posts[j];
-						posts[j] = temp;
-					}
-					posts[0] = com->posts[i]->id_post;
+				for(int j=N-2;j>=0;j--){
+					temp = posts[j+1];
+					posts[j+1] = posts[j];
+					posts[j] = temp;
+				}
+				posts[0] = com->posts[i]->id_post;
 			}
 		}
 	}
@@ -38,11 +38,11 @@ LONG_list contains_word(TAD_community com, char* word, int N){
 	for(int i = 0; i<N ; i++){
 		set_list(l,i,posts[i]);
 	}
-	
+	/*
 	// para testar
 	for(int i = 0; i < N; i++){
 		printf("ID's: %ld\n", get_list(l,i) );
-	}
+	}*/
 
 	return l;	
 }

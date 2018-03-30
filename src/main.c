@@ -119,13 +119,16 @@ int main(){
       menu = 0;
     }
     if(menu == 8){ /////////////////////////////////// erros
-      LONG_list l = create_list(10);
       int tamanho;
-      printf("Qual o número de perguntas que pretende?\n");
+      char palavra[50];
+      printf("Que palavra quer encontrar?\n");
+      scanf("%s", palavra);
+      printf("Qual o número de perguntas que pretende com a palavra '%s'?\n", palavra);
       scanf("%d",&tamanho);
+      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
       start = clock();
-      l = contains_word(tda, "Ho", tamanho);
+      l = contains_word(tda, palavra, tamanho);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
