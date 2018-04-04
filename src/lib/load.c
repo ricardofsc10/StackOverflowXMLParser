@@ -47,7 +47,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            com->utilizador[i]->id = atoi( (const char *) id_l); // usa-se o atoi porque na estrutura o id é um int
            com->utilizador[i]->nome = nome_l;
            com->utilizador[i]->user = create_user( (char *) bio_l,array);
-           com->utilizador[i]->reputacao = reputacao_l;
+           com->utilizador[i]->reputacao = atoi( (const char *) reputacao_l);
 
            xmlFree(id_l);
            xmlFree(nome_l);
@@ -93,7 +93,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            com->posts[i]->data=stringToDias( (char *) creation_date_l);
            com->utilizador[id_bin]->posts_u++;
            com->posts[i]->id_post = atoi( (const char *) id_l);
-           com->posts[i]->score = score_l;
+           com->posts[i]->score = atoi( (const char *) score_l);
            com->posts[i]->owner_user_id= atoi( (const char *) owner_user_id_l);
            com->posts[i]->body = body_l;
            com->posts[i]->post_type_id = atoi( (const char *) post_type_id_l);
@@ -110,7 +110,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            else{
               com->posts[i]->answer_count = atoi( (const char *) answer_count_l);
            }
-           com->posts[i]->comment_count = comment_count_l;
+           com->posts[i]->comment_count = atoi( (const char *) comment_count_l);
            com->posts[i]->favorite_count = favorite_count_l;
               
            xmlFree(id_l);

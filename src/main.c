@@ -142,12 +142,14 @@ int main(){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
     }
-    if(menu == 10){
-      printf("Ainda nao está acabada.\n");
+    if(menu == 10){ ////////////////////////////////// feita
       printf("Resposta:\n");
       start = clock();
-      //par = info_from_post(tda,4567);
+      printf("Qual o Id da pergunta?\n");
+      scanf("%d", &id);
+      long i = better_answer(tda,id);
       stop = clock();
+      printf("%ld\n", i);
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
     }

@@ -19,14 +19,14 @@ struct utilizador{
  	int id;
  	USER user; // bio e array para 10 posts
 	int posts_u;
-	xmlChar* reputacao;
+	int reputacao;
 
 };
 
 struct posts{
 	Date data;
 	int id_post;
-	xmlChar* score;
+	int score;
 	int owner_user_id;
 	xmlChar* title;
 	xmlChar* body;
@@ -34,7 +34,7 @@ struct posts{
 	int parent_id;
 	xmlChar** tags;
 	int answer_count;
-	xmlChar* comment_count;
+	int comment_count;
 	xmlChar* favorite_count;
 	int dif_votes;
 };
