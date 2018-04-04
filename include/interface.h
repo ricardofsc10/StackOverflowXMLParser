@@ -1,6 +1,3 @@
-#ifndef __INTERFACE__
-#define __INTERFACE__
-
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include "date.h"
@@ -303,4 +300,3 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end);
 
 TAD_community clean(TAD_community com);
 
-#endif
