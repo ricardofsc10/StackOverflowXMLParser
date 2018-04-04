@@ -865,3 +865,44 @@ long better_answer(TAD_community com, long id){
 }
 
 // query 11
+
+//query 12
+
+TAD_community clean(TAD_community com){
+  
+  for (int i=0;i<n_utilizadores; i++) {
+
+      free(com->utilizador[i]->nome);
+      free(com->utilizador[i]->id);
+      free(com->utilizador[i]->user);
+      free(com->utilizador[i]->reputacao);
+      free(com->utilizador[i]->posts_u);
+      free(com->utilizador[i]);
+      free(com->utilizador);
+ }
+
+ free(com->utilizador);
+
+  for(i=0;i<posts_t;i++) {
+      free(com->posts[i]->data);
+      free(com->posts[i]->id_post);
+      free(com->posts[i]->score);
+      free(com->posts[i]->owner_user_id);
+      free(com->posts[i]->title);
+      free(com->posts[i]->body);
+      free(com->posts[i]->post_type_id);
+      free(com->posts[i]->parent_id);
+      free(com->posts[i]->tags);
+      free(com->posts[i]->answer_count);
+      free(com->posts[i]->comment_count);
+      free(com->posts[i]->favorite_count);
+      free(com->posts[i]->dif_votes);
+      free(com->posts[i]);
+  }
+  free(com->posts);
+  free(com->n_utilizadores);
+  free(com->espaco_users)
+  free(com->posts_t);
+  free(espaco_posts);
+  return com;
+}
