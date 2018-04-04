@@ -298,5 +298,13 @@ long better_answer(TAD_community com, long id);
 // query 11
 LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end);
 
+// query 12
+/**
+@brief Função que recebe uma estrutura num dado momento e limpa essa estrutura completamente.
+
+@param com Estrutura com os dados.
+
+@returns Estrutura nula, ou seja, a estrutura recebia depois de limpa.
+*/
 TAD_community clean(TAD_community com);
 
