@@ -63,12 +63,20 @@ int main(){
       menu = 0;
     }
     if(menu == 4){
-      printf("Ainda nao está acabada.\n");
+      int tamanho;
+      Date begin = createDate(01,01,2010);
+      Date end = createDate(31,12,2017);
+      printf("Qual o número de utilizadores que pretende?\n");
+      scanf("%d",&tamanho);
+      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
       start = clock();
-      //par = info_from_post(tda,4567);
+      l = questions_with_tag(tda, "&lt;rooting&gt;", begin, end);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      free_date(begin);
+      free_date(end);
+      free_list(l);
       menu = 0;
     }
     if(menu == 5){ ///////////////////////////////// feita
