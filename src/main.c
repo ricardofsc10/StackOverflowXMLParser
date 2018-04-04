@@ -134,19 +134,20 @@ int main(){
       menu = 0;
     }
     if(menu == 9){
-      printf("Ainda nao está acabada.\n");
       printf("Resposta:\n");
+      LONG_list l = create_list(100);
       start = clock();
-      //par = info_from_post(tda,4567);
+      l = both_participated(tda, 1465, 16575, 100);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
     }
     if(menu == 10){ ////////////////////////////////// feita
+      int id;
       printf("Resposta:\n");
-      start = clock();
       printf("Qual o Id da pergunta?\n");
       scanf("%d", &id);
+      start = clock();
       long i = better_answer(tda,id);
       stop = clock();
       printf("%ld\n", i);

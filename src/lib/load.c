@@ -164,6 +164,37 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
     }
 }
 
+/*
+void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
+    xmlChar *id_tag_l, *tag_name_l, *count_tag_l;
+    cur = cur->xmlChildrenNode;
+
+    while (cur != NULL) {
+        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
+           id_tag_l = xmlGetProp(cur, (const xmlChar *) "Id");
+           count_tag_l = xmlGetProp(cur, (const xmlChar *) "Count");
+           tag_name_l = xmlGetProp(cur, (const xmlChar *) "TagName");
+           
+           int id_bin = procura_binaria_p(com,atoi((const char *)postid_l), com->posts_t);
+           if(id_bin != -1){
+              // preenche os parametros do utilizador
+              if(atoi((const char *) (votes_l)) == 2){
+                com->posts[id_bin]->dif_votes++;
+              }
+              if(atoi((const char *) (votes_l)) == 3){
+                com->posts[id_bin]->dif_votes--;
+              }
+            }
+
+          xmlFree(id_tag_l);
+          xmlFree(count_tag_l);
+          xmlFree(tag_name_l);
+        }
+        cur = cur->next;
+    }
+}
+*/
+
 
 TAD_community load(TAD_community com, char* dump_path){
     
@@ -269,6 +300,40 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_votes);
 
     printf("[load.c] Parse do documento Votes.xml foi feito com sucesso...\n");
+
+
+////////////////////////////////// Faz-se o parse do Tags
+    char path_tags[50];
+    strcpy(path_tags, dump_path);
+    strcat(path_tags,"./Tags.xml");
+
+    doc_tags = xmlParseFile(path_tags);
+
+    if (doc_tags == NULL) {
+          fprintf(stderr,"Document not parsed successfully. \n");
+          return 0;
+    }
+
+    cur_tags = xmlDocGetRootElement(doc_tags);
+
+    if (cur_tags == NULL) {
+        fprintf(stderr,"empty document\n");
+        xmlFreeDoc(doc_tags);
+        return 0;
+    }
+
+    if (xmlStrcmp(cur_tags->name, (const xmlChar *) "tags")) {
+        fprintf(stderr,"document of the wrong type, root node != tags\n");
+        xmlFreeDoc(doc_tags);
+        return 0;
+    }
+
+    printf("[load.c] Ínicio do parse do documento Tags.xml...\n");
+
+    getReferencePosts (doc_tags,cur_tags,com);
+    xmlFreeDoc(doc_tags);
+
+    printf("[load.c] Parse do documento Tags.xml foi feito com sucesso...\n");
 
     return com;
 }
