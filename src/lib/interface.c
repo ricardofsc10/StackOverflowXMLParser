@@ -211,6 +211,20 @@ Date stringToDias (char* data) { // "2011-11-11"
     return ndata;
 }
 
+int strToTag (TAD_community com, char* str, int i){
+  char* token;
+  const char delim[3] = "&;"; //caracteres em que a string é dividida
+  token = strtok (str,delim);
+  while (token != NULL){
+      com->posts[i]->tags = token;
+      //para testar:
+      //printf("%s\n", com->posts[i]->tags);
+      token = strtok (NULL, delim);
+  }
+  return 0;
+}
+
+
 void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // acho que está tudo bem nesta função
 
     xmlChar *nome_l, *id_l, *bio_l, *reputacao_l;
@@ -253,7 +267,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
    cur = cur->xmlChildrenNode;
-   int i=0,id_bin;
+   int i=0,id_bin, k;
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
@@ -284,18 +298,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            }
            else{
               com->posts[i]->title = title_l;
-
-                // início do strtok
-                char* token;
-                const char delim[3] = "&;"; //caracteres em que a string é dividida
-                token = strtok ((char*) tags_l,delim);
-                while (token != NULL){
-                    com->posts[i]->tags = token;
-                    // para testar:
-                    // printf("%s\n", com->posts[i]->tags);
-                    token = strtok (NULL, delim);
-                }
-                // fim do strtok
+              k = strToTag(com, (char *) tags_l, i);
             }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
               com->posts[i]->answer_count = 0;
