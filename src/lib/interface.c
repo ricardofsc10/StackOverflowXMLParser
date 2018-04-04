@@ -360,10 +360,11 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
     }
 }
 
+
 TAD_community load(TAD_community com, char* dump_path){
     
-    xmlDocPtr doc_user, doc_posts, doc_votes;
-	  xmlNodePtr cur_user, cur_posts, cur_votes;
+    xmlDocPtr doc_user, doc_posts, doc_votes, doc_tags;
+	  xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags;
 
     ////////////////////////////////// Faz-se o parse do Users
     char path_users[50];
@@ -464,6 +465,39 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_votes);
 
     printf("[load.c] Parse do documento Votes.xml foi feito com sucesso...\n");
+
+   ////////////////////////////////// Faz-se o parse do Tags
+   char path_tags[50];
+   strcpy(path_tags, dump_path);
+   strcat(path_tags,"./Tags.xml");
+
+   doc_tags = xmlParseFile(path_tags);
+
+   if (doc_tags == NULL) {
+         fprintf(stderr,"Document not parsed successfully. \n");
+         return 0;
+   }
+
+   cur_tags = xmlDocGetRootElement(doc_tags);
+
+   if (cur_tags == NULL) {
+       fprintf(stderr,"empty document\n");
+       xmlFreeDoc(doc_tags);
+       return 0;
+   }
+
+   if (xmlStrcmp(cur_tags->name, (const xmlChar *) "tags")) {
+       fprintf(stderr,"document of the wrong type, root node != tags\n");
+       xmlFreeDoc(doc_tags);
+       return 0;
+   }
+
+   printf("[load.c] Ínicio do parse do documento Tags.xml...\n");
+
+   getReferencePosts (doc_tags,cur_tags,com);
+   xmlFreeDoc(doc_tags);
+
+   printf("[load.c] Parse do documento Tags.xml foi feito com sucesso...\n");
 
     return com;
 }
@@ -866,11 +900,28 @@ long better_answer(TAD_community com, long id){
 
 // query 11
 
-//query 12
+void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
+   xmlChar *id_tag_l, *tag_name_l;
+   cur = cur->xmlChildrenNode;
+
+   while (cur != NULL) {
+       if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
+          id_tag_l = xmlGetProp(cur, (const xmlChar *) "Id");
+          tag_name_l = xmlGetProp(cur, (const xmlChar *) "TagName");
+         
+
+         xmlFree(id_tag_l);
+         xmlFree(tag_name_l);
+       }
+       cur = cur->next;
+   }
+}
+
+// query 12
 
 TAD_community clean(TAD_community com){
   
-  for (int i=0;i<n_utilizadores; i++) {
+  for (int i=0;i<com->n_utilizadores; i++) {
 
       free(com->utilizador[i]->nome);
       free(com->utilizador[i]->id);
@@ -883,7 +934,7 @@ TAD_community clean(TAD_community com){
 
  free(com->utilizador);
 
-  for(i=0;i<posts_t;i++) {
+  for(int i=0;i<com->posts_t;i++) {
       free(com->posts[i]->data);
       free(com->posts[i]->id_post);
       free(com->posts[i]->score);
@@ -901,8 +952,8 @@ TAD_community clean(TAD_community com){
   }
   free(com->posts);
   free(com->n_utilizadores);
-  free(com->espaco_users)
+  free(com->espaco_users);
   free(com->posts_t);
-  free(espaco_posts);
+  free(com->espaco_posts);
   return com;
 }

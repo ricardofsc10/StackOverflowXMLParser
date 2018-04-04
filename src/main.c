@@ -62,7 +62,7 @@ int main(){
       free_date(end);
       menu = 0;
     }
-    if(menu == 4){
+    if(menu == 4){ /////////////////////////////////// erros e falta redimensionar
       int tamanho;
       Date begin = createDate(01,01,2010);
       Date end = createDate(31,12,2017);
