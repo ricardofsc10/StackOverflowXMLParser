@@ -303,6 +303,7 @@ TAD_community load(TAD_community com, char* dump_path){
 
 
 ////////////////////////////////// Faz-se o parse do Tags
+/*
     char path_tags[50];
     strcpy(path_tags, dump_path);
     strcat(path_tags,"./Tags.xml");
@@ -334,6 +335,6 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_tags);
 
     printf("[load.c] Parse do documento Tags.xml foi feito com sucesso...\n");
-
+*/
     return com;
 }
