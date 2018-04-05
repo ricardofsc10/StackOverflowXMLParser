@@ -6,37 +6,37 @@
 #include "interface.h"
 
 struct TCD_community{
-	UTILIZADOR* utilizador;
-	int n_utilizadores;
-	int espaco_users;
-	POSTS* posts;
-	int posts_t;
-	int espaco_posts;
+  UTILIZADOR* utilizador;
+  int n_utilizadores;
+  int espaco_users;
+  POSTS* posts;
+  int posts_t;
+  int espaco_posts;
 };
 
 struct utilizador{
- 	xmlChar* nome;
- 	int id;
- 	USER user; // bio e array para 10 posts
-	int posts_u;
-	int reputacao;
+  xmlChar* nome;
+  int id;
+  USER user; // bio e array para 10 posts
+  int posts_u;
+  int reputacao;
 
 };
 
 struct posts{
-	Date data;
-	int id_post;
-	int score;
-	int owner_user_id;
-	char* title;
-	xmlChar* body;
-	int post_type_id; // 1-pergunta 2-resposta
-	int parent_id;
-	xmlChar* tags;
-	int answer_count;
-	int comment_count;
-	xmlChar* favorite_count;
-	int dif_votes;
+  Date data;
+  int id_post;
+  int score;
+  int owner_user_id;
+  xmlChar* title;
+  xmlChar* body;
+  int post_type_id; // 1-pergunta 2-resposta
+  int parent_id;
+  xmlChar* tags;
+  int answer_count;
+  int comment_count;
+  xmlChar* favorite_count;
+  int dif_votes;
 };
 
 // funções auxiliares mais tarde para serem postas noutro ficheiro
@@ -113,81 +113,81 @@ int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas o
 
 TAD_community init(){
 
-	TAD_community tad = malloc(sizeof(struct TCD_community));
-	tad->utilizador = malloc(sizeof(struct utilizador)*50000);
-	tad->n_utilizadores = 0;
-	tad->espaco_users = 50000;
-	tad->posts = malloc(sizeof (struct posts)*75000);
-	tad->posts_t = 0;
-	tad->espaco_posts=75000;
-	
-	for(int i = 0 ; i!=50000 ; i++){
-		tad->utilizador[i] = malloc(sizeof(struct utilizador));
-		tad->utilizador[i]->nome = NULL; ////////
-		tad->utilizador[i]->id = 0;
-		long array[10] = {0};
-		tad->utilizador[i]->user = create_user(NULL,array);
-		tad->utilizador[i]->reputacao = 0;
-		tad->utilizador[i]->posts_u = 0;		
-	}
-	for (int j = 0; j != 75000; j++) {
-		tad->posts[j] = malloc(sizeof(struct posts));
-		tad->posts[j]->data= createDate(0,0,0);
-		tad->posts[j]->id_post = 0;
-		tad->posts[j]->score = 0;
-		tad->posts[j]->owner_user_id= 0;
-		tad->posts[j]->title = NULL;
-		tad->posts[j]->body = NULL;
-		tad->posts[j]->post_type_id = 0;
-		tad->posts[j]->parent_id=0;
-		tad->posts[j]->tags = NULL;
-		tad->posts[j]->answer_count = 0;
-		tad->posts[j]->comment_count = 0;
-		tad->posts[j]->favorite_count = NULL;
-		tad->posts[j]->dif_votes = 0;
-	}
-	return tad;
+  TAD_community tad = malloc(sizeof(struct TCD_community));
+  tad->utilizador = malloc(sizeof(struct utilizador)*50000);
+  tad->n_utilizadores = 0;
+  tad->espaco_users = 50000;
+  tad->posts = malloc(sizeof (struct posts)*75000);
+  tad->posts_t = 0;
+  tad->espaco_posts=75000;
+  
+  for(int i = 0 ; i!=50000 ; i++){
+    tad->utilizador[i] = malloc(sizeof(struct utilizador));
+    tad->utilizador[i]->nome = NULL; ////////
+    tad->utilizador[i]->id = 0;
+    long array[10] = {0};
+    tad->utilizador[i]->user = create_user(NULL,array);
+    tad->utilizador[i]->reputacao = 0;
+    tad->utilizador[i]->posts_u = 0;    
+  }
+  for (int j = 0; j != 75000; j++) {
+    tad->posts[j] = malloc(sizeof(struct posts));
+    tad->posts[j]->data= createDate(0,0,0);
+    tad->posts[j]->id_post = 0;
+    tad->posts[j]->score = 0;
+    tad->posts[j]->owner_user_id= 0;
+    tad->posts[j]->title = NULL;
+    tad->posts[j]->body = NULL;
+    tad->posts[j]->post_type_id = 0;
+    tad->posts[j]->parent_id=0;
+    tad->posts[j]->tags = NULL;
+    tad->posts[j]->answer_count = 0;
+    tad->posts[j]->comment_count = 0;
+    tad->posts[j]->favorite_count = NULL;
+    tad->posts[j]->dif_votes = 0;
+  }
+  return tad;
 }
 
 void redimensiona_utilizadores(TAD_community com){
 
-	//redimensiona e coloca em 'com' tudo o que ja estava, com mais espaço
-	com->utilizador = realloc(com->utilizador, sizeof(struct utilizador) * (com->espaco_users + 50000));
+  //redimensiona e coloca em 'com' tudo o que ja estava, com mais espaço
+  com->utilizador = realloc(com->utilizador, sizeof(struct utilizador) * (com->espaco_users + 50000));
 
-	// faz igual à init
-	for(int i = com->espaco_users ; i < (com->espaco_users + 50000) ; i++){
-		com->utilizador[i] = malloc(sizeof(struct utilizador));
-		com->utilizador[i]->nome = NULL; ////////
-		com->utilizador[i]->id = 0;
-		long array[10] = {0};
-		com->utilizador[i]->user = create_user(NULL,array);
-		com->utilizador[i]->reputacao = 0;
-		com->utilizador[i]->posts_u= 0;		
-	}
-	com->espaco_users += 50000; // so faz este passo no fim por causa do primeiro for
+  // faz igual à init
+  for(int i = com->espaco_users ; i < (com->espaco_users + 50000) ; i++){
+    com->utilizador[i] = malloc(sizeof(struct utilizador));
+    com->utilizador[i]->nome = NULL; ////////
+    com->utilizador[i]->id = 0;
+    long array[10] = {0};
+    com->utilizador[i]->user = create_user(NULL,array);
+    com->utilizador[i]->reputacao = 0;
+    com->utilizador[i]->posts_u= 0;   
+  }
+  com->espaco_users += 50000; // so faz este passo no fim por causa do primeiro for
 }
 
 void redimensiona_posts(TAD_community com) {
-	com->posts = realloc(com->posts, sizeof(struct posts) * (com->espaco_posts + 75000));
+  com->posts = realloc(com->posts, sizeof(struct posts) * (com->espaco_posts + 75000));
 
-	for (int j = com->espaco_posts; j <(com->espaco_posts + 75000); j++) {
-		com->posts[j] = malloc(sizeof(struct posts));
-		com->posts[j]->data= createDate(0,0,0);
-		com->posts[j]->id_post = 0;
-		com->posts[j]->score = 0;
-		com->posts[j]->owner_user_id= 0;
-		com->posts[j]->title = NULL;
-		com->posts[j]->body = NULL;
-		com->posts[j]->post_type_id = 0;
-		com->posts[j]->parent_id=0;
-		com->posts[j]->tags = NULL;
-		com->posts[j]->answer_count = 0;
-		com->posts[j]->comment_count = 0;
-		com->posts[j]->favorite_count = NULL;
-		com->posts[j]->dif_votes = 0;
+  for (int j = com->espaco_posts; j <(com->espaco_posts + 75000); j++) {
+    com->posts[j] = malloc(sizeof(struct posts));
+    com->posts[j]->data= createDate(0,0,0);
+    com->posts[j]->id_post = 0;
+    com->posts[j]->score = 0;
+    com->posts[j]->owner_user_id= 0;
+    com->posts[j]->title = NULL;
+    com->posts[j]->body = NULL;
+    com->posts[j]->post_type_id = 0;
+    com->posts[j]->parent_id=0;
+    com->posts[j]->tags = NULL;
+    com->posts[j]->answer_count = 0;
+    com->posts[j]->comment_count = 0;
+    com->posts[j]->favorite_count = NULL;
+    com->posts[j]->dif_votes = 0;
 
-	}
-	com->espaco_posts+=75000;
+  }
+  com->espaco_posts+=75000;
 
 }
 
@@ -234,7 +234,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
 
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-       	   id_l = xmlGetProp(cur, (const xmlChar *) "Id");
+           id_l = xmlGetProp(cur, (const xmlChar *) "Id");
            nome_l = xmlGetProp(cur, (const xmlChar *) "DisplayName");
            bio_l = xmlGetProp(cur, (const xmlChar *) "AboutMe");
            reputacao_l = xmlGetProp(cur, (const xmlChar *) "Reputation");
@@ -271,11 +271,11 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-       	   id_l = xmlGetProp(cur, (const xmlChar *) "Id");
-       	   post_type_id_l = xmlGetProp(cur, (const xmlChar *) "PostTypeId");
-       	   creation_date_l = xmlGetProp(cur, (const xmlChar *) "CreationDate");
-       	   score_l = xmlGetProp(cur, (const xmlChar *) "Score");
-       	   body_l = xmlGetProp(cur, (const xmlChar *) "Body");
+           id_l = xmlGetProp(cur, (const xmlChar *) "Id");
+           post_type_id_l = xmlGetProp(cur, (const xmlChar *) "PostTypeId");
+           creation_date_l = xmlGetProp(cur, (const xmlChar *) "CreationDate");
+           score_l = xmlGetProp(cur, (const xmlChar *) "Score");
+           body_l = xmlGetProp(cur, (const xmlChar *) "Body");
            owner_user_id_l = xmlGetProp(cur, (const xmlChar *) "OwnerUserId");
            parent_id_l=xmlGetProp(cur, (const xmlChar *) "ParentId");
            title_l = xmlGetProp(cur, (const xmlChar *) "Title");
@@ -297,7 +297,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
            }
            else{
-              com->posts[i]->title = (char *) title_l;
+              com->posts[i]->title = title_l;
               k = strToTag(com, (char *) tags_l, i);
             }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
@@ -364,16 +364,16 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 TAD_community load(TAD_community com, char* dump_path){
     
     xmlDocPtr doc_user, doc_posts, doc_votes, doc_tags;
-	  xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags;
+    xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags;
 
     ////////////////////////////////// Faz-se o parse do Users
     char path_users[50];
     strcpy(path_users, dump_path);
     strcat(path_users,"./Users.xml");
 
-  	doc_user = xmlParseFile(path_users);
+    doc_user = xmlParseFile(path_users);
 
-  	if (doc_user == NULL) {
+    if (doc_user == NULL) {
           fprintf(stderr,"Document not parsed successfully. \n");
           return 0;
     }
@@ -405,9 +405,9 @@ TAD_community load(TAD_community com, char* dump_path){
     strcpy(path_posts, dump_path);
     strcat(path_posts,"./Posts.xml");
 
-  	doc_posts = xmlParseFile(path_posts);
+    doc_posts = xmlParseFile(path_posts);
 
-  	if (doc_posts == NULL) {
+    if (doc_posts == NULL) {
           fprintf(stderr,"Document not parsed successfully. \n");
           return 0;
     }
@@ -505,95 +505,95 @@ TAD_community load(TAD_community com, char* dump_path){
 // query 1
 
 STR_pair info_from_post(TAD_community com, long id) {
-	STR_pair par= create_str_pair(NULL,NULL);
-	int user_id;
-	int l;
+  STR_pair par= create_str_pair(NULL,NULL);
+  int user_id;
+  int l;
     //char* t = NULL;
     //char* n = NULL;
 
     l = procura_binaria_p(com, id, com->posts_t); // indice do array posts onde esta o post com o id dado
 
-	if (com->posts[l]->post_type_id == 1){	
-		set_fst_str(par, (char *) com->posts[l]->title);
+  if (com->posts[l]->post_type_id == 1){  
+    set_fst_str(par, (char *) com->posts[l]->title);
         //t = (char *) com->posts[l]->title;
-		user_id = procura_binaria_u(com, com->posts[l]->owner_user_id, com->n_utilizadores);
-		set_snd_str(par, (char *) com->utilizador[user_id]->nome);
+    user_id = procura_binaria_u(com, com->posts[l]->owner_user_id, com->n_utilizadores);
+    set_snd_str(par, (char *) com->utilizador[user_id]->nome);
         //n = (char *) com->utilizador[user_id]->nome;
     }
-	else { //é uma resposta
-		int x = procura_binaria_p(com, com->posts[l]->parent_id, com->posts_t);
-		set_fst_str(par, (char *) com->posts[x]->title);
-		user_id= procura_binaria_u(com, com->posts[x]->owner_user_id, com->n_utilizadores);
-	    set_snd_str(par, (char *) com->utilizador[user_id]->nome);
-	}
+  else { //é uma resposta
+    int x = procura_binaria_p(com, com->posts[l]->parent_id, com->posts_t);
+    set_fst_str(par, (char *) com->posts[x]->title);
+    user_id= procura_binaria_u(com, com->posts[x]->owner_user_id, com->n_utilizadores);
+      set_snd_str(par, (char *) com->utilizador[user_id]->nome);
+  }
     printf("%s\n", get_fst_str(par) );
     printf("%s\n", get_snd_str(par) );
     //printf("%s\n", t);
     //printf("%s\n", n);
-	return par;
+  return par;
 }
 
 // query 2
 
 LONG_list top_most_active(TAD_community com, int N){
-	LONG_list l = create_list(N);
-	LONG_list lid = create_list(N);
+  LONG_list l = create_list(N);
+  LONG_list lid = create_list(N);
 
-	for(int i=0; i<N; i++){
-		set_list(l,i,0);
-		set_list(lid,i,0);
-	}
+  for(int i=0; i<N; i++){
+    set_list(l,i,0);
+    set_list(lid,i,0);
+  }
 
-	for(int i=0; i<com->n_utilizadores; i++){
-		for(int j=0; j<N;j++){
-			int k = get_list(l,j);
-			if(com->utilizador[i]->posts_u>k){
-				if(j==N-1) {
-					set_list(l,j,com->utilizador[i]->posts_u); 
-					set_list(lid,j,com->utilizador[i]->id);
-					break;
-				}
-				else{
-					set_list(l,j,get_list(l,j+1));
-					set_list(lid,j,get_list(lid,j+1));
-				}
-			}
-			else{
-				set_list(l,j-1,com->utilizador[i]->posts_u);
-				set_list(lid,j-1,com->utilizador[i]->id);
-				break;
-			}
-		}
-	}
-	/*
-	// deixei aqui para se testar se for preciso
-	for(int i=0; i<N; i++){
-		printf("número total de posts: %ld\n", get_list(l,i));
-		printf("id utilizador: %ld\n\n", get_list(lid,i));
-	}*/
+  for(int i=0; i<com->n_utilizadores; i++){
+    for(int j=0; j<N;j++){
+      int k = get_list(l,j);
+      if(com->utilizador[i]->posts_u>k){
+        if(j==N-1) {
+          set_list(l,j,com->utilizador[i]->posts_u); 
+          set_list(lid,j,com->utilizador[i]->id);
+          break;
+        }
+        else{
+          set_list(l,j,get_list(l,j+1));
+          set_list(lid,j,get_list(lid,j+1));
+        }
+      }
+      else{
+        set_list(l,j-1,com->utilizador[i]->posts_u);
+        set_list(lid,j-1,com->utilizador[i]->id);
+        break;
+      }
+    }
+  }
+  /*
+  // deixei aqui para se testar se for preciso
+  for(int i=0; i<N; i++){
+    printf("número total de posts: %ld\n", get_list(l,i));
+    printf("id utilizador: %ld\n\n", get_list(lid,i));
+  }*/
 
-	free_list(l);
+  free_list(l);
 
-	return lid;
+  return lid;
 }
 
 // query 3
 
 LONG_pair total_posts(TAD_community com, Date begin, Date end){
 // devolve o numero total de perguntas e o numero total de respostas
-	
-	LONG_pair par = create_long_pair(0,0);
+  
+  LONG_pair par = create_long_pair(0,0);
 
-	for (int i=0; i<com->posts_t; i++) {
-		if (difDatas(com->posts[i]->data,begin,end)==0) {
-			if(com->posts[i]->post_type_id==1) set_fst_long(par,get_fst_long(par)+1); // se for pergunta
-			else set_snd_long(par,get_snd_long(par)+1); // se for resposta
-		}
-	}
-	/*
-	printf("perguntas: %ld\n", get_fst_long(par));
-	printf("respostas: %ld\n", get_snd_long(par));*/
-	return par;
+  for (int i=0; i<com->posts_t; i++) {
+    if (difDatas(com->posts[i]->data,begin,end)==0) {
+      if(com->posts[i]->post_type_id==1) set_fst_long(par,get_fst_long(par)+1); // se for pergunta
+      else set_snd_long(par,get_snd_long(par)+1); // se for resposta
+    }
+  }
+  /*
+  printf("perguntas: %ld\n", get_fst_long(par));
+  printf("respostas: %ld\n", get_snd_long(par));*/
+  return par;
 }
 
 // query 4
@@ -603,8 +603,6 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
   LONG_list res = create_list(50);
   int k=0;
 
-  char n_tag[strlen(tag)+1];
-  strcpy(n_tag,tag);
 
   for (int i=0; i < 50 ; i++){ // inicialização da lista
     set_list(l,i,0); // vai conter os numeros das perguntas
@@ -613,19 +611,16 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
 
   for(int i=0; i < com->posts_t ; i++){
     if (com->posts[i]->post_type_id == 1){ // se é pergunta
-      printf("%s\n", com->posts[i]->title);
-      /*if(difDatas(com->posts[i]->data,begin,end) == 0){ // se está dentro das datas
+
+      if(difDatas(com->posts[i]->data,begin,end) == 0){ // se está dentro das datas
           
-          char nomes[strlen(com->posts[i]->title)+1];
-          strcpy(nomes, com->posts[i]->title);
           char* ret;
-          ret = strstr(nomes,n_tag);
-          printf("%s\n", nomes );
+          ret = strstr((const char *) com->posts[i]->tags,tag);
           if (ret!=NULL) { // se o titulo contem a palavra
             set_list(l,k,com->posts[i]->id_post);
             k++;
           }
-        }*/
+        }
       }
     }
 
@@ -642,10 +637,10 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
   for(int i = 0; i < 50; i++){
     printf("POST_ID: %ld\n", get_list(res,i) );
     j--;
-  }*/
-  
+  }
+  */
 
-  //free_list(l);
+  free_list(l);
 
   return res;
 }
@@ -655,201 +650,201 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
 USER get_user_info(TAD_community com, long id){
 
 
-	int id_bin = procura_binaria_u(com, id, com->n_utilizadores);
-	char* nbio = get_bio(com->utilizador[id_bin]->user);
+  int id_bin = procura_binaria_u(com, id, com->n_utilizadores);
+  char* nbio = get_bio(com->utilizador[id_bin]->user);
 
-	long posts[10] = {0};
-	long temp;
-	int i,j;
+  long posts[10] = {0};
+  long temp;
+  int i,j;
 
-	for(i=0;i<com->posts_t;i++){
-		if (com->posts[i]->owner_user_id == id){
-			for(j=8;j>=0;j--){
-				temp = posts[j+1];
-				posts[j+1] = posts[j];
-				posts[j] = temp;
-			}
-			posts[0] = com->posts[i]->id_post;
-		}
-	}
+  for(i=0;i<com->posts_t;i++){
+    if (com->posts[i]->owner_user_id == id){
+      for(j=8;j>=0;j--){
+        temp = posts[j+1];
+        posts[j+1] = posts[j];
+        posts[j] = temp;
+      }
+      posts[0] = com->posts[i]->id_post;
+    }
+  }
 
-	USER new_user = create_user(nbio,posts);
-	/*
-	printf("%s\n", nbio);
-	for(i=0;i<10;i++) printf("%ld\n", posts[i]);*/
-		
-	return new_user;
+  USER new_user = create_user(nbio,posts);
+  /*
+  printf("%s\n", nbio);
+  for(i=0;i<10;i++) printf("%ld\n", posts[i]);*/
+    
+  return new_user;
 }
 
 // query 6
 
 LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ // da com mais respostas para a q tem menos
-	LONG_list l = create_list(N);
-	LONG_list lid = create_list(N);
-	LONG_list res = create_list(N);
+  LONG_list l = create_list(N);
+  LONG_list lid = create_list(N);
+  LONG_list res = create_list(N);
 
 
-	for (int i=0; i < N ; i++){ // inicialização da lista
-		set_list(l,i,0); // vai conter os numeros de respostas
-		set_list(lid,i,0); // vai conter o id dos posts
-		set_list(res,i,0); // lista q vai ser devolvida
-	}
+  for (int i=0; i < N ; i++){ // inicialização da lista
+    set_list(l,i,0); // vai conter os numeros de respostas
+    set_list(lid,i,0); // vai conter o id dos posts
+    set_list(res,i,0); // lista q vai ser devolvida
+  }
 
-	for(int i=0; i < com->posts_t ; i++){
-		if (com->posts[i]->post_type_id == 2){ // se é resposta
+  for(int i=0; i < com->posts_t ; i++){
+    if (com->posts[i]->post_type_id == 2){ // se é resposta
 
-			if(difDatas(com->posts[i]->data,begin,end) == 0){ // se está dentro das datas
-				
-				for(int j = 0; j < N ; j++){
-					int k = get_list(l,j);
-					if(com->posts[i]->dif_votes > k){
-						if(j == N-1) { // se está na última posição
-							set_list(l,j,com->posts[i]->dif_votes); 
-							set_list(lid,j,com->posts[i]->id_post);
-							break;
-						}
-						else{
-							set_list(l,j,get_list(l,j+1));
-							set_list(lid,j,get_list(lid,j+1));
-						}
-					}
-					else{
-						set_list(l,j-1, com->posts[i]->dif_votes);
-						set_list(lid,j-1,com->posts[i]->id_post);
-						break;
-					}
-				}
-			}
-		}
-	}
-	// no fim do 'for' a lista lid tem os id's dos posts por ordem crescente, necessário inverter a ordem
-	int j = N-1;
-	for (int i = 0 ; i < N ; i++){
-		set_list(res, i, get_list(lid, j)); 
-		j--;
-	}
+      if(difDatas(com->posts[i]->data,begin,end) == 0){ // se está dentro das datas
+        
+        for(int j = 0; j < N ; j++){
+          int k = get_list(l,j);
+          if(com->posts[i]->dif_votes > k){
+            if(j == N-1) { // se está na última posição
+              set_list(l,j,com->posts[i]->dif_votes); 
+              set_list(lid,j,com->posts[i]->id_post);
+              break;
+            }
+            else{
+              set_list(l,j,get_list(l,j+1));
+              set_list(lid,j,get_list(lid,j+1));
+            }
+          }
+          else{
+            set_list(l,j-1, com->posts[i]->dif_votes);
+            set_list(lid,j-1,com->posts[i]->id_post);
+            break;
+          }
+        }
+      }
+    }
+  }
+  // no fim do 'for' a lista lid tem os id's dos posts por ordem crescente, necessário inverter a ordem
+  int j = N-1;
+  for (int i = 0 ; i < N ; i++){
+    set_list(res, i, get_list(lid, j)); 
+    j--;
+  }
 
-	/*
-	// para testar
-	j = N-1;
-	for(int i = 0; i < N; i++){
-		printf("POST_ID: %ld\n", get_list(res,i) );
-		printf("Dif votos: %ld\n", get_list(l,j) );
-		j--;
-	}*/
+  /*
+  // para testar
+  j = N-1;
+  for(int i = 0; i < N; i++){
+    printf("POST_ID: %ld\n", get_list(res,i) );
+    printf("Dif votos: %ld\n", get_list(l,j) );
+    j--;
+  }*/
 
-	free_list(l);
-	free_list(lid);
+  free_list(l);
+  free_list(lid);
 
-	return res;
+  return res;
 }
 
 
 // query 7
 
 LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end){ // da com mais respostas para a q tem menos
-	LONG_list l = create_list(N);
-	LONG_list lid = create_list(N);
-	LONG_list res = create_list(N);
+  LONG_list l = create_list(N);
+  LONG_list lid = create_list(N);
+  LONG_list res = create_list(N);
 
 
-	for (int i=0; i < N ; i++){ // inicialização da lista
-		set_list(l,i,0); // vai conter os numeros de respostas
-		set_list(lid,i,0); // vai conter o id dos posts
-		set_list(res,i,0); // lista q vai ser devolvida
-	}
+  for (int i=0; i < N ; i++){ // inicialização da lista
+    set_list(l,i,0); // vai conter os numeros de respostas
+    set_list(lid,i,0); // vai conter o id dos posts
+    set_list(res,i,0); // lista q vai ser devolvida
+  }
 
-	for(int i=0; i < com->posts_t ; i++){
-		if (com->posts[i]->post_type_id == 1){ // se é pergunta
+  for(int i=0; i < com->posts_t ; i++){
+    if (com->posts[i]->post_type_id == 1){ // se é pergunta
 
-			if(difDatas(com->posts[i]->data,begin,end) == 0){ // se está dentro das datas
-				
-				for(int j = 0; j < N ; j++){
-					int k = get_list(l,j);
-					if(com->posts[i]->answer_count > k){
-						if(j == N-1) { // se está na última posição
-							set_list(l,j,com->posts[i]->answer_count); 
-							set_list(lid,j,com->posts[i]->id_post);
-							break;
-						}
-						else{
-							set_list(l,j,get_list(l,j+1));
-							set_list(lid,j,get_list(lid,j+1));
-						}
-					}
-					else{
-						set_list(l,j-1, com->posts[i]->answer_count);
-						set_list(lid,j-1,com->posts[i]->id_post);
-						break;
-					}
-				}
-			}
-		}
-	}
-	// no fim do 'for' a lista lid tem os id's dos posts por ordem crescente, necessário inverter a ordem
-	int j = N-1;
-	for (int i = 0 ; i < N ; i++){
-		set_list(res, i, get_list(lid, j)); 
-		j--;
-	}
+      if(difDatas(com->posts[i]->data,begin,end) == 0){ // se está dentro das datas
+        
+        for(int j = 0; j < N ; j++){
+          int k = get_list(l,j);
+          if(com->posts[i]->answer_count > k){
+            if(j == N-1) { // se está na última posição
+              set_list(l,j,com->posts[i]->answer_count); 
+              set_list(lid,j,com->posts[i]->id_post);
+              break;
+            }
+            else{
+              set_list(l,j,get_list(l,j+1));
+              set_list(lid,j,get_list(lid,j+1));
+            }
+          }
+          else{
+            set_list(l,j-1, com->posts[i]->answer_count);
+            set_list(lid,j-1,com->posts[i]->id_post);
+            break;
+          }
+        }
+      }
+    }
+  }
+  // no fim do 'for' a lista lid tem os id's dos posts por ordem crescente, necessário inverter a ordem
+  int j = N-1;
+  for (int i = 0 ; i < N ; i++){
+    set_list(res, i, get_list(lid, j)); 
+    j--;
+  }
 
-	/*
-	// para testar
-	j = N-1;
-	for(int i = 0; i < N; i++){
-		printf("POST_ID: %ld\n", get_list(res,i) );
-		printf("nº respostas: %ld\n", get_list(l,j) );
-		j--;
-	}*/
+  /*
+  // para testar
+  j = N-1;
+  for(int i = 0; i < N; i++){
+    printf("POST_ID: %ld\n", get_list(res,i) );
+    printf("nº respostas: %ld\n", get_list(l,j) );
+    j--;
+  }*/
 
-	free_list(l);
-	free_list(lid);
+  free_list(l);
+  free_list(lid);
 
-	return res;
+  return res;
 }
 
 // query 8
 
 LONG_list contains_word(TAD_community com, char* word, int N){
-	
-	LONG_list l = create_list(N);
-	long posts[N];
-	int temp;
+  
+  LONG_list l = create_list(N);
+  long posts[N];
+  int temp;
 
-	// inicialização do posts a 0
-	for(int i = 0; i<N ; i++){
-		posts[i] = 0;
-	}
+  // inicialização do posts a 0
+  for(int i = 0; i<N ; i++){
+    posts[i] = 0;
+  }
 
-	for (int i=0; i < N ; i++){ // inicialização da lista
-		set_list(l,i,0); // tem os id's das perguntas
-	}
-	
-	for(int i=0; i < com->posts_t ; i++){
-		if (com->posts[i]->post_type_id == 1){ // se é pergunta
-			char* ret;
-			ret = strstr((const char *) com->posts[i]->title,word);
-			if (ret!=NULL) { // se o titulo contem a palavra
-				for(int j=N-2;j>=0;j--){
-					temp = posts[j+1];
-					posts[j+1] = posts[j];
-					posts[j] = temp;
-				}
-				posts[0] = com->posts[i]->id_post;
-			}
-		}
-	}
+  for (int i=0; i < N ; i++){ // inicialização da lista
+    set_list(l,i,0); // tem os id's das perguntas
+  }
+  
+  for(int i=0; i < com->posts_t ; i++){
+    if (com->posts[i]->post_type_id == 1){ // se é pergunta
+      char* ret;
+      ret = strstr((const char *) com->posts[i]->title,word);
+      if (ret!=NULL) { // se o titulo contem a palavra
+        for(int j=N-2;j>=0;j--){
+          temp = posts[j+1];
+          posts[j+1] = posts[j];
+          posts[j] = temp;
+        }
+        posts[0] = com->posts[i]->id_post;
+      }
+    }
+  }
 
-	for(int i = 0; i<N ; i++){
-		set_list(l,i,posts[i]);
-	}
-	/*
-	// para testar
-	for(int i = 0; i < N; i++){
-		printf("ID's: %ld\n", get_list(l,i) );
-	}*/
+  for(int i = 0; i<N ; i++){
+    set_list(l,i,posts[i]);
+  }
+  /*
+  // para testar
+  for(int i = 0; i < N; i++){
+    printf("ID's: %ld\n", get_list(l,i) );
+  }*/
 
-	return l;	
+  return l; 
 }
 
 // query 9
@@ -949,23 +944,23 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 // query 10
 
 long better_answer(TAD_community com, long id){
-	int melhor_media = 0, melhor_id = 0;
-	for(int i=0; i < com->posts_t; i++){
-		
-		if(com->posts[i]->parent_id == id){
-			int media;
-			int id_bin = procura_binaria_u (com, com->posts[i]->owner_user_id, com->n_utilizadores);
-			
-			media = (0.45 * com->posts[i]->score) + (0.25 * com->utilizador[id_bin]->reputacao) + (0.2 * com->posts[i]->dif_votes) + (0.1 * com->posts[i]->comment_count);
-		
-			if (media>melhor_media){
-				melhor_media = media;
-				melhor_id = com->posts[i]->id_post;
-			}
-		}
-	}
-	// printf("melhor media: %d\n", melhor_media);
-	return melhor_id;
+  int melhor_media = 0, melhor_id = 0;
+  for(int i=0; i < com->posts_t; i++){
+    
+    if(com->posts[i]->parent_id == id){
+      int media;
+      int id_bin = procura_binaria_u (com, com->posts[i]->owner_user_id, com->n_utilizadores);
+      
+      media = (0.45 * com->posts[i]->score) + (0.25 * com->utilizador[id_bin]->reputacao) + (0.2 * com->posts[i]->dif_votes) + (0.1 * com->posts[i]->comment_count);
+    
+      if (media>melhor_media){
+        melhor_media = media;
+        melhor_id = com->posts[i]->id_post;
+      }
+    }
+  }
+  // printf("melhor media: %d\n", melhor_media);
+  return melhor_id;
 }
 
 // query 11
@@ -987,6 +982,30 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
    }
 }
 
+
+LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
+
+  LONG_list l_topusers = create_list(N);
+  int conta
+  for(int i=0; i<N; i++) 
+    set_list(l_topusers,i,0);
+  
+
+// inserir ordenadamente
+// percorrer o resto dos users inserindo ordenadamente
+  
+
+// percorrer os posts todos verificar se pertence a um "top user"
+// verificar se está entre as datas e fazer um levantamento das tags
+
+  if(difDatas(com->posts[i]->data,begin,end) == 0){ //verifica se esta entre o intervalo de tempo
+
+  } 
+
+}
+
+
+
 // query 12
 
 TAD_community clean(TAD_community com){
@@ -1006,24 +1025,17 @@ TAD_community clean(TAD_community com){
 
   for(int i=0;i<com->posts_t;i++) {
       free(com->posts[i]->data);
-      free(&(com->posts[i]->id_post));
-      free(&(com->posts[i]->score));
-      free(&(com->posts[i]->owner_user_id));
+
       free(com->posts[i]->title);
       free(com->posts[i]->body);
-      free(&(com->posts[i]->post_type_id));
-      free(&(com->posts[i]->parent_id));
+    
       free(com->posts[i]->tags);
-      free(&(com->posts[i]->answer_count));
-      free(&(com->posts[i]->comment_count));
+    
       free(com->posts[i]->favorite_count);
-      free(&(com->posts[i]->dif_votes));
+  
       free(com->posts[i]);
   }
   free(com->posts);
-  free(&(com->n_utilizadores));
-  free(&(com->espaco_users));
-  free(&(com->posts_t));
-  free(&(com->espaco_posts));
+ 
   return com;
 }
