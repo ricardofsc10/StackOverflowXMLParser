@@ -152,7 +152,6 @@ array está o criador do post.
 
 void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com);
 
-
 /**
 @brief Função que filtra os dados que são necessários do documento Tags.xml 
 e coloca nos campos da estrutura.
@@ -165,7 +164,6 @@ e coloca nos campos da estrutura.
 */
 
 void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com);
-
 
 /**
 @brief Função que realiza todo o processo de parsing dos documentos.
@@ -230,6 +228,7 @@ LONG_list top_most_active(TAD_community com, int N);
 LONG_pair total_posts(TAD_community com, Date begin, Date end);
 
 // query 4
+
 LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end);
 
 // query 5
@@ -294,6 +293,19 @@ ordenados por cronologia inversa.
 LONG_list contains_word(TAD_community com, char* word, int N);
 
 // query 9
+
+/**
+@brief Função que dados os IDs de dois utilizadores, devolve as últimas
+N perguntas, em cronologia inversa, em que participaram os dois utilizadores específicos
+
+@param com Estrutura com os dados.
+@param id1 Parâmetro de comparação.
+@param id2 Parâmetro de comparação.
+@param N Número de perguntas pedidas.
+
+@returns Lista com os IDs das perguntas em que ambos participam.
+*/
+
 LONG_list both_participated(TAD_community com, long id1, long id2, int N);
 
 // query 10
@@ -311,9 +323,11 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N);
 long better_answer(TAD_community com, long id);
 
 // query 11
+
 LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end);
 
-// query 12
+// clean
+
 /**
 @brief Função que recebe uma estrutura num dado momento e limpa essa estrutura completamente.
 
@@ -321,5 +335,6 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end);
 
 @returns Estrutura nula, ou seja, a estrutura recebia depois de limpa.
 */
+
 TAD_community clean(TAD_community com);
 
