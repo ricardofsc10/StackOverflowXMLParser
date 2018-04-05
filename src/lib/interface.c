@@ -494,7 +494,7 @@ TAD_community load(TAD_community com, char* dump_path){
 
    printf("[load.c] Ínicio do parse do documento Tags.xml...\n");
 
-   getReferencePosts (doc_tags,cur_tags,com);
+   getReferenceTags (doc_tags,cur_tags,com);
    xmlFreeDoc(doc_tags);
 
    printf("[load.c] Parse do documento Tags.xml foi feito com sucesso...\n");
@@ -924,10 +924,10 @@ TAD_community clean(TAD_community com){
   for (int i=0;i<com->n_utilizadores; i++) {
 
       free(com->utilizador[i]->nome);
-      free(com->utilizador[i]->id);
+      free(&(com->utilizador[i]->id));
       free(com->utilizador[i]->user);
-      free(com->utilizador[i]->reputacao);
-      free(com->utilizador[i]->posts_u);
+      free(&(com->utilizador[i]->reputacao));
+      free(&(com->utilizador[i]->posts_u));
       free(com->utilizador[i]);
       free(com->utilizador);
  }
@@ -936,24 +936,24 @@ TAD_community clean(TAD_community com){
 
   for(int i=0;i<com->posts_t;i++) {
       free(com->posts[i]->data);
-      free(com->posts[i]->id_post);
-      free(com->posts[i]->score);
-      free(com->posts[i]->owner_user_id);
+      free(&(com->posts[i]->id_post));
+      free(&(com->posts[i]->score));
+      free(&(com->posts[i]->owner_user_id));
       free(com->posts[i]->title);
       free(com->posts[i]->body);
-      free(com->posts[i]->post_type_id);
-      free(com->posts[i]->parent_id);
+      free(&(com->posts[i]->post_type_id));
+      free(&(com->posts[i]->parent_id));
       free(com->posts[i]->tags);
-      free(com->posts[i]->answer_count);
-      free(com->posts[i]->comment_count);
+      free(&(com->posts[i]->answer_count));
+      free(&(com->posts[i]->comment_count));
       free(com->posts[i]->favorite_count);
-      free(com->posts[i]->dif_votes);
+      free(&(com->posts[i]->dif_votes));
       free(com->posts[i]);
   }
   free(com->posts);
-  free(com->n_utilizadores);
-  free(com->espaco_users);
-  free(com->posts_t);
-  free(com->espaco_posts);
+  free(&(com->n_utilizadores));
+  free(&(com->espaco_users));
+  free(&(com->posts_t));
+  free(&(com->espaco_posts));
   return com;
 }

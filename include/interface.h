@@ -152,6 +152,21 @@ array está o criador do post.
 
 void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com);
 
+
+/**
+@brief Função que filtra os dados que são necessários do documento Tags.xml 
+e coloca nos campos da estrutura.
+
+@param doc Documento Tags.xml.
+@param cur Raiz do documento.
+@param com Estrutura onde vao ser inseridos os dados.
+
+@returns Estrutura com as tags referentes a cada post.
+*/
+
+void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com);
+
+
 /**
 @brief Função que realiza todo o processo de parsing dos documentos.
 
