@@ -259,7 +259,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
         }
         cur = cur->next;
     }
-    printf("[load.c] %d Users...\n", i);
+    printf("[load] %d Users...\n", i);
 }
 
 
@@ -330,7 +330,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
        }
        cur = cur->next;
    }
-   printf("[load.c] %d Posts...\n", i);
+   printf("[load] %d Posts...\n", i);
 }
 
 void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
@@ -392,12 +392,12 @@ TAD_community load(TAD_community com, char* dump_path){
         return 0;
     }
 
-    printf("[load.c] Ínicio do parse do documento Users.xml...\n");
+    printf("[load] Ínicio do parse do documento Users.xml...\n");
 
     getReferenceUser (doc_user,cur_user,com);
     xmlFreeDoc(doc_user);
 
-    printf("[load.c] Parse do documento Users.xml foi feito com sucesso...\n");
+    printf("[load] Parse do documento Users.xml foi feito com sucesso...\n");
 
 
     ////////////////////////////////// Faz-se o parse do Posts
@@ -426,12 +426,12 @@ TAD_community load(TAD_community com, char* dump_path){
         return 0;
     }
 
-    printf("[load.c] Ínicio do parse do documento Posts.xml...\n");
+    printf("[load] Ínicio do parse do documento Posts.xml...\n");
 
     getReferencePosts (doc_posts,cur_posts,com);
     xmlFreeDoc(doc_posts);
 
-    printf("[load.c] Parse do documento Posts.xml foi feito com sucesso...\n");
+    printf("[load] Parse do documento Posts.xml foi feito com sucesso...\n");
 
     ////////////////////////////////// Faz-se o parse do Votes
     char path_votes[50];
@@ -459,12 +459,12 @@ TAD_community load(TAD_community com, char* dump_path){
         return 0;
     }
 
-    printf("[load.c] Ínicio do parse do documento Votes.xml...\n");
+    printf("[load] Ínicio do parse do documento Votes.xml...\n");
 
     getReferenceVotes (doc_votes,cur_votes,com);
     xmlFreeDoc(doc_votes);
 
-    printf("[load.c] Parse do documento Votes.xml foi feito com sucesso...\n");
+    printf("[load] Parse do documento Votes.xml foi feito com sucesso...\n");
 
    ////////////////////////////////// Faz-se o parse do Tags
    char path_tags[50];
@@ -492,12 +492,12 @@ TAD_community load(TAD_community com, char* dump_path){
        return 0;
    }
 
-   printf("[load.c] Ínicio do parse do documento Tags.xml...\n");
+   printf("[load] Ínicio do parse do documento Tags.xml...\n");
 
    getReferenceTags (doc_tags,cur_tags,com);
    xmlFreeDoc(doc_tags);
 
-   printf("[load.c] Parse do documento Tags.xml foi feito com sucesso...\n");
+   printf("[load] Parse do documento Tags.xml foi feito com sucesso...\n");
 
     return com;
 }
@@ -851,29 +851,94 @@ LONG_list contains_word(TAD_community com, char* word, int N){
 
 LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 
-int array [100] = {0};
-int k=0;
+  LONG_list l = create_list(N);
+  for (int i=0; i < N ; i++){ // inicialização da lista
+    set_list(l,i,0);
+  }
 
-	for(int i=0; i<com->posts_t; i++){
-		if(com->posts[i]->post_type_id == 1){
-			int x1=0,x2=0;
-			if(com->posts[i]->owner_user_id == id1){
-				x1=1;
-				for(int j=i; j<com->posts_t; j++){
-					if(com->posts[j]->parent_id == com->posts[i]->id_post){
-						if(com->posts[j]->owner_user_id == id2) x2=1;
-					}
-				}
-				if (x1==1 && x2==1){
-					array[k] = com->posts[i]->id_post;
-					k++;
-				}
-			}
-		}
-	}
-	for(int l=0; l<N; l++)
-		printf("%d\n", array[l]);
-	return 0;
+  for(int i=0; i<com->posts_t; i++){ // percorre todos os posts
+    if(com->posts[i]->post_type_id == 1){ // vê se é pergunta
+      int x1=0,x2=0;
+
+      // para o caso de ser o id1 a fazer a pergunta
+      if(com->posts[i]->owner_user_id == id1){
+        x1=1;
+        for(int j=i; j<com->posts_t; j++){ // percorre o resto dos posts
+          if(com->posts[j]->parent_id == com->posts[i]->id_post){ // verifica se o parent_id é igual ao da pergunta em análise
+            if(com->posts[j]->owner_user_id == id2){
+              x2=1;
+              break; // assim nao avança para o resto dos posts
+            }
+          }
+        }
+        // verifica se os dois participam na questão
+        if (x1==1 && x2==1){
+          for(int k = 1 ; k < N ; k++){ // isto é para arrastar um elemento para a direita
+            long temp1, temp2;
+            temp1 = get_list(l,0); // fica sempre com o primeiro elemento
+            temp2 = get_list(l,k);
+            set_list(l,0,temp2); // coloca na posição 0
+            set_list(l,k,temp1); // coloca na posição i o q estava em 0
+          }
+          set_list(l,0, (long) com->posts[i]->id_post);
+        }
+      }
+      else {
+        // para o caso de ser o id2 a fazer a pergunta
+        if(com->posts[i]->owner_user_id == id2){
+          x2=1;
+          for(int j=i; j<com->posts_t; j++){ // percorre o resto dos posts
+            if(com->posts[j]->parent_id == com->posts[i]->id_post){ // verifica se o parent_id é igual ao da pergunta em análise
+              if(com->posts[j]->owner_user_id == id1){
+                x1=1;
+                break; // assim nao avança para o resto dos posts
+              }
+            }
+          }
+          // verifica se os dois participam na questão
+          if (x1==1 && x2==1){
+            for(int k = 1 ; k < N ; k++){ // isto é para arrastar um elemento para a direita
+              long temp1,temp2;
+              temp1 = get_list(l,0); // fica sempre com o primeiro elemento
+              temp2 = get_list(l,k);
+              set_list(l,0,temp2); // coloca na posição 0
+              set_list(l,k,temp1); // coloca na posição i o q estava em 0
+            }
+            set_list(l,0, (long) com->posts[i]->id_post);
+          }
+        }
+        else{
+          //para quando nao e nenhum a fazer a pergunta, só podem interagir nas respostas
+          for(int j=i; j<com->posts_t; j++){ // percorre o resto dos posts
+            if(com->posts[j]->parent_id == com->posts[i]->id_post){ // verifica se o parent_id é igual ao da pergunta em análise
+              if(com->posts[j]->owner_user_id == id2) x2=1;
+              if(com->posts[j]->owner_user_id == id1) x1=1;
+
+              // verifica se os dois participam na questão
+              if (x1==1 && x2==1){
+                for(int k = 1 ; k < N ; k++){ // isto é para arrastar um elemento para a direita
+                  long temp1, temp2;
+                  temp1 = get_list(l,0); // fica sempre com o primeiro elemento
+                  temp2 = get_list(l,k);
+                  set_list(l,0,temp2); // coloca na posição 0
+                  set_list(l,k,temp1); // coloca na posição i o q estava em 0
+                }
+                set_list(l,0, (long) com->posts[i]->id_post);
+                break;
+              }
+            }
+          }
+        }
+        }
+    }
+  }
+  
+  // teste
+  for(int i = 0; i < N ; i++){
+    printf("%ld\n", get_list(l,i));
+  }
+
+  return l;
 }
 
 // query 10

@@ -9,17 +9,17 @@ int main(){
   int menu = 0;
   
   tda = init();
-  printf("[init.c] Estrutura já foi inicializada...\n");
+  printf("[init] Estrutura já foi inicializada...\n");
 
   char* path1 __unused = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
   char* path2 = "../../dumpexemplo/android/";
-  printf("[load.c] Ínicio do load...\n");
+  printf("[load] Ínicio do load...\n");
 
   clock_t start = clock();
   tda = load(tda, path2);
   clock_t stop = clock();
   
-  printf("[load.c] Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) ); // faz-se esta conta pq tempo vem em mili
+  printf("[load] Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) ); // faz-se esta conta pq tempo vem em mili
 
   while(menu == 0){ // interatividade
     printf("Que questão deseja resolver? (-1, para sair do programa)\n");
@@ -142,10 +142,13 @@ int main(){
       menu = 0;
     }
     if(menu == 9){
+      int tamanho;
+      printf("Qual o tamanho do array das perguntas?\n");
+      scanf("%d", &tamanho);
+      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
-      LONG_list l = create_list(100);
       start = clock();
-      l = both_participated(tda, 1465, 16575, 100);
+      l = both_participated(tda, 1465, 16575, tamanho);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
@@ -174,9 +177,11 @@ int main(){
     if(menu==-1) break;
   }
 
-
-  free(tda);
+  /*
+  printf("[clean] Estrutura a ser limpa ...\n");
+  tda = clean(tda);
+  printf("[clean] Estrutura limpa.\n");*/
   
-  printf("Program Done...\n");
+  printf("[main] Program Done...\n");
   return 0;
 } 
