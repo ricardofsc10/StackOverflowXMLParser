@@ -28,7 +28,7 @@ struct posts{
 	int id_post;
 	int score;
 	int owner_user_id;
-	xmlChar* title;
+	char* title;
 	xmlChar* body;
 	int post_type_id; // 1-pergunta 2-resposta
 	int parent_id;
@@ -297,7 +297,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
            }
            else{
-              com->posts[i]->title = title_l;
+              com->posts[i]->title = (char *) title_l;
               k = strToTag(com, (char *) tags_l, i);
             }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
@@ -603,6 +603,8 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
   LONG_list res = create_list(50);
   int k=0;
 
+  char n_tag[strlen(tag)+1];
+  strcpy(n_tag,tag);
 
   for (int i=0; i < 50 ; i++){ // inicialização da lista
     set_list(l,i,0); // vai conter os numeros das perguntas
@@ -611,16 +613,19 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
 
   for(int i=0; i < com->posts_t ; i++){
     if (com->posts[i]->post_type_id == 1){ // se é pergunta
-
-      if(difDatas(com->posts[i]->data,begin,end) == 0){ // se está dentro das datas
+      printf("%s\n", com->posts[i]->title);
+      /*if(difDatas(com->posts[i]->data,begin,end) == 0){ // se está dentro das datas
           
+          char nomes[strlen(com->posts[i]->title)+1];
+          strcpy(nomes, com->posts[i]->title);
           char* ret;
-          ret = strstr((const char *) com->posts[i]->tags,tag);
+          ret = strstr(nomes,n_tag);
+          printf("%s\n", nomes );
           if (ret!=NULL) { // se o titulo contem a palavra
             set_list(l,k,com->posts[i]->id_post);
             k++;
           }
-        }
+        }*/
       }
     }
 
@@ -637,10 +642,10 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
   for(int i = 0; i < 50; i++){
     printf("POST_ID: %ld\n", get_list(res,i) );
     j--;
-  }
-  */
+  }*/
+  
 
-  free_list(l);
+  //free_list(l);
 
   return res;
 }

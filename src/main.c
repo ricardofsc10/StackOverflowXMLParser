@@ -64,19 +64,19 @@ int main(){
     }
     if(menu == 4){ /////////////////////////////////// erros e falta redimensionar
       int tamanho;
-      Date begin = createDate(01,01,2010);
-      Date end = createDate(31,12,2017);
+      Date begin = createDate(01,01,2014);
+      Date end = createDate(31,12,2014);
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
       LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
       start = clock();
-      l = questions_with_tag(tda, "&lt;rooting&gt;", begin, end);
+      l = questions_with_tag(tda, "rooting", begin, end);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_date(begin);
       free_date(end);
-      free_list(l);
+      //free_list(l);
       menu = 0;
     }
     if(menu == 5){ ///////////////////////////////// feita
@@ -141,7 +141,7 @@ int main(){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
     }
-    if(menu == 9){
+    if(menu == 9){ ////////////////////////////////// feita
       int tamanho;
       printf("Qual o tamanho do array das perguntas?\n");
       scanf("%d", &tamanho);
