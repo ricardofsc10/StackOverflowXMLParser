@@ -15,7 +15,7 @@ struct TCD_community{
 };
 
 struct utilizador{
-  xmlChar* nome;
+  char* nome;
   int id;
   USER user; // bio e array para 10 posts
   int posts_u;
@@ -28,14 +28,14 @@ struct posts{
   int id_post;
   int score;
   int owner_user_id;
-  xmlChar* title;
-  xmlChar* body;
+  char* title;
+  char* body;
   int post_type_id; // 1-pergunta 2-resposta
   int parent_id;
-  xmlChar* tags;
+  char* tags;
   int answer_count;
   int comment_count;
-  xmlChar* favorite_count;
+  char* favorite_count;
   int dif_votes;
 };
 
@@ -241,8 +241,8 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            
            // preenche os parametros do utilizador
            com->utilizador[i]->id = atoi( (const char *) id_l); // usa-se o atoi porque na estrutura o id é um int
-           com->utilizador[i]->nome = nome_l;
-           com->utilizador[i]->user = create_user( (char *) bio_l,array);
+           com->utilizador[i]->nome = mystrdup( (char *) nome_l);
+           com->utilizador[i]->user = create_user( mystrdup((char *) bio_l), array);
            com->utilizador[i]->reputacao = atoi( (const char *) reputacao_l);
 
            xmlFree(id_l);
@@ -291,13 +291,13 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            com->posts[i]->id_post = atoi( (const char *) id_l);
            com->posts[i]->score = atoi( (const char *) score_l);
            com->posts[i]->owner_user_id= atoi( (const char *) owner_user_id_l);
-           com->posts[i]->body = body_l;
+           com->posts[i]->body = mystrdup( (char *) body_l);
            com->posts[i]->post_type_id = atoi( (const char *) post_type_id_l);
            if(com->posts[i]->post_type_id==2) {
               com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
            }
            else{
-              com->posts[i]->title = title_l;
+              com->posts[i]->title = mystrdup( (char *) title_l);
               k = strToTag(com, (char *) tags_l, i);
             }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
@@ -307,7 +307,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               com->posts[i]->answer_count = atoi( (const char *) answer_count_l);
            }
            com->posts[i]->comment_count = atoi( (const char *) comment_count_l);
-           com->posts[i]->favorite_count = favorite_count_l;
+           com->posts[i]->favorite_count = mystrdup( (char *)favorite_count_l);
               
            xmlFree(id_l);
            xmlFree(post_type_id_l);
@@ -508,28 +508,22 @@ STR_pair info_from_post(TAD_community com, long id) {
   STR_pair par= create_str_pair(NULL,NULL);
   int user_id;
   int l;
-    //char* t = NULL;
-    //char* n = NULL;
 
     l = procura_binaria_p(com, id, com->posts_t); // indice do array posts onde esta o post com o id dado
 
   if (com->posts[l]->post_type_id == 1){  
     set_fst_str(par, (char *) com->posts[l]->title);
-        //t = (char *) com->posts[l]->title;
     user_id = procura_binaria_u(com, com->posts[l]->owner_user_id, com->n_utilizadores);
     set_snd_str(par, (char *) com->utilizador[user_id]->nome);
-        //n = (char *) com->utilizador[user_id]->nome;
     }
   else { //é uma resposta
     int x = procura_binaria_p(com, com->posts[l]->parent_id, com->posts_t);
     set_fst_str(par, (char *) com->posts[x]->title);
     user_id= procura_binaria_u(com, com->posts[x]->owner_user_id, com->n_utilizadores);
-      set_snd_str(par, (char *) com->utilizador[user_id]->nome);
+    set_snd_str(par, (char *) com->utilizador[user_id]->nome);
   }
-    printf("%s\n", get_fst_str(par) );
-    printf("%s\n", get_snd_str(par) );
-    //printf("%s\n", t);
-    //printf("%s\n", n);
+    printf("Título: %s\n", get_fst_str(par) );
+    printf("Nome de utilizador: %s\n", get_snd_str(par) );
   return par;
 }
 
@@ -565,12 +559,12 @@ LONG_list top_most_active(TAD_community com, int N){
       }
     }
   }
-  /*
+  
   // deixei aqui para se testar se for preciso
   for(int i=0; i<N; i++){
     printf("número total de posts: %ld\n", get_list(l,i));
     printf("id utilizador: %ld\n\n", get_list(lid,i));
-  }*/
+  }
 
   free_list(l);
 
@@ -838,11 +832,11 @@ LONG_list contains_word(TAD_community com, char* word, int N){
   for(int i = 0; i<N ; i++){
     set_list(l,i,posts[i]);
   }
-  /*
+  
   // para testar
   for(int i = 0; i < N; i++){
     printf("ID's: %ld\n", get_list(l,i) );
-  }*/
+  }
 
   return l; 
 }
@@ -852,11 +846,12 @@ LONG_list contains_word(TAD_community com, char* word, int N){
 LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 
   LONG_list l = create_list(N);
+  int contador = 0;
   for (int i=0; i < N ; i++){ // inicialização da lista
     set_list(l,i,0);
   }
 
-  for(int i=0; i<com->posts_t; i++){ // percorre todos os posts
+  for(int i= (com->posts_t - 1) ; i >= 0 && contador < N ; i--){ // percorre os posts a começar pelo fim
     if(com->posts[i]->post_type_id == 1){ // vê se é pergunta
       int x1=0,x2=0;
 
@@ -873,14 +868,8 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
         }
         // verifica se os dois participam na questão
         if (x1==1 && x2==1){
-          for(int k = 1 ; k < N ; k++){ // isto é para arrastar um elemento para a direita
-            long temp1, temp2;
-            temp1 = get_list(l,0); // fica sempre com o primeiro elemento
-            temp2 = get_list(l,k);
-            set_list(l,0,temp2); // coloca na posição 0
-            set_list(l,k,temp1); // coloca na posição i o q estava em 0
-          }
-          set_list(l,0, (long) com->posts[i]->id_post);
+          set_list(l,contador,com->posts[i]->id_post);
+          contador++;
         }
       }
       else {
@@ -897,14 +886,8 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
           }
           // verifica se os dois participam na questão
           if (x1==1 && x2==1){
-            for(int k = 1 ; k < N ; k++){ // isto é para arrastar um elemento para a direita
-              long temp1,temp2;
-              temp1 = get_list(l,0); // fica sempre com o primeiro elemento
-              temp2 = get_list(l,k);
-              set_list(l,0,temp2); // coloca na posição 0
-              set_list(l,k,temp1); // coloca na posição i o q estava em 0
-            }
-            set_list(l,0, (long) com->posts[i]->id_post);
+            set_list(l,contador,com->posts[i]->id_post);
+            contador++;
           }
         }
         else{
@@ -916,14 +899,8 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 
               // verifica se os dois participam na questão
               if (x1==1 && x2==1){
-                for(int k = 1 ; k < N ; k++){ // isto é para arrastar um elemento para a direita
-                  long temp1, temp2;
-                  temp1 = get_list(l,0); // fica sempre com o primeiro elemento
-                  temp2 = get_list(l,k);
-                  set_list(l,0,temp2); // coloca na posição 0
-                  set_list(l,k,temp1); // coloca na posição i o q estava em 0
-                }
-                set_list(l,0, (long) com->posts[i]->id_post);
+                set_list(l,contador,com->posts[i]->id_post);
+                contador++;
                 break;
               }
             }
@@ -986,7 +963,7 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
 
   LONG_list l_topusers = create_list(N);
-  int conta
+  int conta;
   for(int i=0; i<N; i++) 
     set_list(l_topusers,i,0);
   
@@ -998,10 +975,11 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
 // percorrer os posts todos verificar se pertence a um "top user"
 // verificar se está entre as datas e fazer um levantamento das tags
 
+  int i=0; // so declarei para nao dar erro
   if(difDatas(com->posts[i]->data,begin,end) == 0){ //verifica se esta entre o intervalo de tempo
 
   } 
-
+  return l_topusers;
 }
 
 

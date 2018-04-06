@@ -4,6 +4,7 @@
 #include "pair.h"
 #include "list.h"
 #include "user.h"
+#include "common.h"
 
 typedef struct TCD_community * TAD_community;
 

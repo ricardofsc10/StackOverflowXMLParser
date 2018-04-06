@@ -25,11 +25,14 @@ int main(){
     printf("Que questão deseja resolver? (-1, para sair do programa)\n");
     scanf("%d", &menu);
 
-    if(menu == 1){ /////////////////////////////////// erros
+    if(menu == 1){ /////////////////////////////////// feita
       STR_pair par = create_str_pair(NULL,NULL);
+      int id;
+      printf("Qual o id do post?\n");
+      scanf("%d", &id);
       printf("Resposta:\n");
       start = clock();
-      par = info_from_post(tda,141044);
+      par = info_from_post(tda,id);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_str_pair(par);
@@ -94,8 +97,8 @@ int main(){
     }
     if(menu == 6){ ////////////////////////////////// feita
       int tamanho;
-      Date begin = createDate(01,01,2010);
-      Date end = createDate(31,12,2017);
+      Date begin = createDate(01,01,2015);
+      Date end = createDate(31,02,2016);
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
       LONG_list l = create_list(tamanho);
@@ -111,8 +114,8 @@ int main(){
     }
     if(menu == 7){ ////////////////////////////////// feita
       int tamanho;
-      Date begin = createDate(01,01,2010);
-      Date end = createDate(31,12,2017);
+      Date begin = createDate(01,01,2015);
+      Date end = createDate(31,02,2016);
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
       LONG_list l = create_list(tamanho);
@@ -126,7 +129,7 @@ int main(){
       free_list(l);
       menu = 0;
     }
-    if(menu == 8){ /////////////////////////////////// erros
+    if(menu == 8){ /////////////////////////////////// feita
       int tamanho;
       char palavra[50];
       printf("Que palavra quer encontrar?\n");
@@ -148,7 +151,7 @@ int main(){
       LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
       start = clock();
-      l = both_participated(tda, 1465, 16575, tamanho);
+      l = both_participated(tda, 449, 15811, tamanho); // 1465 e 16575
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
