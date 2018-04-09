@@ -18,6 +18,9 @@ struct utilizador{
   char* nome;
   int id;
   USER user; // bio e array para 10 posts
+  int* posts_frequentados; // so contem o id das perguntas em que ele interage
+  int contador_posts_frequentados;
+  int espaco_posts_frequentados;
   int posts_u;
   int reputacao;
 
@@ -127,6 +130,10 @@ TAD_community init(){
     tad->utilizador[i]->id = 0;
     long array[10] = {0};
     tad->utilizador[i]->user = create_user(NULL,array);
+    tad->utilizador[i]->posts_frequentados = malloc(sizeof(5));
+    for(int k = 0; k < 5 ; k++) tad->utilizador[i]->posts_frequentados[k] = 0;
+    tad->utilizador[i]->contador_posts_frequentados = 0;
+    tad->utilizador[i]->espaco_posts_frequentados = 5;
     tad->utilizador[i]->reputacao = 0;
     tad->utilizador[i]->posts_u = 0;    
   }
@@ -161,6 +168,10 @@ void redimensiona_utilizadores(TAD_community com){
     com->utilizador[i]->id = 0;
     long array[10] = {0};
     com->utilizador[i]->user = create_user(NULL,array);
+    com->utilizador[i]->posts_frequentados = malloc(sizeof(5));
+    for(int k = 0; k < 5 ; k++) com->utilizador[i]->posts_frequentados[k] = 0;
+    com->utilizador[i]->contador_posts_frequentados = 0;
+    com->utilizador[i]->espaco_posts_frequentados = 5;
     com->utilizador[i]->reputacao = 0;
     com->utilizador[i]->posts_u= 0;   
   }
@@ -189,6 +200,14 @@ void redimensiona_posts(TAD_community com) {
   }
   com->espaco_posts+=75000;
 
+}
+
+void redimensiona_posts_frequentados(TAD_community com, int id_bin){ // recebe a posição do array onde esta o utilizador a redimensionar
+    com->utilizador[id_bin]->posts_frequentados = realloc(com->utilizador[id_bin]->posts_frequentados, sizeof(int) * (com->utilizador[id_bin]->espaco_posts_frequentados + 5));
+    for(int i = com->utilizador[id_bin]->espaco_posts_frequentados ; i < com->utilizador[id_bin]->espaco_posts_frequentados + 5 ; i++){
+        com->utilizador[id_bin]->posts_frequentados[i] = 0;
+    }
+    com->utilizador[id_bin]->espaco_posts_frequentados += 5;
 }
 
 // query 0 (load)
@@ -224,6 +243,12 @@ int strToTag (TAD_community com, char* str, int i){
   return 0;
 }
 
+int myelem (int* l, int id, int N){ // ve se um elemento esta num array
+    for(int i = 0; i < N ; i++){
+      if(id == l[i]) return 1; // caso de ter
+    }
+    return 0; // caso de nao ter
+}
 
 void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // acho que está tudo bem nesta função
 
@@ -295,11 +320,31 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            com->posts[i]->post_type_id = atoi( (const char *) post_type_id_l);
            if(com->posts[i]->post_type_id==2) {
               com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
+              // inserir o id da pergunta no utilizador que faz a pergunta
+              if(myelem(com->utilizador[id_bin]->posts_frequentados, com->posts[i]->parent_id, com->utilizador[id_bin]->contador_posts_frequentados) == 0){
+                // se nao tem o id no array, insere-o
+                com->utilizador[id_bin]->posts_frequentados[com->utilizador[id_bin]->contador_posts_frequentados] = com->posts[i]->parent_id;
+                com->utilizador[id_bin]->contador_posts_frequentados++;
+                // verifica se o array precisa de ser redimensionado
+                if( (com->utilizador[id_bin]->espaco_posts_frequentados - com->utilizador[id_bin]->contador_posts_frequentados) == 0){
+                  redimensiona_posts_frequentados(com, id_bin);
+                }
+              }
            }
            else{
               com->posts[i]->title = mystrdup( (char *) title_l);
               k = strToTag(com, (char *) tags_l, i);
-            }
+              // inserir o id da pergunta no utilizador que faz a pergunta
+              if(myelem(com->utilizador[id_bin]->posts_frequentados, com->posts[i]->id_post, com->utilizador[id_bin]->contador_posts_frequentados) == 0){
+                // se nao tem o id no array, insere-o
+                com->utilizador[id_bin]->posts_frequentados[com->utilizador[id_bin]->contador_posts_frequentados] = com->posts[i]->parent_id;
+                com->utilizador[id_bin]->contador_posts_frequentados++;
+                // verifica se o array precisa de ser redimensionado
+                if( (com->utilizador[id_bin]->espaco_posts_frequentados - com->utilizador[id_bin]->contador_posts_frequentados) == 0){
+                  redimensiona_posts_frequentados(com, id_bin);
+                }
+              }
+           }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
               com->posts[i]->answer_count = 0;
            }
@@ -851,6 +896,28 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
     set_list(l,i,0);
   }
 
+  int id1_bin = procura_binaria_u(com,id1,com->n_utilizadores);
+  int id2_bin = procura_binaria_u(com,id2,com->n_utilizadores);
+
+  for(int i = com->utilizador[id1_bin]->contador_posts_frequentados-1 ; i >= 0 ; i--){
+      printf("%d: %d\n", i, com->utilizador[id1_bin]->posts_frequentados[i]);
+      /*
+      for(int j = com->utilizador[id2_bin]->contador_posts_frequentados; j >= 0; j--){
+        
+        if(com->utilizador[id1_bin]->posts_frequentados[i] == com->utilizador[id2_bin]->posts_frequentados[j]){
+          set_list(l,contador,com->utilizador[id1_bin]->posts_frequentados[i]);
+          contador++;
+          printf("%d\n", com->utilizador[id1_bin]->posts_frequentados[i] );
+          break;
+        }
+      }
+      if(contador == N) break;*/
+  }
+  for(int i = com->utilizador[id2_bin]->contador_posts_frequentados-1 ; i >= 0 ; i--){
+      printf("%d: %d\n", i, com->utilizador[id2_bin]->posts_frequentados[i]);
+  }
+
+  /*
   for(int i= (com->posts_t - 1) ; i >= 0 && contador < N ; i--){ // percorre os posts a começar pelo fim
     if(com->posts[i]->post_type_id == 1){ // vê se é pergunta
       int x1=0,x2=0;
@@ -908,12 +975,12 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
         }
         }
     }
-  }
-  
+  }*/
+  /*
   // teste
   for(int i = 0; i < N ; i++){
     printf("%ld\n", get_list(l,i));
-  }
+  }*/
 
   return l;
 }
@@ -963,7 +1030,7 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
 
   LONG_list l_topusers = create_list(N);
-  int conta;
+  int conta __unused; // so para nao dar warning
   for(int i=0; i<N; i++) 
     set_list(l_topusers,i,0);
   
@@ -984,7 +1051,7 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
 
 
 
-// query 12
+// clean
 
 TAD_community clean(TAD_community com){
   

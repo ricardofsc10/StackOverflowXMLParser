@@ -52,7 +52,6 @@ int procura_binaria_p (TAD_community com, int id, int Tam);
 */
 int difDatas(Date x,Date begin, Date end);
 
-int elem(char* palavra, char* texto);
 
 /**
 @brief Função que faz a primeira inicialização da estrutura.
@@ -106,6 +105,20 @@ void redimensiona_posts(TAD_community com);
 */
 
 Date stringToDias (char* data);
+
+int strToTag (TAD_community com, char* str, int i);
+
+/**
+@brief Função que diz se um id esta contido numa lista de id's.
+
+@param l Lista onde se vai encontrar ou não o elemento.
+@param id Parâmetro de comparação
+@param N Tamanho da lista l.
+
+@returns Data compatível com a struct date.
+*/
+
+int myelem (int* l, int id, int N);
 
 /**
 @brief Função que filtra os dados que são necessários do documento Users.xml 
