@@ -15,17 +15,16 @@ typedef struct posts* POSTS;
 // funções auxiliares
 
 /**
-@brief Função que implementa a procura binária, aplicada ao 
+@brief Função que implementa uma função de hash, aplicada ao 
 Id de cada utilizador.
 
 @param com Estrutura com os dados.
-@param id Parâmetro de comparação.
-@param Tam Tamanho do array.
+@param chave Parâmetro de comparação.
 
 @returns Índice do array utilizadores da estrutura onde um dado utilizador
-se encontra.
+se pode encontrar.
 */
-int procura_binaria_u (TAD_community com, int id, int Tam);
+int hash_users(int chave, TAD_community com);
 
 
 /**
@@ -33,13 +32,12 @@ int procura_binaria_u (TAD_community com, int id, int Tam);
 Id de cada post.
 
 @param com Estrutura com os dados.
-@param id Parâmetro de comparação.
-@param Tam Tamanho do array.
+@param chave Parâmetro de comparação.
 
 @returns Índice do array posts da estrutura onde um dado post
-se encontra.
+se pode encontrar.
 */
-int procura_binaria_p (TAD_community com, int id, int Tam);
+int hash_posts(int chave, TAD_community com);
 
 /**
 @brief Função que verifica se uma data se encontra ou não entre um período.
@@ -138,7 +136,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com);
 @brief Função que filtra os dados que são necessários do documento Posts.xml 
 e coloca nos campos da estrutura.
 
-Utiliza a função <b>procuraBinaria()</b>, para a descobrir em que posição do
+Utiliza a função <b>Hash()</b>, para a descobrir em que posição do
 array está o criador do post.
 
 @param doc Documento Posts.xml.
@@ -154,7 +152,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com);
 @brief Função que filtra os dados que são necessários do documento Votes.xml 
 e coloca nos campos da estrutura.
 
-Utiliza a função <b>procuraBinaria()</b>, para a descobrir em que posição do
+Utiliza a função <b>Hash()</b>, para a descobrir em que posição do
 array está o criador do post.
 
 @param doc Documento Votes.xml.
