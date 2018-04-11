@@ -160,7 +160,8 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            value->bio = mystrdup((char *) bio_l);
            value->reputacao = atoi( (const char *) reputacao_l);
 
-           g_hash_table_insert (com->utilizador, (void*)id_l, value);
+           gint boolean = g_hash_table_insert (com->utilizador, (void*)id_l, value);
+           if(boolean == FALSE) break;
 
            xmlFree(nome_l);
            xmlFree(bio_l);
