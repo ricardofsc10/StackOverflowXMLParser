@@ -18,6 +18,7 @@ struct TCD_community{
 };
 
 struct utilizador{
+  gint id;
   gchar* nome;
   gchar* bio;
   gint* posts_frequentados; // so contem o id das perguntas em que ele interage
@@ -28,6 +29,7 @@ struct utilizador{
 };
 
 struct posts{
+  gint id_post;
   Date data;
   gint score;
   gint owner_user_id;
@@ -157,15 +159,19 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
 
            // preenche os parametros do utilizador
            UTILIZADOR value = malloc(sizeof(struct utilizador));
+
+           value->id = id_l;
            value->nome = mystrdup( (char *) nome_l);
            value->bio = mystrdup((char *) bio_l);
            value->reputacao = atoi( (const char *) reputacao_l);
+           value->posts_u = 0;
 
-           g_hash_table_insert (com->utilizador, (gpointer)&id_l, value);
+           g_hash_table_insert (com->utilizador, (gpointer) &id_l, (gpointer) &value);
 
            xmlFree(nome_l);
            xmlFree(bio_l);
            xmlFree(reputacao_l);
+           free(value);
 
            i++;
         }
@@ -201,11 +207,13 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            POSTS value = malloc(sizeof(struct posts));
            UTILIZADOR value_user;
 
+           value->id_post = id_l;
            value->data = stringToDias( (char *) creation_date_l);
-           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) &owner_user_id_l);
+           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gconstpointer) &owner_user_id_l);
+           if(value_user == NULL) printf("deu null\n");
            value_user->posts_u++;
            value->score = atoi( (const char *) score_l);
-           value->owner_user_id= atoi( (const char *) owner_user_id_l);
+           value->owner_user_id= owner_user_id_l;
            value->body = mystrdup( (char *) body_l);
            value->post_type_id = atoi( (const char *) post_type_id_l);
 
@@ -220,7 +228,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            }
            else{
               value->title = mystrdup( (char *) title_l);
-              k = strToTag(com, (char *) tags_l, atoi( (const char *) id_l));
+              k = strToTag(com, (char *) tags_l, id_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
               if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
@@ -324,7 +332,6 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_user);
 
     printf("[load] Parse do documento Users.xml foi feito com sucesso...\n");
-
 
     ////////////////////////////////// Faz-se o parse do Posts
     char path_posts[50];
