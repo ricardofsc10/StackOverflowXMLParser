@@ -4,6 +4,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <gmodule.h>
+#include <glib.h>
 #include "interface.h"
 
 // para as tabelas
@@ -36,12 +37,6 @@ struct utilizador{
   int status;
 };
 
-/*
-struct utilizador{
-  int id;
-  GHashTable* u;
-}*/
-
 struct posts{
   Date data;
   int id_post;
@@ -60,6 +55,52 @@ struct posts{
   int indice_posts_datas;
   int status;
 };
+
+/*
+
+// definições da glib
+// typedef void* gpointer;
+// typedef char gchar;
+// gint(); ver no site
+
+struct TCD_community{
+  GHashTable* utilizador;
+  GHashTable* posts;
+};
+
+struct utilizador{
+  gpointer key_id;
+  gpointer value_info_utilizador;
+};
+
+struct posts{
+  gpointer key_id;
+  gpointer value_info_posts;
+};
+
+struct value_info_utilizador{
+  gchar* nome;
+  USER user;
+  gint posts_u;
+  gint reputacao;
+};
+
+struct value_info_posts{
+  Date data;
+  gint score;
+  gint owner_user_id;
+  gchar* title;
+  gchar* body;
+  gint post_type_id; // 1-pergunta 2-resposta
+  gint parent_id;
+  gchar* tags;
+  gint answer_count;
+  gint comment_count;
+  gchar* favorite_count;
+  gint dif_votes;
+};
+
+*/
 
 // funções auxiliares mais tarde para serem postas noutro ficheiro
 
