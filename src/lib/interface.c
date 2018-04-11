@@ -70,25 +70,6 @@ struct TCD_community{
 
 struct utilizador{
   gpointer key_id;
-  gpointer value_info_utilizador;
-};
-
-struct posts{
-  gpointer key_id;
-  gpointer value_info_posts;
-};
-
-struct value_info_utilizador{
-  gchar* nome;
-  USER user;
-  gint* posts_frequentados; // so contem o id das perguntas em que ele interage
-  gint contador_posts_frequentados;
-  gint espaco_posts_frequentados;
-  gint posts_u;
-  gint reputacao;
-};
-
-struct value_info_posts{
   Date data;
   gint score;
   gint owner_user_id;
@@ -101,6 +82,17 @@ struct value_info_posts{
   gint comment_count;
   gchar* favorite_count;
   gint dif_votes;
+};
+
+struct posts{
+  gpointer key_id;
+  gchar* nome;
+  USER user;
+  gint* posts_frequentados; // so contem o id das perguntas em que ele interage
+  gint contador_posts_frequentados;
+  gint espaco_posts_frequentados;
+  gint posts_u;
+  gint reputacao;
 };
 
 */
