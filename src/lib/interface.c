@@ -161,8 +161,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            value->bio = mystrdup((char *) bio_l);
            value->reputacao = atoi( (const char *) reputacao_l);
 
-           gint boolean = g_hash_table_insert (com->utilizador, (gpointer)id_l, value);
-           if(boolean == FALSE) break;
+           g_hash_table_insert (com->utilizador, (gpointer)&id_l, value);
 
            xmlFree(nome_l);
            xmlFree(bio_l);
@@ -203,7 +202,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            UTILIZADOR value_user;
 
            value->data = stringToDias( (char *) creation_date_l);
-           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) owner_user_id_l);
+           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) &owner_user_id_l);
            value_user->posts_u++;
            value->score = atoi( (const char *) score_l);
            value->owner_user_id= atoi( (const char *) owner_user_id_l);
@@ -215,7 +214,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               // inserir o id da pergunta no utilizador que faz a pergunta
               if(myelem(value_user->posts_frequentados, value->parent_id, value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
-                value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
+                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
                 value_user->contador_posts_frequentados++;
               }
            }
@@ -225,7 +224,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               // inserir o id da pergunta no utilizador que faz a pergunta
               if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
-                value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
+                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
                 value_user->contador_posts_frequentados++;
               }
            }
@@ -238,7 +237,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            value->comment_count = atoi( (const char *) comment_count_l);
            value->favorite_count = mystrdup( (char *)favorite_count_l);
 
-           g_hash_table_insert (com->posts, (gpointer) id_l, value);
+           g_hash_table_insert (com->posts, (gpointer) &id_l, value);
 
           
            xmlFree(post_type_id_l);
