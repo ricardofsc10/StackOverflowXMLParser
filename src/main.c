@@ -6,7 +6,7 @@
 
 int main(){
   TAD_community tda = NULL;
-  int menu = 0;
+  int menu __unused = 0;
   
   tda = init();
   printf("[init] Estrutura já foi inicializada...\n");

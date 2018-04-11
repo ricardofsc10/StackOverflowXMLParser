@@ -110,10 +110,10 @@ Date stringToDias (char* data) { // "2011-11-11"
     return ndata;
 }
 
-int strToTag (TAD_community com, char* str, int id){
+int strToTag (TAD_community com, char* str, size_t id){
   char* token;
   POSTS value_post;
-  value_post = (POSTS) g_hash_table_lookup(com->posts,id);
+  value_post = (POSTS) g_hash_table_lookup(com->posts, (const void *) id);
   const char delim[3] = "&;"; //caracteres em que a string é dividida
   token = strtok (str,delim);
   while (token != NULL){
@@ -145,7 +145,8 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
 
     xmlChar *nome_l, *bio_l, *reputacao_l;
     cur = cur->xmlChildrenNode;
-    int i = 0,id_l;
+    int i = 0;
+    size_t id_l;
 
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
@@ -160,7 +161,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            value->bio = mystrdup((char *) bio_l);
            value->reputacao = atoi( (const char *) reputacao_l);
 
-           gint boolean = g_hash_table_insert (com->utilizador, (void*)id_l, value);
+           gint boolean = g_hash_table_insert (com->utilizador, (gpointer)id_l, value);
            if(boolean == FALSE) break;
 
            xmlFree(nome_l);
@@ -177,18 +178,19 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
 
 void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
-   xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
+   xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
    cur = cur->xmlChildrenNode;
    int i=0, k;
+   size_t owner_user_id_l, id_l;
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-           id_l = xmlGetProp(cur, (const xmlChar *) "Id");
+           id_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
            post_type_id_l = xmlGetProp(cur, (const xmlChar *) "PostTypeId");
            creation_date_l = xmlGetProp(cur, (const xmlChar *) "CreationDate");
            score_l = xmlGetProp(cur, (const xmlChar *) "Score");
            body_l = xmlGetProp(cur, (const xmlChar *) "Body");
-           owner_user_id_l = xmlGetProp(cur, (const xmlChar *) "OwnerUserId");
+           owner_user_id_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "OwnerUserId"));
            parent_id_l=xmlGetProp(cur, (const xmlChar *) "ParentId");
            title_l = xmlGetProp(cur, (const xmlChar *) "Title");
            tags_l = xmlGetProp(cur, (const xmlChar *) "Tags");
@@ -201,7 +203,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            UTILIZADOR value_user;
 
            value->data = stringToDias( (char *) creation_date_l);
-           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, atoi((const char *) owner_user_id_l));
+           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) owner_user_id_l);
            value_user->posts_u++;
            value->score = atoi( (const char *) score_l);
            value->owner_user_id= atoi( (const char *) owner_user_id_l);
@@ -236,15 +238,13 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            value->comment_count = atoi( (const char *) comment_count_l);
            value->favorite_count = mystrdup( (char *)favorite_count_l);
 
-           g_hash_table_insert (com->posts, atoi( (const char *)id_l), value);
+           g_hash_table_insert (com->posts, (gpointer) id_l, value);
 
-              
-           xmlFree(id_l);
+          
            xmlFree(post_type_id_l);
            xmlFree(creation_date_l);
            xmlFree(score_l);
            xmlFree(body_l);
-           xmlFree(owner_user_id_l);
            xmlFree(parent_id_l);
            xmlFree(title_l);
            xmlFree(tags_l);
@@ -260,16 +260,17 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 }
 
 void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
-    xmlChar *votes_l, *postid_l;
+    xmlChar *votes_l;
+    size_t postid_l;
     cur = cur->xmlChildrenNode;
 
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
            votes_l = xmlGetProp(cur, (const xmlChar *) "VoteTypeId");
-           postid_l = xmlGetProp(cur, (const xmlChar *) "PostId");
+           postid_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "PostId"));
            
            POSTS value_tags;  //procura_binaria_p(com,atoi((const char *)postid_l), com->posts_t);
-           value_tags = (POSTS) g_hash_table_lookup(com->posts, atoi((const char *) postid_l));
+           value_tags = (POSTS) g_hash_table_lookup(com->posts, (gpointer) postid_l);
            if(value_tags != NULL){
               // preenche os parametros do utilizador
               if(atoi((const char *) (votes_l)) == 2){
@@ -281,7 +282,6 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
             }
 
           xmlFree(votes_l);
-          xmlFree(postid_l);
         }
         cur = cur->next;
     }
@@ -290,8 +290,8 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 
 TAD_community load(TAD_community com, char* dump_path){
     
-    xmlDocPtr doc_user, doc_posts, doc_votes, doc_tags;
-    xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags;
+    xmlDocPtr doc_user, doc_posts, doc_votes, doc_tags __unused;
+    xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags __unused;
 
     ////////////////////////////////// Faz-se o parse do Users
     char path_users[50];
