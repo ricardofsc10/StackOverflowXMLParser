@@ -1,5 +1,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
+#include <gmodule.h>
+#include <glib.h>
 #include "date.h"
 #include "pair.h"
 #include "list.h"
@@ -61,37 +63,6 @@ Inicializa cada parâmetro da estrutura definida em
 
 TAD_community init();
 
-/**
-@brief Função utilizada para redimensionar a estrutura dos utilizadores quando esta se encontra sem espaço.
-
-Usa o <b>realloc()</b> que está definido na biblioteca <b>stdlib.h</b>, para realocar mais memória 
-para que possam ser inseridos mais utilizadores, sem perder a informação 
-que ja la estava.
-
-Inicializa os campos da estrutura relativos ao novo espaço alocado.
-
-@param com Estrutura onde será alocada memória.
-
-@returns Estrutura com os mesmos dados, mas com mais espaço.
-*/
-void redimensiona_utilizadores(TAD_community com);
-
-
-/**
-@brief Função utilizada para redimensionar a estrutura dos posts quando esta se encontra sem espaço.
-
-Usa o <b>realloc()</b> que está definido na biblioteca <b>stdlib.h</b>, para realocar mais memória 
-para que possam ser inseridos mais posts, sem perder a informação 
-que ja la estava.
-
-Inicializa os campos da estrutura relativos ao novo espaço alocado.
-
-@param com Estrutura onde será alocada memória.
-
-@returns Estrutura com os mesmos dados, mas com mais espaço.
-*/
-void redimensiona_posts(TAD_community com);
-
 // query 0
 
 /**
@@ -104,7 +75,7 @@ void redimensiona_posts(TAD_community com);
 
 Date stringToDias (char* data);
 
-int strToTag (TAD_community com, char* str, int i);
+int strToTag (TAD_community com, char* str, int id);
 
 /**
 @brief Função que diz se um id esta contido numa lista de id's.

@@ -7,57 +7,6 @@
 #include <glib.h>
 #include "interface.h"
 
-// para as tabelas
-#define OCUPADO 1
-#define LIVRE 0
-
-struct TCD_community{
-  UTILIZADOR* utilizador;
-  int n_utilizadores;
-  int espaco_users;
-  POSTS* posts;
-  int posts_t;
-  int espaco_posts;
-  POSTS* posts_datas;
-  int posts_datas_t;
-  int espaco_posts_datas;
-};
-
-
-struct utilizador{
-  char* nome;
-  int id;
-  USER user; // bio e array para 10 posts
-  int* posts_frequentados; // so contem o id das perguntas em que ele interage
-  int contador_posts_frequentados;
-  int espaco_posts_frequentados;
-  int posts_u;
-  int reputacao;
-  int indice; // indice onde está o utilizador no array
-  int status;
-};
-
-struct posts{
-  Date data;
-  int id_post;
-  int score;
-  int owner_user_id;
-  char* title;
-  char* body;
-  int post_type_id; // 1-pergunta 2-resposta
-  int parent_id;
-  char* tags;
-  int answer_count;
-  int comment_count;
-  char* favorite_count;
-  int dif_votes;
-  int indice_posts;
-  int indice_posts_datas;
-  int status;
-};
-
-/*
-
 // definições da glib
 // typedef void* gpointer;
 // typedef char gchar;
@@ -69,7 +18,16 @@ struct TCD_community{
 };
 
 struct utilizador{
-  gpointer key_id;
+  gchar* nome;
+  gchar* bio;
+  gint* posts_frequentados; // so contem o id das perguntas em que ele interage
+  gint contador_posts_frequentados;
+  gint espaco_posts_frequentados;
+  gint posts_u;
+  gint reputacao;
+};
+
+struct posts{
   Date data;
   gint score;
   gint owner_user_id;
@@ -84,28 +42,17 @@ struct utilizador{
   gint dif_votes;
 };
 
-struct posts{
-  gpointer key_id;
-  gchar* nome;
-  USER user;
-  gint* posts_frequentados; // so contem o id das perguntas em que ele interage
-  gint contador_posts_frequentados;
-  gint espaco_posts_frequentados;
-  gint posts_u;
-  gint reputacao;
-};
+// init
 
-*/
+TAD_community init(){
+    TAD_community tad = malloc(sizeof(struct TCD_community));
+    tad->utilizador = g_hash_table_new (g_int_hash, g_int_equal);
+    tad->posts = g_hash_table_new (g_int_hash, g_int_equal);
+    return tad;
+}
+
 
 // funções auxiliares mais tarde para serem postas noutro ficheiro
-
-int hash_users(int chave, TAD_community com){
-    return (abs(chave) % com->espaco_users);
-}
-
-int hash_posts(int chave, TAD_community com){
-    return (abs(chave) % com->espaco_posts);
-}
 
 int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas ou n
     int inicio = 0,fim;
@@ -143,77 +90,6 @@ int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas o
     else return -1;
 }
 
-// init
-
-TAD_community init(){
-
-  TAD_community tad = malloc(sizeof(struct TCD_community));
-  tad->utilizador = g_hash_table_new (g_int_hash, g_int_equal) ;//malloc(sizeof(struct utilizador)*50000);
-  tad->n_utilizadores = 0;
-  tad->espaco_users = 50000;
-  tad->posts = malloc(sizeof (struct posts)*75000);
-  tad->posts_t = 0;
-  tad->espaco_posts=75000;
-  tad->posts_datas = malloc(sizeof (struct posts)*75000);
-  tad->posts_datas_t = 0;
-  tad->espaco_posts_datas = 0;
-  
-  for(int i = 0 ; i!=50000 ; i++){
-    tad->utilizador[i] = malloc(sizeof(struct utilizador));
-    tad->utilizador[i]->nome = NULL; ////////
-    tad->utilizador[i]->id = 0;
-    long array[10] = {0};
-    tad->utilizador[i]->user = create_user(NULL,array);
-    tad->utilizador[i]->posts_frequentados = malloc(sizeof(5));
-    for(int k = 0; k < 5 ; k++) tad->utilizador[i]->posts_frequentados[k] = 0;
-    tad->utilizador[i]->contador_posts_frequentados = 0;
-    tad->utilizador[i]->espaco_posts_frequentados = 5;
-    tad->utilizador[i]->reputacao = 0;
-    tad->utilizador[i]->posts_u = 0;   
-    tad->utilizador[i]->status = LIVRE; 
-  }
-  for (int j = 0; j != 75000; j++) {
-    tad->posts[j] = malloc(sizeof(struct posts));
-    tad->posts[j]->data= createDate(0,0,0);
-    tad->posts[j]->id_post = 0;
-    tad->posts[j]->score = 0;
-    tad->posts[j]->owner_user_id= 0;
-    tad->posts[j]->title = NULL;
-    tad->posts[j]->body = NULL;
-    tad->posts[j]->post_type_id = 0;
-    tad->posts[j]->parent_id=0;
-    tad->posts[j]->tags = NULL;
-    tad->posts[j]->answer_count = 0;
-    tad->posts[j]->comment_count = 0;
-    tad->posts[j]->favorite_count = NULL;
-    tad->posts[j]->dif_votes = 0;
-    tad->posts[j]->indice_posts = 0;
-    tad->posts[j]->indice_posts_datas = 0;
-    tad->posts[j]->status = LIVRE; 
-
-  }
-  for (int k = 0; k != 75000; k++) {
-    tad->posts_datas[k] = malloc(sizeof(struct posts));
-    tad->posts_datas[k]->data= createDate(0,0,0);
-    tad->posts_datas[k]->id_post = 0;
-    tad->posts_datas[k]->score = 0;
-    tad->posts_datas[k]->owner_user_id= 0;
-    tad->posts_datas[k]->title = NULL;
-    tad->posts_datas[k]->body = NULL;
-    tad->posts_datas[k]->post_type_id = 0;
-    tad->posts_datas[k]->parent_id=0;
-    tad->posts_datas[k]->tags = NULL;
-    tad->posts_datas[k]->answer_count = 0;
-    tad->posts_datas[k]->comment_count = 0;
-    tad->posts_datas[k]->favorite_count = NULL;
-    tad->posts_datas[k]->dif_votes = 0;
-    tad->posts_datas[k]->indice_posts = 0;
-    tad->posts_datas[k]->indice_posts_datas = 0;
-    tad->posts_datas[k]->status = LIVRE;
-  }
-  return tad;
-}
-
 // query 0 (load)
 
 Date stringToDias (char* data) { // "2011-11-11"
@@ -234,12 +110,14 @@ Date stringToDias (char* data) { // "2011-11-11"
     return ndata;
 }
 
-int strToTag (TAD_community com, char* str, int i){
+int strToTag (TAD_community com, char* str, int id){
   char* token;
+  POSTS value_post;
+  value_post = (POSTS) g_hash_table_lookup(com->posts,id);
   const char delim[3] = "&;"; //caracteres em que a string é dividida
   token = strtok (str,delim);
   while (token != NULL){
-      com->posts[i]->tags = token;
+      value_post->tags = token;
       //para testar:
       //printf("%s\n", com->posts[i]->tags);
       token = strtok (NULL, delim);
@@ -254,82 +132,20 @@ int myelem (int* l, int id, int N){ // ve se um elemento esta num array
     return 0; // caso de nao ter
 }
 
-void redimensiona_utilizadores(TAD_community com){
-
-  int posicao_hash;
-
-  UTILIZADOR* new = malloc(sizeof(struct utilizador)*(com->espaco_users + 50000));
-
-  for(int j = 0; j < (com->espaco_users + 50000) ; j++){ // inicializar o new array
-      new[j] = malloc(sizeof(struct utilizador));
-      new[j]->nome = NULL; ////////
-      new[j]->id = 0;
-      long array[10] = {0};
-      new[j]->user = create_user(NULL,array);
-      new[j]->posts_frequentados = malloc(sizeof(5));
-      for(int k = 0; k < 5 ; k++) new[j]->posts_frequentados[k] = 0;
-      new[j]->contador_posts_frequentados = 0;
-      new[j]->espaco_posts_frequentados = 5;
-      new[j]->reputacao = 0;
-      new[j]->posts_u= 0; 
-      new[j]->indice = 0;
-      new[j]->status = LIVRE;
-  }
-
-  for(int i = 0 ; i < com->espaco_users ; i++ ){
-      posicao_hash = hash_users(com->utilizador[i]->id, com);
-      posicao_hash = 0;//verifica_array(new, com, posicao_hash);
-      new[posicao_hash]->nome = com->utilizador[i]->nome; 
-      new[posicao_hash]->id = com->utilizador[i]->id;
-      new[posicao_hash]->contador_posts_frequentados = com->utilizador[i]->contador_posts_frequentados;
-      new[posicao_hash]->espaco_posts_frequentados = com->utilizador[i]->espaco_posts_frequentados;
-      new[posicao_hash]->reputacao = com->utilizador[i]->reputacao;
-      new[posicao_hash]->posts_u= com->utilizador[i]->posts_u;
-      new[posicao_hash]->indice = posicao_hash;
-      new[posicao_hash]->status = OCUPADO;
-  }
-
-  com->utilizador = new;
-  com->espaco_users += 50000;
-}
-
-void redimensiona_posts(TAD_community com) {
-  com->posts = realloc(com->posts, sizeof(struct posts) * (com->espaco_posts + 75000));
-
-  for (int j = com->espaco_posts; j <(com->espaco_posts + 75000); j++) {
-    com->posts[j] = malloc(sizeof(struct posts));
-    com->posts[j]->data= createDate(0,0,0);
-    com->posts[j]->id_post = 0;
-    com->posts[j]->score = 0;
-    com->posts[j]->owner_user_id= 0;
-    com->posts[j]->title = NULL;
-    com->posts[j]->body = NULL;
-    com->posts[j]->post_type_id = 0;
-    com->posts[j]->parent_id=0;
-    com->posts[j]->tags = NULL;
-    com->posts[j]->answer_count = 0;
-    com->posts[j]->comment_count = 0;
-    com->posts[j]->favorite_count = NULL;
-    com->posts[j]->dif_votes = 0;
-
-  }
-  com->espaco_posts+=75000;
-}
-
+/*
 void redimensiona_posts_frequentados(TAD_community com, int id_bin){ // recebe a posição do array onde esta o utilizador a redimensionar
     com->utilizador[id_bin]->posts_frequentados = realloc(com->utilizador[id_bin]->posts_frequentados, sizeof(int) * (com->utilizador[id_bin]->espaco_posts_frequentados + 5));
     for(int i = com->utilizador[id_bin]->espaco_posts_frequentados ; i < com->utilizador[id_bin]->espaco_posts_frequentados + 5 ; i++){
         com->utilizador[id_bin]->posts_frequentados[i] = 0;
     }
     com->utilizador[id_bin]->espaco_posts_frequentados += 5;
-}
+}*/
 
 void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // acho que está tudo bem nesta função
 
     xmlChar *nome_l, *bio_l, *reputacao_l;
     cur = cur->xmlChildrenNode;
-    int i = 0,id_l,posicao_hash;
-    long array[10] = {0}; // está aqui para ser usado apenas no create_user()
+    int i = 0,id_l;
 
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
@@ -339,25 +155,18 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            reputacao_l = xmlGetProp(cur, (const xmlChar *) "Reputation");
 
            // preenche os parametros do utilizador
-           com->utilizador[posicao_hash]->id = id_l; // usa-se o atoi porque na estrutura o id é um int
-           com->utilizador[posicao_hash]->nome = mystrdup( (char *) nome_l);
-           com->utilizador[posicao_hash]->user = create_user( mystrdup((char *) bio_l), array);
-           com->utilizador[posicao_hash]->reputacao = atoi( (const char *) reputacao_l);
-           com->utilizador[posicao_hash]->status = OCUPADO;
+           UTILIZADOR value = malloc(sizeof(struct utilizador));
+           value->nome = mystrdup( (char *) nome_l);
+           value->bio = mystrdup((char *) bio_l);
+           value->reputacao = atoi( (const char *) reputacao_l);
 
-           int value =0;
-           g_hash_table_insert (com->utilizador, id_l, value);
+           g_hash_table_insert (com->utilizador, (void*)id_l, value);
 
            xmlFree(nome_l);
            xmlFree(bio_l);
            xmlFree(reputacao_l);
-           
-           if ((com->espaco_users - com->n_utilizadores) == 1){ // testa se ainda tem espaço para alocar o proximo
-               redimensiona_utilizadores(com);
-           }
 
            i++;
-           com->n_utilizadores++;
         }
         cur = cur->next;
     }
@@ -369,7 +178,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    xmlChar *id_l, *post_type_id_l, *creation_date_l, *score_l, *body_l, *owner_user_id_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
    cur = cur->xmlChildrenNode;
-   int i=0,id_bin, k;
+   int i=0, k;
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
@@ -387,49 +196,47 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            favorite_count_l = xmlGetProp(cur, (const xmlChar *) "FavoriteCount");
 
            // preenche os parametros dos posts
-           id_bin = 0;//procura_binaria_u(com, atoi( (const char *) owner_user_id_l),com->n_utilizadores);
-           com->posts[i]->data=stringToDias( (char *) creation_date_l);
-           com->utilizador[id_bin]->posts_u++;
-           com->posts[i]->id_post = atoi( (const char *) id_l);
-           com->posts[i]->score = atoi( (const char *) score_l);
-           com->posts[i]->owner_user_id= atoi( (const char *) owner_user_id_l);
-           com->posts[i]->body = mystrdup( (char *) body_l);
-           com->posts[i]->post_type_id = atoi( (const char *) post_type_id_l);
-           if(com->posts[i]->post_type_id==2) {
-              com->posts[i]->parent_id = atoi( (const char *) parent_id_l);
+           POSTS value = malloc(sizeof(struct posts));
+           UTILIZADOR value_user;
+
+           value->data = stringToDias( (char *) creation_date_l);
+           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, atoi((const char *) owner_user_id_l));
+           value_user->posts_u++;
+           value->score = atoi( (const char *) score_l);
+           value->owner_user_id= atoi( (const char *) owner_user_id_l);
+           value->body = mystrdup( (char *) body_l);
+           value->post_type_id = atoi( (const char *) post_type_id_l);
+
+           if(value->post_type_id==2) {
+              value->parent_id = atoi( (const char *) parent_id_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
-              if(myelem(com->utilizador[id_bin]->posts_frequentados, com->posts[i]->parent_id, com->utilizador[id_bin]->contador_posts_frequentados) == 0){
+              if(myelem(value_user->posts_frequentados, value->parent_id, value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
-                com->utilizador[id_bin]->posts_frequentados[com->utilizador[id_bin]->contador_posts_frequentados] = com->posts[i]->parent_id;
-                com->utilizador[id_bin]->contador_posts_frequentados++;
-                // verifica se o array precisa de ser redimensionado
-                if( (com->utilizador[id_bin]->espaco_posts_frequentados - com->utilizador[id_bin]->contador_posts_frequentados) == 0){
-                  redimensiona_posts_frequentados(com, id_bin);
-                }
+                value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
+                value_user->contador_posts_frequentados++;
               }
            }
            else{
-              com->posts[i]->title = mystrdup( (char *) title_l);
-              k = strToTag(com, (char *) tags_l, i);
+              value->title = mystrdup( (char *) title_l);
+              k = strToTag(com, (char *) tags_l, atoi( (const char *) id_l));
               // inserir o id da pergunta no utilizador que faz a pergunta
-              if(myelem(com->utilizador[id_bin]->posts_frequentados, com->posts[i]->id_post, com->utilizador[id_bin]->contador_posts_frequentados) == 0){
+              if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
-                com->utilizador[id_bin]->posts_frequentados[com->utilizador[id_bin]->contador_posts_frequentados] = com->posts[i]->parent_id;
-                com->utilizador[id_bin]->contador_posts_frequentados++;
-                // verifica se o array precisa de ser redimensionado
-                if( (com->utilizador[id_bin]->espaco_posts_frequentados - com->utilizador[id_bin]->contador_posts_frequentados) == 0){
-                  redimensiona_posts_frequentados(com, id_bin);
-                }
+                value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
+                value_user->contador_posts_frequentados++;
               }
            }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
-              com->posts[i]->answer_count = 0;
+              value->answer_count = 0;
            }
            else{
-              com->posts[i]->answer_count = atoi( (const char *) answer_count_l);
+              value->answer_count = atoi( (const char *) answer_count_l);
            }
-           com->posts[i]->comment_count = atoi( (const char *) comment_count_l);
-           com->posts[i]->favorite_count = mystrdup( (char *)favorite_count_l);
+           value->comment_count = atoi( (const char *) comment_count_l);
+           value->favorite_count = mystrdup( (char *)favorite_count_l);
+
+           g_hash_table_insert (com->posts, atoi( (const char *)id_l), value);
+
               
            xmlFree(id_l);
            xmlFree(post_type_id_l);
@@ -444,10 +251,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            xmlFree(comment_count_l);
            xmlFree(favorite_count_l);
 
-           if ((com->espaco_posts - com->posts_t)== 1) {
-               redimensiona_posts(com);
-           }
-           com->posts_t++;
            i++;
        }
        cur = cur->next;
@@ -464,14 +267,15 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
            votes_l = xmlGetProp(cur, (const xmlChar *) "VoteTypeId");
            postid_l = xmlGetProp(cur, (const xmlChar *) "PostId");
            
-           int id_bin = 0;//procura_binaria_p(com,atoi((const char *)postid_l), com->posts_t);
-           if(id_bin != -1){
+           POSTS value_tags;  //procura_binaria_p(com,atoi((const char *)postid_l), com->posts_t);
+           value_tags = (POSTS) g_hash_table_lookup(com->posts, atoi((const char *) postid_l));
+           if(value_tags != NULL){
               // preenche os parametros do utilizador
               if(atoi((const char *) (votes_l)) == 2){
-                com->posts[id_bin]->dif_votes++;
+                value_tags->dif_votes++;
               }
               if(atoi((const char *) (votes_l)) == 3){
-                com->posts[id_bin]->dif_votes--;
+                value_tags->dif_votes--;
               }
             }
 
