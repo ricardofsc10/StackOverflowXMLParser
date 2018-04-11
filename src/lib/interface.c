@@ -81,6 +81,9 @@ struct posts{
 struct value_info_utilizador{
   gchar* nome;
   USER user;
+  gint* posts_frequentados; // so contem o id das perguntas em que ele interage
+  gint contador_posts_frequentados;
+  gint espaco_posts_frequentados;
   gint posts_u;
   gint reputacao;
 };
