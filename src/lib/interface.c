@@ -112,10 +112,8 @@ Date stringToDias (char* data) { // "2011-11-11"
     return ndata;
 }
 
-void strToTag (TAD_community com, char* str, int id){
+void strToTag (POSTS value_post, char* str, int id){
   char* token;
-  POSTS value_post;
-  value_post = (POSTS) g_hash_table_lookup(com->posts,(gconstpointer) &id);
   const char delim[3] = "&;"; //caracteres em que a string é dividida
   token = strtok (str,delim);
   while (token != NULL){
@@ -223,7 +221,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
            value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) owner_user_id_l);
            if(value_user == NULL) printf("deu null\n");
-           else printf("nao deu null\n");
 
            value_user->posts_u++;
            value->score = atoi( (const char *) score_l);
@@ -234,21 +231,21 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            if(value->post_type_id==2) {
               value->parent_id = atoi( (const char *) parent_id_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
-              if(myelem(value_user->posts_frequentados, value->parent_id, value_user->contador_posts_frequentados) == 0){
+             // if(myelem(value_user->posts_frequentados, value->parent_id, value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
                 //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
-                value_user->contador_posts_frequentados++;
-              }
+               // value_user->contador_posts_frequentados++;
+              //}
            }
            else{
               value->title = mystrdup( (char *) title_l);
-              strToTag(com, (char *) tags_l, *id_l);
+              strToTag(value, (char *) tags_l, *id_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
-              if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
+              //if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
-                value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
-                value_user->contador_posts_frequentados++;
-              }
+                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
+                //value_user->contador_posts_frequentados++;
+              //}
            }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
               value->answer_count = 0;
