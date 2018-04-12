@@ -112,7 +112,7 @@ Date stringToDias (char* data) { // "2011-11-11"
     return ndata;
 }
 
-void strToTag (POSTS value_post, char* str, int id){
+void strToTag (POSTS value_post, char* str){
   char* token;
   const char delim[3] = "&;"; //caracteres em que a string é dividida
   token = strtok (str,delim);
@@ -157,20 +157,20 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            reputacao_l = xmlGetProp(cur, (const xmlChar *) "Reputation");
 
            // preenche os parametros do utilizador
-           UTILIZADOR value = malloc(sizeof(struct utilizador));
+           UTILIZADOR value_user = malloc(sizeof(struct utilizador));
 
-           value->key_id = *id_l;
-           value->nome = mystrdup( (char *) nome_l);
-           value->bio = mystrdup((char *) bio_l);
-           value->reputacao = atoi( (const char *) reputacao_l);
-           value->posts_u = 0;
+           value_user->key_id = *id_l;
+           value_user->nome = mystrdup( (char *) nome_l);
+           value_user->bio = mystrdup((char *) bio_l);
+           value_user->reputacao = atoi( (const char *) reputacao_l);
+           value_user->posts_u = 0;
 
-           g_hash_table_insert (com->utilizador, (gpointer) id_l, (gpointer) &value);
+           g_hash_table_insert (com->utilizador, (gpointer) id_l, (gpointer) value_user);
 
            xmlFree(nome_l);
            xmlFree(bio_l);
            xmlFree(reputacao_l);
-           free(value);
+           free(value_user);
 
            i++;
         }
@@ -213,50 +213,50 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            favorite_count_l = xmlGetProp(cur, (const xmlChar *) "FavoriteCount");
 
            // preenche os parametros dos posts
-           POSTS value = malloc(sizeof(struct posts));
+           POSTS value_post = malloc(sizeof(struct posts));
            UTILIZADOR value_user = malloc(sizeof(struct utilizador));
 
-           value->key_id_post = *id_l;
-           value->data = stringToDias( (char *) creation_date_l);
+           value_post->key_id_post = *id_l;
+           value_post->data = stringToDias( (char *) creation_date_l);
 
            value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) owner_user_id_l);
            if(value_user == NULL) printf("deu null\n");
 
            value_user->posts_u++;
-           value->score = atoi( (const char *) score_l);
-           value->owner_user_id= *owner_user_id_l;
-           value->body = mystrdup( (char *) body_l);
-           value->post_type_id = atoi( (const char *) post_type_id_l);
+           value_post->score = atoi( (const char *) score_l);
+           value_post->owner_user_id= *owner_user_id_l;
+           value_post->body = mystrdup( (char *) body_l);
+           value_post->post_type_id = atoi( (const char *) post_type_id_l);
 
-           if(value->post_type_id==2) {
-              value->parent_id = atoi( (const char *) parent_id_l);
+           if(value_post->post_type_id==2) {
+              value_post->parent_id = atoi( (const char *) parent_id_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
-             // if(myelem(value_user->posts_frequentados, value->parent_id, value_user->contador_posts_frequentados) == 0){
+             // if(myelem(value_user->posts_frequentados, value_post->parent_id, value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
-                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
+                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value_post->parent_id;
                // value_user->contador_posts_frequentados++;
               //}
            }
            else{
-              value->title = mystrdup( (char *) title_l);
-              strToTag(value, (char *) tags_l, *id_l);
+              value_post->title = mystrdup( (char *) title_l);
+              strToTag(value_post, (char *) tags_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
               //if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
-                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
+                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value_post->parent_id;
                 //value_user->contador_posts_frequentados++;
               //}
            }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
-              value->answer_count = 0;
+              value_post->answer_count = 0;
            }
            else{
-              value->answer_count = atoi( (const char *) answer_count_l);
+              value_post->answer_count = atoi( (const char *) answer_count_l);
            }
-           value->comment_count = atoi( (const char *) comment_count_l);
-           value->favorite_count = mystrdup( (char *)favorite_count_l);
+           value_post->comment_count = atoi( (const char *) comment_count_l);
+           value_post->favorite_count = mystrdup( (char *)favorite_count_l);
 
-           g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) &value);
+           g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) value_post);
 
           
            xmlFree(post_type_id_l);

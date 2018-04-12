@@ -75,7 +75,7 @@ TAD_community init();
 
 Date stringToDias (char* data);
 
-void strToTag (POSTS value_post, char* str, int id);
+void strToTag (POSTS value_post, char* str);
 
 /**
 @brief Função que diz se um id esta contido numa lista de id's.
