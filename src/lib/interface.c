@@ -256,7 +256,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            value->comment_count = atoi( (const char *) comment_count_l);
            value->favorite_count = mystrdup( (char *)favorite_count_l);
 
-           g_hash_table_insert (com->posts, (gpointer) &id_l, value);
+           g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) &value);
 
           
            xmlFree(post_type_id_l);
@@ -278,14 +278,17 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 }
 
 void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
-    xmlChar *votes_l;
-    size_t postid_l;
+
     cur = cur->xmlChildrenNode;
 
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
+
+           xmlChar *votes_l;
+           int* postid_l = malloc(sizeof(int));
+
            votes_l = xmlGetProp(cur, (const xmlChar *) "VoteTypeId");
-           postid_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "PostId"));
+           *postid_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "PostId"));
            
            POSTS value_tags;  //procura_binaria_p(com,atoi((const char *)postid_l), com->posts_t);
            value_tags = (POSTS) g_hash_table_lookup(com->posts, (gpointer) postid_l);
