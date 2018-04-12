@@ -170,7 +170,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            xmlFree(nome_l);
            xmlFree(bio_l);
            xmlFree(reputacao_l);
-           free(value_user);
+           //free(value_user);
 
            i++;
         }
@@ -223,6 +223,10 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            if(value_user == NULL) printf("deu null\n");
 
            value_user->posts_u++;
+
+           printf("ID USER: %d\n", value_user->key_id );
+           printf("Nº POSTS: %d\n", value_user->posts_u );
+           
            value_post->score = atoi( (const char *) score_l);
            value_post->owner_user_id= *owner_user_id_l;
            value_post->body = mystrdup( (char *) body_l);
@@ -269,6 +273,8 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            xmlFree(answer_count_l);
            xmlFree(comment_count_l);
            xmlFree(favorite_count_l);
+           //free(value_post);
+           //free(value_user);
 
            i++;
        }
@@ -290,19 +296,20 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
            votes_l = xmlGetProp(cur, (const xmlChar *) "VoteTypeId");
            *postid_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "PostId"));
            
-           POSTS value_tags;  //procura_binaria_p(com,atoi((const char *)postid_l), com->posts_t);
-           value_tags = (POSTS) g_hash_table_lookup(com->posts, (gpointer) postid_l);
-           if(value_tags != NULL){
+           POSTS value_post = malloc(sizeof(struct posts));
+           value_post = (POSTS) g_hash_table_lookup(com->posts, (gpointer) postid_l);
+           if(value_post != NULL){
               // preenche os parametros do utilizador
               if(atoi((const char *) (votes_l)) == 2){
-                value_tags->dif_votes++;
+                value_post->dif_votes++;
               }
               if(atoi((const char *) (votes_l)) == 3){
-                value_tags->dif_votes--;
+                value_post->dif_votes--;
               }
             }
 
           xmlFree(votes_l);
+          //free(value_post);
         }
         cur = cur->next;
     }
