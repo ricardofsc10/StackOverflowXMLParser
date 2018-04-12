@@ -112,10 +112,10 @@ Date stringToDias (char* data) { // "2011-11-11"
     return ndata;
 }
 
-int strToTag (TAD_community com, char* str, size_t id){
+void strToTag (TAD_community com, char* str, int id){
   char* token;
   POSTS value_post;
-  value_post = (POSTS) g_hash_table_lookup(com->posts, (const void *) id);
+  value_post = (POSTS) g_hash_table_lookup(com->posts,(gconstpointer) &id);
   const char delim[3] = "&;"; //caracteres em que a string é dividida
   token = strtok (str,delim);
   while (token != NULL){
@@ -124,7 +124,6 @@ int strToTag (TAD_community com, char* str, size_t id){
       //printf("%s\n", com->posts[i]->tags);
       token = strtok (NULL, delim);
   }
-  return 0;
 }
 
 int myelem (int* l, int id, int N){ // ve se um elemento esta num array
@@ -143,16 +142,18 @@ void redimensiona_posts_frequentados(TAD_community com, int id_bin){ // recebe a
     com->utilizador[id_bin]->espaco_posts_frequentados += 5;
 }*/
 
-void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // acho que está tudo bem nesta função
+void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { 
 
-    xmlChar *nome_l, *bio_l, *reputacao_l;
     cur = cur->xmlChildrenNode;
     int i = 0;
-    size_t id_l;
 
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-           id_l = atoi( (const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
+
+           xmlChar *nome_l, *bio_l, *reputacao_l;
+           int* id_l = malloc(sizeof(int));
+
+           *id_l = atoi( (const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
            nome_l = xmlGetProp(cur, (const xmlChar *) "DisplayName");
            bio_l = xmlGetProp(cur, (const xmlChar *) "AboutMe");
            reputacao_l = xmlGetProp(cur, (const xmlChar *) "Reputation");
@@ -160,13 +161,13 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            // preenche os parametros do utilizador
            UTILIZADOR value = malloc(sizeof(struct utilizador));
 
-           value->key_id = id_l;
+           value->key_id = *id_l;
            value->nome = mystrdup( (char *) nome_l);
            value->bio = mystrdup((char *) bio_l);
            value->reputacao = atoi( (const char *) reputacao_l);
            value->posts_u = 0;
 
-           g_hash_table_insert (com->utilizador, (gpointer) &id_l, (gpointer) &value);
+           g_hash_table_insert (com->utilizador, (gpointer) id_l, (gpointer) &value);
 
            xmlFree(nome_l);
            xmlFree(bio_l);
@@ -178,24 +179,34 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
         cur = cur->next;
     }
     printf("[load] %d Users...\n", i);
+
+    /* testa se contem elementos
+    int* key = malloc(sizeof(int));
+    *key = 1;
+    gboolean g = g_hash_table_contains(com->utilizador, (gpointer) key);
+    if(g == TRUE) printf("contem..\n");
+    else printf("nao contem..\n");*/
 }
 
 
 void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
-   xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
    cur = cur->xmlChildrenNode;
-   int i=0, k;
-   size_t owner_user_id_l, id_l;
+   int i=0;
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-           id_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
+
+           xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
+           int* owner_user_id_l = malloc(sizeof(int)); 
+           int* id_l = malloc(sizeof(int));
+
+           *id_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
            post_type_id_l = xmlGetProp(cur, (const xmlChar *) "PostTypeId");
            creation_date_l = xmlGetProp(cur, (const xmlChar *) "CreationDate");
            score_l = xmlGetProp(cur, (const xmlChar *) "Score");
            body_l = xmlGetProp(cur, (const xmlChar *) "Body");
-           owner_user_id_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "OwnerUserId"));
+           *owner_user_id_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "OwnerUserId"));
            parent_id_l=xmlGetProp(cur, (const xmlChar *) "ParentId");
            title_l = xmlGetProp(cur, (const xmlChar *) "Title");
            tags_l = xmlGetProp(cur, (const xmlChar *) "Tags");
@@ -205,15 +216,18 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
            // preenche os parametros dos posts
            POSTS value = malloc(sizeof(struct posts));
-           UTILIZADOR value_user;
+           UTILIZADOR value_user = malloc(sizeof(struct utilizador));
 
-           value->key_id_post = id_l;
+           value->key_id_post = *id_l;
            value->data = stringToDias( (char *) creation_date_l);
-           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gconstpointer) &owner_user_id_l);
+
+           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) owner_user_id_l);
            if(value_user == NULL) printf("deu null\n");
+           else printf("nao deu null\n");
+
            value_user->posts_u++;
            value->score = atoi( (const char *) score_l);
-           value->owner_user_id= owner_user_id_l;
+           value->owner_user_id= *owner_user_id_l;
            value->body = mystrdup( (char *) body_l);
            value->post_type_id = atoi( (const char *) post_type_id_l);
 
@@ -228,11 +242,11 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            }
            else{
               value->title = mystrdup( (char *) title_l);
-              k = strToTag(com, (char *) tags_l, id_l);
+              strToTag(com, (char *) tags_l, *id_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
               if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
-                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
+                value_user->posts_frequentados[value_user->contador_posts_frequentados] = value->parent_id;
                 value_user->contador_posts_frequentados++;
               }
            }
