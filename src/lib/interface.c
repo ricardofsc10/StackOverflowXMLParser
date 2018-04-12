@@ -18,7 +18,7 @@ struct TCD_community{
 };
 
 struct utilizador{
-  gint id;
+  gint key_id;
   gchar* nome;
   gchar* bio;
   gint* posts_frequentados; // so contem o id das perguntas em que ele interage
@@ -29,7 +29,7 @@ struct utilizador{
 };
 
 struct posts{
-  gint id_post;
+  gint key_id_post;
   Date data;
   gint score;
   gint owner_user_id;
@@ -160,7 +160,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { // ac
            // preenche os parametros do utilizador
            UTILIZADOR value = malloc(sizeof(struct utilizador));
 
-           value->id = id_l;
+           value->key_id = id_l;
            value->nome = mystrdup( (char *) nome_l);
            value->bio = mystrdup((char *) bio_l);
            value->reputacao = atoi( (const char *) reputacao_l);
@@ -207,7 +207,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            POSTS value = malloc(sizeof(struct posts));
            UTILIZADOR value_user;
 
-           value->id_post = id_l;
+           value->key_id_post = id_l;
            value->data = stringToDias( (char *) creation_date_l);
            value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gconstpointer) &owner_user_id_l);
            if(value_user == NULL) printf("deu null\n");
