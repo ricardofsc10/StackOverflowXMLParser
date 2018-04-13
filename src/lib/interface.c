@@ -40,7 +40,6 @@ struct posts{
   gchar* tags;
   gint answer_count;
   gint comment_count;
-  gchar* favorite_count;
   gint dif_votes;
 };
 
@@ -198,7 +197,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
 
-           xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l, *favorite_count_l;
+           xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l;
            int* owner_user_id_l = malloc(sizeof(int)); 
            int* id_l = malloc(sizeof(int));
 
@@ -213,7 +212,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            tags_l = xmlGetProp(cur, (const xmlChar *) "Tags");
            answer_count_l = xmlGetProp(cur, (const xmlChar *) "AnswerCount");
            comment_count_l = xmlGetProp(cur, (const xmlChar *) "CommentCount");
-           favorite_count_l = xmlGetProp(cur, (const xmlChar *) "FavoriteCount");
 
            // preenche os parametros dos posts e dos utilizadores
            POSTS value_post = malloc(sizeof(struct posts));
@@ -261,7 +259,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               value_post->answer_count = atoi( (const char *) answer_count_l);
            }
            value_post->comment_count = atoi( (const char *) comment_count_l);
-           value_post->favorite_count = mystrdup( (char *)favorite_count_l);
            value_post->dif_votes = 0;
 
            // insere todos os parametros do post na chave (id) associado
@@ -277,7 +274,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            xmlFree(tags_l);
            xmlFree(answer_count_l);
            xmlFree(comment_count_l);
-           xmlFree(favorite_count_l);
            //free(value_post);
            //free(value_user);
 
