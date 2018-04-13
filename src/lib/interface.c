@@ -163,6 +163,9 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            value_user->nome = mystrdup( (char *) nome_l);
            value_user->bio = mystrdup((char *) bio_l);
            value_user->reputacao = atoi( (const char *) reputacao_l);
+           value_user->posts_frequentados = malloc(sizeof(5));
+           value_user->contador_posts_frequentados = 0;
+           value_user->espaco_posts_frequentados = 0;
            value_user->posts_u = 0;
 
            g_hash_table_insert (com->utilizador, (gpointer) id_l, (gpointer) value_user);
@@ -212,21 +215,19 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            comment_count_l = xmlGetProp(cur, (const xmlChar *) "CommentCount");
            favorite_count_l = xmlGetProp(cur, (const xmlChar *) "FavoriteCount");
 
-           // preenche os parametros dos posts
+           // preenche os parametros dos posts e dos utilizadores
            POSTS value_post = malloc(sizeof(struct posts));
            UTILIZADOR value_user = malloc(sizeof(struct utilizador));
 
+           // value_user fica com valor associado à chave passada
+           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) owner_user_id_l);
+           value_user->posts_u++;
+           /*
+           printf("ID USER: %d\n", value_user->key_id );
+           printf("Nº POSTS: %d\n", value_user->posts_u );*/
+
            value_post->key_id_post = *id_l;
            value_post->data = stringToDias( (char *) creation_date_l);
-
-           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) owner_user_id_l);
-           if(value_user == NULL) printf("deu null\n");
-
-           value_user->posts_u++;
-
-           printf("ID USER: %d\n", value_user->key_id );
-           printf("Nº POSTS: %d\n", value_user->posts_u );
-           
            value_post->score = atoi( (const char *) score_l);
            value_post->owner_user_id= *owner_user_id_l;
            value_post->body = mystrdup( (char *) body_l);
@@ -234,6 +235,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
            if(value_post->post_type_id==2) {
               value_post->parent_id = atoi( (const char *) parent_id_l);
+              value_post->title = NULL;
               // inserir o id da pergunta no utilizador que faz a pergunta
              // if(myelem(value_user->posts_frequentados, value_post->parent_id, value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
@@ -243,6 +245,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            }
            else{
               value_post->title = mystrdup( (char *) title_l);
+              value_post->parent_id = 0;
               strToTag(value_post, (char *) tags_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
               //if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
@@ -259,7 +262,9 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            }
            value_post->comment_count = atoi( (const char *) comment_count_l);
            value_post->favorite_count = mystrdup( (char *)favorite_count_l);
+           value_post->dif_votes = 0;
 
+           // insere todos os parametros do post na chave (id) associado
            g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) value_post);
 
           
@@ -286,6 +291,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 
     cur = cur->xmlChildrenNode;
+    int i = 0;
 
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
@@ -310,9 +316,12 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 
           xmlFree(votes_l);
           //free(value_post);
+
+          i++;
         }
         cur = cur->next;
     }
+    printf("[load] %d Votes...\n", i);
 }
 
 

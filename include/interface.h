@@ -17,31 +17,6 @@ typedef struct posts* POSTS;
 // funções auxiliares
 
 /**
-@brief Função que implementa uma função de hash, aplicada ao 
-Id de cada utilizador.
-
-@param com Estrutura com os dados.
-@param chave Parâmetro de comparação.
-
-@returns Índice do array utilizadores da estrutura onde um dado utilizador
-se pode encontrar.
-*/
-int hash_users(int chave, TAD_community com);
-
-
-/**
-@brief Função que implementa a procura binária, aplicada ao 
-Id de cada post.
-
-@param com Estrutura com os dados.
-@param chave Parâmetro de comparação.
-
-@returns Índice do array posts da estrutura onde um dado post
-se pode encontrar.
-*/
-int hash_posts(int chave, TAD_community com);
-
-/**
 @brief Função que verifica se uma data se encontra ou não entre um período.
 
 @param x Data usada para comparar
