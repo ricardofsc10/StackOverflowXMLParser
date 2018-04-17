@@ -10,10 +10,6 @@
 
 typedef struct TCD_community * TAD_community;
 
-typedef struct utilizador* UTILIZADOR;
-
-typedef struct posts* POSTS;
-
 // funções auxiliares
 
 /**
