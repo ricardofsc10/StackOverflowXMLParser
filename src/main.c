@@ -11,7 +11,7 @@ int main(){
   tda = init();
   printf("[init] Estrutura já foi inicializada...\n");
 
-  char* path1 = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
+  char* path1 __unused = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
   char* path2 = "../../dumpexemplo/android/";
   printf("[load] Ínicio do load...\n");
 

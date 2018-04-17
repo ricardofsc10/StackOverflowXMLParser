@@ -20,7 +20,7 @@ UTILIZADOR create_utilizador(){
 	u->key_id = 0;
 	u->nome = NULL;
 	u->bio = NULL;
-	u->posts_frequentados = malloc(sizeof(10));
+	u->posts_frequentados = malloc(sizeof(int)*10);
 	for(int i=0; i<10; i++) u->posts_frequentados[i] = 0;
 	u->contador_posts_frequentados = 0;
 	u->espaco_posts_frequentados = 0;
@@ -44,7 +44,7 @@ gchar* get_bio_utilizador(UTILIZADOR u){
 gint* get_posts_frequentados(UTILIZADOR u, int tam){
 	long* u1 = malloc(sizeof(int)*tam);
 	memcpy(u1, u->posts_frequentados, sizeof(int)*tam);
-	return u1;
+	return (gint*) u1;
 }
 
 gint get_contador_posts_frequentados(UTILIZADOR u){
