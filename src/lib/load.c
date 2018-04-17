@@ -96,10 +96,10 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
     }
     printf("[load] %d Users...\n", i);
 
-    /* testa se contem elementos
+    /*// testa se contem elementos
     int* key = malloc(sizeof(int));
     *key = 1;
-    gboolean g = g_hash_table_contains(com->utilizador, (gpointer) key);
+    gboolean g = g_hash_table_contains(get_utilizador(com), (gpointer) key);
     if(g == TRUE) printf("contem..\n");
     else printf("nao contem..\n");*/
 }
@@ -134,11 +134,16 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            UTILIZADOR value_user = create_utilizador();
 
            // value_user fica com valor associado à chave passada
-           value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id_l);
+           value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gconstpointer) owner_user_id_l);
+
+           printf("id: %d\n", get_key_id(value_user) );
+           printf("nome: %s\n", get_nome(value_user));
+
            set_posts_u(value_user, (get_posts_u(value_user)+1));
            /*
-           printf("ID USER: %d\n", value_user->key_id );
-           printf("Nº POSTS: %d\n", value_user->posts_u );*/
+           printf("owner: %d\n", *owner_user_id_l );
+           printf("ID USER: %d\n", get_key_id(value_user) );
+           printf("Nº POSTS: %d\n", get_posts_u(value_user) );*/
 
            set_key_id_post(value_post, *id_l);
            set_data(value_post, stringToDias( (char *) creation_date_l));

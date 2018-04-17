@@ -89,8 +89,8 @@ void set_espaco_posts_frequentados(UTILIZADOR u, int espaco_posts_frequentados){
 	u->espaco_posts_frequentados = espaco_posts_frequentados;
 }
 
-void set_posts_u(UTILIZADOR u, int posts_u){
-	u->posts_u = posts_u;
+void set_posts_u(UTILIZADOR u, int posts_u_l){
+	u->posts_u = posts_u_l;
 }
 
 void set_reputacao(UTILIZADOR u, int reputacao){
