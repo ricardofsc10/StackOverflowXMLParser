@@ -3,5 +3,5 @@
 // init
 
 TAD_community init(){
-    create_tad();
+    return create_tad();
 }

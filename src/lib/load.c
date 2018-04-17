@@ -5,81 +5,10 @@
 #include <libxml/parser.h>
 #include <gmodule.h>
 #include <glib.h>
-#include "interface.h"
-
-// definições da glib
-// typedef void* gpointer;
-// typedef char gchar;
-// gint(); ver no site
-
-struct TCD_community{
-  GHashTable* utilizador;
-  GHashTable* posts;
-};
-
-struct utilizador{
-  gint key_id;
-  gchar* nome;
-  gchar* bio;
-  gint* posts_frequentados; // so contem o id das perguntas em que ele interage
-  gint contador_posts_frequentados;
-  gint espaco_posts_frequentados;
-  gint posts_u;
-  gint reputacao;
-};
-
-struct posts{
-  gint key_id_post;
-  Date data;
-  gint score;
-  gint owner_user_id;
-  gchar* title;
-  gchar* body;
-  gint post_type_id; // 1-pergunta 2-resposta
-  gint parent_id;
-  gchar* tags;
-  gint answer_count;
-  gint comment_count;
-  gint dif_votes;
-};
-
-// funções auxiliares mais tarde para serem postas noutro ficheiro
-
-int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas ou n
-    int inicio = 0,fim;
-    if(get_year(x) < get_year(begin)) inicio=-1;
-    else {
-        if (get_year(x) == get_year(begin)) {
-            if (get_month(x) < get_month(begin)) inicio=-1;
-            else {
-                if (get_month(x) == get_month(begin)) {
-                    if (get_day(x) < get_day(begin)) inicio= -1;
-                    else inicio= 0;
-                }
-                else inicio = 0;
-            }
-        }
-        else inicio = 0;
-    }
-
-    if(get_year(x) > get_year(end)) fim=-1;
-    else {
-        if (get_year(x) == get_year(end)) {
-            if (get_month(x) > get_month(end)) fim =-1;
-            else {
-                if (get_month(x) == get_month(end)) {
-                    if (get_day(x) > get_day(end)) fim = -1;
-                    else fim = 0;
-                }
-                else fim = 0;
-            }
-        }
-        else fim = 0;
-    }
-    
-    if (inicio== 0 && fim ==0) return 0;
-    else return -1;
-}
+#include "tcd.h"
+#include "utilizador.h"
+#include "posts.h"
+#include "common.h"
 
 // query 0 (load)
 
@@ -106,7 +35,7 @@ void strToTag (POSTS value_post, char* str){
   const char delim[3] = "&;"; //caracteres em que a string é dividida
   token = strtok (str,delim);
   while (token != NULL){
-      value_post->tags = token;
+      set_tags(value_post, token);
       //para testar:
       //printf("%s\n", com->posts[i]->tags);
       token = strtok (NULL, delim);
@@ -146,23 +75,20 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            reputacao_l = xmlGetProp(cur, (const xmlChar *) "Reputation");
 
            // preenche os parametros do utilizador
-           UTILIZADOR value_user = malloc(sizeof(struct utilizador));
+           UTILIZADOR value_user = create_utilizador();
 
-           value_user->key_id = *id_l;
-           value_user->nome = mystrdup( (char *) nome_l);
-           value_user->bio = mystrdup((char *) bio_l);
-           value_user->reputacao = atoi( (const char *) reputacao_l);
-           value_user->posts_frequentados = malloc(sizeof(5));
-           value_user->contador_posts_frequentados = 0;
-           value_user->espaco_posts_frequentados = 0;
-           value_user->posts_u = 0;
+           set_key_id(value_user, *id_l);
+           set_nome(value_user, mystrdup( (char *) nome_l));
+           set_bio(value_user, mystrdup((char *) bio_l));
+           set_reputacao(value_user, atoi( (const char *) reputacao_l));
 
-           g_hash_table_insert (com->utilizador, (gpointer) id_l, (gpointer) value_user);
+           set_utilizador(com, (gpointer) id_l, (gpointer) value_user);
+           //g_hash_table_insert (com->utilizador, (gpointer) id_l, (gpointer) value_user);
 
            xmlFree(nome_l);
            xmlFree(bio_l);
            xmlFree(reputacao_l);
-           //free(value_user);
+           free_utilizador(value_user);
 
            i++;
         }
@@ -204,26 +130,26 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            comment_count_l = xmlGetProp(cur, (const xmlChar *) "CommentCount");
 
            // preenche os parametros dos posts e dos utilizadores
-           POSTS value_post = malloc(sizeof(struct posts));
-           UTILIZADOR value_user = malloc(sizeof(struct utilizador));
+           POSTS value_post = create_posts();
+           UTILIZADOR value_user = create_utilizador();
 
            // value_user fica com valor associado à chave passada
-           value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) owner_user_id_l);
-           value_user->posts_u++;
+           value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id_l);
+           set_posts_u(value_user, (get_posts_u(value_user)+1));
            /*
            printf("ID USER: %d\n", value_user->key_id );
            printf("Nº POSTS: %d\n", value_user->posts_u );*/
 
-           value_post->key_id_post = *id_l;
-           value_post->data = stringToDias( (char *) creation_date_l);
-           value_post->score = atoi( (const char *) score_l);
-           value_post->owner_user_id= *owner_user_id_l;
-           value_post->body = mystrdup( (char *) body_l);
-           value_post->post_type_id = atoi( (const char *) post_type_id_l);
+           set_key_id_post(value_post, *id_l);
+           set_data(value_post, stringToDias( (char *) creation_date_l));
+           set_score(value_post, atoi( (const char *) score_l));
+           set_owner_user_id(value_post, *owner_user_id_l);
+           set_body(value_post, mystrdup( (char *) body_l));
+           set_post_type_id(value_post, atoi( (const char *) post_type_id_l));
 
-           if(value_post->post_type_id==2) {
-              value_post->parent_id = atoi( (const char *) parent_id_l);
-              value_post->title = NULL;
+           if(get_post_type_id(value_post)==2) {
+              set_parent_id(value_post, atoi( (const char *) parent_id_l));
+              set_title(value_post, NULL);
               // inserir o id da pergunta no utilizador que faz a pergunta
              // if(myelem(value_user->posts_frequentados, value_post->parent_id, value_user->contador_posts_frequentados) == 0){
                 // se nao tem o id no array, insere-o
@@ -232,8 +158,8 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               //}
            }
            else{
-              value_post->title = mystrdup( (char *) title_l);
-              value_post->parent_id = 0;
+              set_title(value_post, mystrdup( (char *) title_l));
+              set_parent_id(value_post, 0);
               strToTag(value_post, (char *) tags_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
               //if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
@@ -243,16 +169,17 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               //}
            }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
-              value_post->answer_count = 0;
+              set_answer_count(value_post, 0);
            }
            else{
-              value_post->answer_count = atoi( (const char *) answer_count_l);
+              set_answer_count(value_post, atoi( (const char *) answer_count_l));
            }
-           value_post->comment_count = atoi( (const char *) comment_count_l);
-           value_post->dif_votes = 0;
+           set_comment_count(value_post, atoi( (const char *) comment_count_l));
+           set_dif_votes(value_post, 0);
 
            // insere todos os parametros do post na chave (id) associado
-           g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) value_post);
+           //g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) value_post);
+           set_posts(com,(gpointer) id_l, (gpointer) value_post);
 
           
            xmlFree(post_type_id_l);
@@ -264,8 +191,8 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            xmlFree(tags_l);
            xmlFree(answer_count_l);
            xmlFree(comment_count_l);
-           //free(value_post);
-           //free(value_user);
+           free_posts(value_post);
+           free_utilizador(value_user);
 
            i++;
        }
@@ -288,20 +215,20 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
            votes_l = xmlGetProp(cur, (const xmlChar *) "VoteTypeId");
            *postid_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "PostId"));
            
-           POSTS value_post = malloc(sizeof(struct posts));
-           value_post = (POSTS) g_hash_table_lookup(com->posts, (gpointer) postid_l);
+           POSTS value_post = create_posts();
+           value_post = (POSTS) g_hash_table_lookup(get_posts(com), (gpointer) postid_l);
            if(value_post != NULL){
               // preenche os parametros do utilizador
               if(atoi((const char *) (votes_l)) == 2){
-                value_post->dif_votes++;
+                set_dif_votes(value_post, (get_dif_votes(value_post)+1));
               }
               if(atoi((const char *) (votes_l)) == 3){
-                value_post->dif_votes--;
+                set_dif_votes(value_post, (get_dif_votes(value_post)-1));
               }
             }
 
           xmlFree(votes_l);
-          //free(value_post);
+          free_posts(value_post);
 
           i++;
         }

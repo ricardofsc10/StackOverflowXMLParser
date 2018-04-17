@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include "interface.c"
+#include "interface.h"
 #include "query1.h"
 
 // query 1
 
 STR_pair info_from_post(TAD_community com, long id) {
   STR_pair par= create_str_pair(NULL,NULL);
-  int* id_l = id;
+  int* id_l = (int*) id;
 
   POSTS value_post = (POSTS) g_hash_table_lookup(com->posts, (gpointer) id_l);
 
@@ -16,7 +16,7 @@ STR_pair info_from_post(TAD_community com, long id) {
     set_snd_str(par, (char *) value_user->nome);
     }
   else { //é uma resposta
-    POSTS value_post2 = g_hash_table_lookup(com->posts, (gpointer) value_post->parent_id);
+    POSTS value_post2 = (POSTS) g_hash_table_lookup(com->posts, (gpointer) value_post->parent_id);
     set_fst_str(par, (char *) value_post2->title);
     UTILIZADOR value_user = (UTILIZADOR) g_hash_table_lookup(com->utilizador, (gpointer) value_post2->owner_user_id);
     set_snd_str(par, (char *) value_user->nome);
