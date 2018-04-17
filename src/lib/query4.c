@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include "list.h"
 #include "interface.c"
@@ -37,16 +38,18 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
     j--;
   }
 
-  /*
+  
   // para testar
   j = 50-1;
   for(int i = 0; i < 50; i++){
     printf("POST_ID: %ld\n", get_list(res,i) );
     j--;
   }
-  */
+  
 
   free_list(l);
 
   return res;
 }
+
+*/

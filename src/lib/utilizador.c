@@ -2,6 +2,7 @@
 #include "utilizador.h"
 #include "common.h"
 #include <glib.h>
+#include <string.h>
 
 struct utilizador{
 	gint key_id;
@@ -41,9 +42,9 @@ gchar* get_bio_utilizador(UTILIZADOR u){
 }
 
 gint* get_posts_frequentados(UTILIZADOR u, int tam){
-	long* u = malloc(sizeof(int)*tam);
-	memcpy(u, u->posts->posts_frequentados, sizeof(int)*tam);
-	return u;
+	long* u1 = malloc(sizeof(int)*tam);
+	memcpy(u1, u->posts_frequentados, sizeof(int)*tam);
+	return u1;
 }
 
 gint get_contador_posts_frequentados(UTILIZADOR u){

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "common.h"
 #include <glib.h>
-
+#include "tcd.h"
 
 struct TCD_community{
   GHashTable* utilizador;

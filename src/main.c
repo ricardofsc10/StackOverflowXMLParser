@@ -6,12 +6,12 @@
 
 int main(){
   TAD_community tda = NULL;
-  int menu __unused = 0;
+  int menu  = 0;
   
   tda = init();
   printf("[init] Estrutura já foi inicializada...\n");
 
-  char* path1 __unused = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
+  char* path1 = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
   char* path2 = "../../dumpexemplo/android/";
   printf("[load] Ínicio do load...\n");
 
@@ -37,7 +37,7 @@ int main(){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_str_pair(par);
       menu = 0;
-    }
+    } 
     if(menu == 2){ /////////////////////////////////// feita
       int tamanho;
       printf("Qual o número de utilizadores que pretende?\n");
@@ -50,7 +50,7 @@ int main(){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_list(l);
       menu = 0;
-    }
+    }/*
     if(menu == 3){ ///////////////////////////////// feita
       LONG_pair lp = create_long_pair(0,0);
       Date begin = createDate(03,10,2014);
@@ -176,7 +176,7 @@ int main(){
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
-    }
+    }*/
     if(menu==-1) break;
   }
 

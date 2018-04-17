@@ -1,3 +1,5 @@
+/*
+
 #include <stdio.h>
 #include "list.h"
 #include "interface.c"
@@ -50,17 +52,19 @@ LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end
     j--;
   }
 
-  /*
+  
   // para testar
   j = N-1;
   for(int i = 0; i < N; i++){
     printf("POST_ID: %ld\n", get_list(res,i) );
     printf("nº respostas: %ld\n", get_list(l,j) );
     j--;
-  }*/
+  }
 
   free_list(l);
   free_list(lid);
 
   return res;
 }
+
+*/

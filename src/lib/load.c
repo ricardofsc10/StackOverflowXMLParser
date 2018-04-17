@@ -240,8 +240,8 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 
 TAD_community load(TAD_community com, char* dump_path){
     
-    xmlDocPtr doc_user, doc_posts, doc_votes, doc_tags __unused;
-    xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags __unused;
+    xmlDocPtr doc_user, doc_posts, doc_votes, doc_tags ;
+    xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags ;
 
     ////////////////////////////////// Faz-se o parse do Users
     char path_users[50];

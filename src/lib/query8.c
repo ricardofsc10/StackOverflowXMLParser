@@ -1,3 +1,5 @@
+/*
+
 #include <stdio.h>
 #include "list.h"
 #include "interface.c"
@@ -45,3 +47,4 @@ LONG_list contains_word(TAD_community com, char* word, int N){
 
   return l; 
 }
+*/

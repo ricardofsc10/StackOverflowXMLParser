@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include "list.h"
 #include "interface.c"
@@ -17,7 +18,7 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 
   for(int i = com->utilizador[id1_bin]->contador_posts_frequentados-1 ; i >= 0 ; i--){
       printf("%d: %d\n", i, com->utilizador[id1_bin]->posts_frequentados[i]);
-      /*
+      
       for(int j = com->utilizador[id2_bin]->contador_posts_frequentados; j >= 0; j--){
         
         if(com->utilizador[id1_bin]->posts_frequentados[i] == com->utilizador[id2_bin]->posts_frequentados[j]){
@@ -27,13 +28,13 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
           break;
         }
       }
-      if(contador == N) break;*/
+      if(contador == N) break;
   }
   for(int i = com->utilizador[id2_bin]->contador_posts_frequentados-1 ; i >= 0 ; i--){
       printf("%d: %d\n", i, com->utilizador[id2_bin]->posts_frequentados[i]);
   }
 
-  /*
+  
   for(int i= (com->posts_t - 1) ; i >= 0 && contador < N ; i--){ // percorre os posts a começar pelo fim
     if(com->posts[i]->post_type_id == 1){ // vê se é pergunta
       int x1=0,x2=0;
@@ -91,12 +92,13 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
         }
         }
     }
-  }*/
-  /*
+  }
+  
   // teste
   for(int i = 0; i < N ; i++){
     printf("%ld\n", get_list(l,i));
-  }*/
+  }
 
   return l;
 }
+*/

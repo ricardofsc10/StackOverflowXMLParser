@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include "interface.c"
 
@@ -22,3 +23,4 @@ long better_answer(TAD_community com, long id){
   // printf("melhor media: %d\n", melhor_media);
   return melhor_id;
 }
+*/
