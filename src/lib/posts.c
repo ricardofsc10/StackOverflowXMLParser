@@ -2,6 +2,7 @@
 #include "posts.h"
 #include "common.h"
 #include "date.h"
+#include <glib.h>
 
 struct posts{
     gint key_id_post;
@@ -100,13 +101,13 @@ void set_owner_user_id(POSTS p, int owner_user_id){
 }
 
 void set_title(POSTS p, char* str){
-    free(u->title);
-    u->title = mystrdup(str);
+    free(p->title);
+    p->title = mystrdup(str);
 }
 
 void set_body(POSTS p, char* str){
-    free(u->body);
-    u->body = mystrdup(str);
+    free(p->body);
+    p->body = mystrdup(str);
 }
 
 void set_post_type_id(POSTS p, int post_type_id){
@@ -118,8 +119,8 @@ void set_parent_id(POSTS p, int parent_id){
 }
 
 void set_tags(POSTS p, char* str){
-    free(u->tags);
-    u->tags = mystrdup(str);
+    free(p->tags);
+    p->tags = mystrdup(str);
 }
 
 void set_answer_count(POSTS p, int answer_count){

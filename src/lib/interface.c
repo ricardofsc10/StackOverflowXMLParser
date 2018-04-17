@@ -43,16 +43,6 @@ struct posts{
   gint dif_votes;
 };
 
-// init
-
-TAD_community init(){
-    TAD_community tad = malloc(sizeof(struct TCD_community));
-    tad->utilizador = g_hash_table_new (g_int_hash, g_int_equal);
-    tad->posts = g_hash_table_new (g_int_hash, g_int_equal);
-    return tad;
-}
-
-
 // funções auxiliares mais tarde para serem postas noutro ficheiro
 
 int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas ou n

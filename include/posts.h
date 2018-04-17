@@ -1,6 +1,9 @@
 #ifndef __POSTS__
 #define __POSTS__
 
+#include "date.h"
+#include <glib.h>
+
 typedef struct posts* POSTS;
 
 POSTS create_posts();

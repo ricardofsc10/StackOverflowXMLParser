@@ -1,12 +1,15 @@
 #ifndef __UTILIZADOR__
 #define __UTILIZADOR__
 
+#include "date.h"
+#include <glib.h>
+
 typedef struct utilizador* UTILIZADOR;
 
 UTILIZADOR create_utilizador();
 gint get_key_id(UTILIZADOR u);
 gchar* get_nome(UTILIZADOR u);
-gchar* get_bio(UTILIZADOR u);
+gchar* get_bio_utilizador(UTILIZADOR u);
 gint* get_posts_frequentados(UTILIZADOR u, int tam);
 gint get_contador_posts_frequentados(UTILIZADOR u);
 gint get_espaco_posts_frequentados(UTILIZADOR u);

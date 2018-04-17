@@ -2,6 +2,8 @@
 #include <libxml/parser.h>
 #include <gmodule.h>
 #include <glib.h>
+#include "utilizador.h"
+#include "posts.h"
 #include "date.h"
 #include "pair.h"
 #include "list.h"
@@ -23,14 +25,6 @@ typedef struct TCD_community * TAD_community;
 */
 int difDatas(Date x,Date begin, Date end);
 
-
-/**
-@brief Função que faz a primeira inicialização da estrutura.
-
-Inicializa cada parâmetro da estrutura definida em 
-
-@returns Estrutura TAD_community inicializada.
-*/
 
 TAD_community init();
 
