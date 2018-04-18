@@ -65,11 +65,10 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-
-
-
            xmlChar *nome_l, *bio_l, *reputacao_l;
            long id_l; 
+
+           // faz o parse dos parametros necessários
            id_l = atol( (const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
            nome_l = xmlGetProp(cur, (const xmlChar *) "DisplayName");
            bio_l = xmlGetProp(cur, (const xmlChar *) "AboutMe");
@@ -77,19 +76,18 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
            // preenche os parametros do utilizador
            UTILIZADOR value_user = create_utilizador();
-
            set_key_id(value_user, id_l);
            set_nome(value_user, (char *) nome_l);
            set_bio(value_user,(char *) bio_l);
            set_reputacao(value_user, atoi( (const char *) reputacao_l));
 
+           // insere na tabela de hash referente aos utilizadores
            set_utilizador(com, id_l, value_user);
-           //g_hash_table_insert (get_utilizador(com), (gpointer) id_l, (gpointer) value_user);
 
+           // faz free das variáveis usadas
            xmlFree(nome_l);
            xmlFree(bio_l);
            xmlFree(reputacao_l);
-           //free_utilizador(value_user);
 
            i++;
         }
@@ -99,7 +97,7 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
     
     /*// testa se contem elementos
-    long key; // = malloc(sizeof(int));
+    long key;
     key = 10;
     gboolean g = g_hash_table_contains(get_utilizador(com), (gpointer) key);
     if(g == TRUE){
@@ -185,16 +183,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            //g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) value_post);
            set_posts(com,(gpointer) id_l, (gpointer) value_post);
 
-           /*
-           GList* list;
-           list = NULL;
-           list = g_list_append(list,creation_date_l); // ou g_slist_append ??
-           // g_slist_append: https://github.com/steshaw/gtk-examples/blob/master/ch02.glib/list.c
-           tad->date_posts = list;
-
-           // no fim de tudo
-           g_list_sort(tad->date_posts,strcmp);
-           */
           
            xmlFree(post_type_id_l);
            xmlFree(creation_date_l);
