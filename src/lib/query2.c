@@ -12,20 +12,24 @@ LONG_list top_most_active(TAD_community com, int N){
   LONG_list l = create_list(N);
   LONG_list lid = create_list(N);
 
+  // inicialização das listas
   for(int i=0; i<N; i++){
     set_list(l,i,0);
     set_list(lid,i,0);
   }
+
   GList* gl = g_hash_table_get_values(get_utilizador(com));
   GList* glista;
-  for(glista = gl; glista!=NULL; glista= glista->next){
+
+  for(glista = gl; glista!=NULL; glista = glista->next){
     for(int j=0; j<N;j++){
-      int k = get_list(l,j);
-      if(get_posts_u( (UTILIZADOR) glista->data) > k){
-        printf("cheguei\n");
-        if(j==N-1) {
-          set_list(l,j,get_posts_u(get_utilizador(com))); 
-          set_list(lid,j,get_key_id(get_utilizador(com)));
+      long k = get_list(l,j);
+
+      if(get_posts_u((UTILIZADOR) glista->data) > k){
+        // se é a última posição
+        if(j == N-1) {
+          set_list(l,j,get_posts_u((UTILIZADOR) glista->data)); 
+          set_list(lid,j,get_key_id((UTILIZADOR) glista->data));
           break;
         }
         else{
@@ -34,9 +38,12 @@ LONG_list top_most_active(TAD_community com, int N){
         }
       }
       else{
-        set_list(l,j-1,get_posts_u(get_utilizador(com)));
-        set_list(lid,j, get_key_id(get_utilizador(com)));
-        break;
+        if(j != 0){ // se for zero nao pode escrever na posição anterior(j-1)
+          set_list(l,j-1,get_posts_u((UTILIZADOR) glista->data));
+          set_list(lid,j-1, get_key_id((UTILIZADOR) glista->data));
+          break;
+        }
+        else break;
       }
     }
   }

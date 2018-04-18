@@ -117,11 +117,10 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-
            xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l;
-           long owner_user_id_l; 
-           long id_l;
+           long owner_user_id_l, id_l;
 
+           // faz o parse dos parametros necessários
            id_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
            post_type_id_l = xmlGetProp(cur, (const xmlChar *) "PostTypeId");
            creation_date_l = xmlGetProp(cur, (const xmlChar *) "CreationDate");
@@ -134,14 +133,12 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            answer_count_l = xmlGetProp(cur, (const xmlChar *) "AnswerCount");
            comment_count_l = xmlGetProp(cur, (const xmlChar *) "CommentCount");
 
-           // preenche os parametros dos posts e dos utilizadores
-           POSTS value_post = create_posts();
-
            // value_user fica com valor associado à chave passada
            UTILIZADOR value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id_l);
-
            set_posts_u(value_user, (get_posts_u(value_user)+1));
            
+           // preenche os parametros dos posts e dos utilizadores
+           POSTS value_post = create_posts();
            set_key_id_post(value_post, id_l);
            set_data(value_post, stringToDias( (char *) creation_date_l));
            set_score(value_post, atoi( (const char *) score_l));
@@ -181,8 +178,18 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
            // insere todos os parametros do post na chave (id) associado
            //g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) value_post);
-           set_posts(com,(gpointer) id_l, (gpointer) value_post);
+           set_posts(com, id_l,  value_post);
 
+           /*
+           GList* list;
+           list = NULL;
+           list = g_list_append(list,creation_date_l); // ou g_slist_append ??
+           // g_slist_append: https://github.com/steshaw/gtk-examples/blob/master/ch02.glib/list.c
+           tad->date_posts = list;
+
+           // no fim de tudo
+           g_list_sort(tad->date_posts,strcmp);
+           */
           
            xmlFree(post_type_id_l);
            xmlFree(creation_date_l);
@@ -193,8 +200,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            xmlFree(tags_l);
            xmlFree(answer_count_l);
            xmlFree(comment_count_l);
-           //free_posts(value_post);
-           //free_utilizador(value_user);
 
            i++;
        }

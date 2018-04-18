@@ -38,7 +38,10 @@ void set_posts(TAD_community tad, long key, POSTS value){
 }
 
 void set_date_posts(TAD_community tad, gpointer data, gint position){
-	g_list_insert(tad->date_posts, data, position);
+	GList* gl __unused = g_list_insert(tad->date_posts, data, position);
+	// a função insert do g_list retorna o novo apontador para a cabeça portanto nao sei se seria bom o retornar
+	// dá warning
+	// so meti unused para nao dar warning
 }
 
 void free_tad(TAD_community tad){

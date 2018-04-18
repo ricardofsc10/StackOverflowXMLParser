@@ -29,7 +29,7 @@ UTILIZADOR create_utilizador(){
 	return u;
 }
 
-gint get_key_id(UTILIZADOR u){
+long get_key_id(UTILIZADOR u){
 	return u->key_id;
 }
 
@@ -47,19 +47,19 @@ gint* get_posts_frequentados(UTILIZADOR u, int tam){
 	return (gint*) u1;
 }
 
-gint get_contador_posts_frequentados(UTILIZADOR u){
+long get_contador_posts_frequentados(UTILIZADOR u){
 	return u->contador_posts_frequentados;
 }
 
-gint get_espaco_posts_frequentados(UTILIZADOR u){
+long get_espaco_posts_frequentados(UTILIZADOR u){
 	return u->espaco_posts_frequentados;
 }
 
-gint get_posts_u(UTILIZADOR u){
+long get_posts_u(UTILIZADOR u){
 	return u->posts_u;
 }
 
-gint get_reputacao(UTILIZADOR u){
+long get_reputacao(UTILIZADOR u){
 	return u->reputacao;
 }
 

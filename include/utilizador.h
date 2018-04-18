@@ -7,14 +7,14 @@
 typedef struct utilizador * UTILIZADOR;
 
 UTILIZADOR create_utilizador();
-gint get_key_id(UTILIZADOR u);
+long get_key_id(UTILIZADOR u);
 gchar* get_nome(UTILIZADOR u);
 gchar* get_bio_utilizador(UTILIZADOR u);
 gint* get_posts_frequentados(UTILIZADOR u, int tam);
-gint get_contador_posts_frequentados(UTILIZADOR u);
-gint get_espaco_posts_frequentados(UTILIZADOR u);
-gint get_posts_u(UTILIZADOR u);
-gint get_reputacao(UTILIZADOR u);
+long get_contador_posts_frequentados(UTILIZADOR u);
+long get_espaco_posts_frequentados(UTILIZADOR u);
+long get_posts_u(UTILIZADOR u);
+long get_reputacao(UTILIZADOR u);
 void set_key_id(UTILIZADOR u, int key_id);
 void set_nome(UTILIZADOR u, char* str);
 void set_bio(UTILIZADOR u, char* str);

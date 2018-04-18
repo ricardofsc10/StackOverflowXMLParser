@@ -36,7 +36,7 @@ POSTS create_posts(){
     return p;
 }
 
-gint get_key_id_post(POSTS p){
+long get_key_id_post(POSTS p){
     return p->key_id_post;
 }
 
@@ -44,11 +44,11 @@ Date get_data(POSTS p){
     return p->data;
 }
 
-gint get_score(POSTS p){
+long get_score(POSTS p){
     return p->score;
 }
 
-gint get_owner_user_id(POSTS p){
+long get_owner_user_id(POSTS p){
     return p->owner_user_id;
 }
 
@@ -60,11 +60,11 @@ gchar* get_body(POSTS p){
     return p ? mystrdup(p->body) : NULL;
 }
 
-gint get_post_type_id(POSTS p){
+long get_post_type_id(POSTS p){
     return p->post_type_id;
 }
 
-gint get_parent_id(POSTS p){
+long get_parent_id(POSTS p){
     return p->parent_id;
 }
 
@@ -72,15 +72,15 @@ gchar* get_tags(POSTS p){
     return p ? mystrdup(p->tags) : NULL;
 }
 
-gint get_answer_count(POSTS p){
+long get_answer_count(POSTS p){
     return p->answer_count;
 }
 
-gint get_comment_count(POSTS p){
+long get_comment_count(POSTS p){
     return p->comment_count;
 }
 
-gint get_dif_votes(POSTS p){
+long get_dif_votes(POSTS p){
     return p->dif_votes;
 }
 
