@@ -81,8 +81,8 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            UTILIZADOR value_user = create_utilizador();
 
            set_key_id(value_user, id_l);
-           set_nome(value_user, mystrdup( (char *) nome_l));
-           set_bio(value_user, mystrdup((char *) bio_l));
+           set_nome(value_user, (char *) nome_l);
+           set_bio(value_user,(char *) bio_l);
            set_reputacao(value_user, atoi( (const char *) reputacao_l));
 
            set_utilizador(com, id_l, value_user);
@@ -152,7 +152,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            set_data(value_post, stringToDias( (char *) creation_date_l));
            set_score(value_post, atoi( (const char *) score_l));
            set_owner_user_id(value_post, owner_user_id_l);
-           set_body(value_post, mystrdup( (char *) body_l));
+           set_body(value_post,(char *) body_l);
            set_post_type_id(value_post, atoi( (const char *) post_type_id_l));
 
            if(get_post_type_id(value_post)==2) {
@@ -166,7 +166,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               //}
            }
            else{
-              set_title(value_post, mystrdup( (char *) title_l));
+              set_title(value_post,(char *) title_l);
               set_parent_id(value_post, 0);
               strToTag(value_post, (char *) tags_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
