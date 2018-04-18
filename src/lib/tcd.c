@@ -6,12 +6,14 @@
 struct TCD_community{
   GHashTable* utilizador;
   GHashTable* posts;
+  GList* date_posts;
 };
 
 TAD_community create_tad(){
 	TAD_community tad = malloc(sizeof(struct TCD_community));
     tad->utilizador = g_hash_table_new(g_direct_hash, g_direct_equal);
-    tad->posts = g_hash_table_new (g_direct_hash, g_direct_equal);
+    tad->posts = g_hash_table_new(g_direct_hash, g_direct_equal);
+    tad->date_posts = NULL;
     return tad;
 }
 
@@ -23,20 +25,24 @@ GHashTable* get_posts(TAD_community tad){
 	return tad->posts;
 }
 
-UTILIZADOR get_value_utilizador(TAD_community tad, int* key){
-	UTILIZADOR u = (UTILIZADOR) g_hash_table_lookup(tad->utilizador, (gpointer) key);
-	return u;
+GList* get_date_posts(TAD_community tad){
+	return tad->date_posts;
 }
 
 void set_utilizador(TAD_community tad, long key, UTILIZADOR value){
 	g_hash_table_insert(tad->utilizador, (gpointer) key, (gpointer) value);
 }
 
-void set_posts(TAD_community tad, gpointer key, gpointer value){
-	g_hash_table_insert(tad->posts, key, value);
+void set_posts(TAD_community tad, long key, POSTS value){
+	g_hash_table_insert(tad->posts, (gpointer) key, (gpointer) value);
+}
+
+void set_date_posts(TAD_community tad, gpointer data, gint position){
+	g_list_insert(tad->date_posts, data, position);
 }
 
 void free_tad(TAD_community tad){
 	g_hash_table_destroy(tad->utilizador);
-	g_hash_table_destroy(tad->utilizador);
+	g_hash_table_destroy(tad->posts);
+	g_list_free(tad->date_posts);
 }

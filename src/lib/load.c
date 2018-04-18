@@ -185,6 +185,16 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            //g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) value_post);
            set_posts(com,(gpointer) id_l, (gpointer) value_post);
 
+           /*
+           GList* list;
+           list = NULL;
+           list = g_list_append(list,creation_date_l); // ou g_slist_append ??
+           // g_slist_append: https://github.com/steshaw/gtk-examples/blob/master/ch02.glib/list.c
+           tad->date_posts = list;
+
+           // no fim de tudo
+           g_list_sort(tad->date_posts,strcmp);
+           */
           
            xmlFree(post_type_id_l);
            xmlFree(creation_date_l);
