@@ -5,8 +5,6 @@
 
 typedef struct TCD_community * TAD_community;
 
-// funções auxiliares
-
 TAD_community init();
 
 // query 0

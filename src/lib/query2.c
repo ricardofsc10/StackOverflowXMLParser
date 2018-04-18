@@ -7,7 +7,7 @@
 #include "query2.h"
 
 // query 2
-
+/*
 LONG_list top_most_active(TAD_community com, int N){
   LONG_list l = create_list(N);
   LONG_list lid = create_list(N);
@@ -49,4 +49,4 @@ LONG_list top_most_active(TAD_community com, int N){
   free_list(l);
 
   return lid;
-}
+}*/

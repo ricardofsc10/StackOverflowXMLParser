@@ -66,10 +66,13 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
     while (cur != NULL) {
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
 
-           xmlChar *nome_l, *bio_l, *reputacao_l;
-           int* id_l = malloc(sizeof(int));
 
-           *id_l = atoi( (const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
+
+           xmlChar *nome_l, *bio_l, *reputacao_l;
+           long id_l; // = malloc(sizeof(int));
+
+           id_l = atol( (const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
+           printf("ID: %ld\n", id_l);
            nome_l = xmlGetProp(cur, (const xmlChar *) "DisplayName");
            bio_l = xmlGetProp(cur, (const xmlChar *) "AboutMe");
            reputacao_l = xmlGetProp(cur, (const xmlChar *) "Reputation");
@@ -77,18 +80,18 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            // preenche os parametros do utilizador
            UTILIZADOR value_user = create_utilizador();
 
-           set_key_id(value_user, *id_l);
+           set_key_id(value_user, id_l);
            set_nome(value_user, mystrdup( (char *) nome_l));
            set_bio(value_user, mystrdup((char *) bio_l));
            set_reputacao(value_user, atoi( (const char *) reputacao_l));
 
-           set_utilizador(com, (gpointer) id_l, (gpointer) value_user);
-           //g_hash_table_insert (com->utilizador, (gpointer) id_l, (gpointer) value_user);
+           set_utilizador(com, id_l, value_user);
+           //g_hash_table_insert (get_utilizador(com), (gpointer) id_l, (gpointer) value_user);
 
            xmlFree(nome_l);
            xmlFree(bio_l);
            xmlFree(reputacao_l);
-           free_utilizador(value_user);
+           //free_utilizador(value_user);
 
            i++;
         }
@@ -96,11 +99,17 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
     }
     printf("[load] %d Users...\n", i);
 
+    
     /*// testa se contem elementos
-    int* key = malloc(sizeof(int));
-    *key = 1;
+    long key; // = malloc(sizeof(int));
+    key = 10;
     gboolean g = g_hash_table_contains(get_utilizador(com), (gpointer) key);
-    if(g == TRUE) printf("contem..\n");
+    if(g == TRUE){
+      printf("contem..\n");
+      UTILIZADOR u = g_hash_table_lookup(get_utilizador(com), (gpointer) key);
+      printf("id: %d\n", get_key_id(u) );
+      printf("reputação: %d\n", get_reputacao(u));
+    }
     else printf("nao contem..\n");*/
 }
 
@@ -114,15 +123,15 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
 
            xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l;
-           int* owner_user_id_l = malloc(sizeof(int)); 
-           int* id_l = malloc(sizeof(int));
+           long owner_user_id_l; 
+           long id_l;
 
-           *id_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
+           id_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
            post_type_id_l = xmlGetProp(cur, (const xmlChar *) "PostTypeId");
            creation_date_l = xmlGetProp(cur, (const xmlChar *) "CreationDate");
            score_l = xmlGetProp(cur, (const xmlChar *) "Score");
            body_l = xmlGetProp(cur, (const xmlChar *) "Body");
-           *owner_user_id_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "OwnerUserId"));
+           owner_user_id_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "OwnerUserId"));
            parent_id_l=xmlGetProp(cur, (const xmlChar *) "ParentId");
            title_l = xmlGetProp(cur, (const xmlChar *) "Title");
            tags_l = xmlGetProp(cur, (const xmlChar *) "Tags");
@@ -131,24 +140,18 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
            // preenche os parametros dos posts e dos utilizadores
            POSTS value_post = create_posts();
-           UTILIZADOR value_user = create_utilizador();
 
            // value_user fica com valor associado à chave passada
-           value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gconstpointer) owner_user_id_l);
+           UTILIZADOR value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id_l);
 
            printf("id: %d\n", get_key_id(value_user) );
-           printf("nome: %s\n", get_nome(value_user));
 
            set_posts_u(value_user, (get_posts_u(value_user)+1));
-           /*
-           printf("owner: %d\n", *owner_user_id_l );
-           printf("ID USER: %d\n", get_key_id(value_user) );
-           printf("Nº POSTS: %d\n", get_posts_u(value_user) );*/
-
-           set_key_id_post(value_post, *id_l);
+           
+           set_key_id_post(value_post, id_l);
            set_data(value_post, stringToDias( (char *) creation_date_l));
            set_score(value_post, atoi( (const char *) score_l));
-           set_owner_user_id(value_post, *owner_user_id_l);
+           set_owner_user_id(value_post, owner_user_id_l);
            set_body(value_post, mystrdup( (char *) body_l));
            set_post_type_id(value_post, atoi( (const char *) post_type_id_l));
 
@@ -196,8 +199,8 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            xmlFree(tags_l);
            xmlFree(answer_count_l);
            xmlFree(comment_count_l);
-           free_posts(value_post);
-           free_utilizador(value_user);
+           //free_posts(value_post);
+           //free_utilizador(value_user);
 
            i++;
        }
@@ -215,10 +218,10 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
         if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
 
            xmlChar *votes_l;
-           int* postid_l = malloc(sizeof(int));
+           long postid_l;
 
            votes_l = xmlGetProp(cur, (const xmlChar *) "VoteTypeId");
-           *postid_l = atoi((const char *) xmlGetProp(cur, (const xmlChar *) "PostId"));
+           postid_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "PostId"));
            
            POSTS value_post = create_posts();
            value_post = (POSTS) g_hash_table_lookup(get_posts(com), (gpointer) postid_l);
@@ -233,7 +236,7 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
             }
 
           xmlFree(votes_l);
-          free_posts(value_post);
+          //free_posts(value_post);
 
           i++;
         }

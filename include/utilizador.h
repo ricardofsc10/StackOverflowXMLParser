@@ -4,7 +4,7 @@
 #include "date.h"
 #include <glib.h>
 
-typedef struct utilizador* UTILIZADOR;
+typedef struct utilizador * UTILIZADOR;
 
 UTILIZADOR create_utilizador();
 gint get_key_id(UTILIZADOR u);
