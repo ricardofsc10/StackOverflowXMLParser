@@ -37,7 +37,7 @@ int main(){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_str_pair(par);
       menu = 0;
-    } /*
+    } 
     if(menu == 2){ /////////////////////////////////// feita
       int tamanho;
       printf("Qual o número de utilizadores que pretende?\n");
@@ -50,7 +50,7 @@ int main(){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_list(l);
       menu = 0;
-    }
+    }/*
     if(menu == 3){ ///////////////////////////////// feita
       LONG_pair lp = create_long_pair(0,0);
       Date begin = createDate(03,10,2014);

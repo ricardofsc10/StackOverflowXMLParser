@@ -69,10 +69,8 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
 
            xmlChar *nome_l, *bio_l, *reputacao_l;
-           long id_l; // = malloc(sizeof(int));
-
+           long id_l; 
            id_l = atol( (const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
-           printf("ID: %ld\n", id_l);
            nome_l = xmlGetProp(cur, (const xmlChar *) "DisplayName");
            bio_l = xmlGetProp(cur, (const xmlChar *) "AboutMe");
            reputacao_l = xmlGetProp(cur, (const xmlChar *) "Reputation");
@@ -143,8 +141,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
            // value_user fica com valor associado à chave passada
            UTILIZADOR value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id_l);
-
-           printf("id: %d\n", get_key_id(value_user) );
 
            set_posts_u(value_user, (get_posts_u(value_user)+1));
            

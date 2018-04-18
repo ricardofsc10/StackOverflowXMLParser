@@ -7,7 +7,7 @@
 #include "query2.h"
 
 // query 2
-/*
+
 LONG_list top_most_active(TAD_community com, int N){
   LONG_list l = create_list(N);
   LONG_list lid = create_list(N);
@@ -21,7 +21,8 @@ LONG_list top_most_active(TAD_community com, int N){
   for(glista = gl; glista!=NULL; glista= glista->next){
     for(int j=0; j<N;j++){
       int k = get_list(l,j);
-      if(get_posts_u(get_utilizador(com))>k){
+      if(get_posts_u( (UTILIZADOR) glista->data) > k){
+        printf("cheguei\n");
         if(j==N-1) {
           set_list(l,j,get_posts_u(get_utilizador(com))); 
           set_list(lid,j,get_key_id(get_utilizador(com)));
@@ -49,4 +50,4 @@ LONG_list top_most_active(TAD_community com, int N){
   free_list(l);
 
   return lid;
-}*/
+}
