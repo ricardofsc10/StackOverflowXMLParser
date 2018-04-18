@@ -21,7 +21,7 @@ LONG_list top_most_active(TAD_community com, int N){
   GList* gl = g_hash_table_get_values(get_utilizador(com));
   GList* glista;
 
-  for(glista = gl; glista!=NULL; glista = glista->next){
+  for(glista = gl; glista!=NULL; glista = g_list_next(glista)){
     for(int j=0; j<N;j++){
       long k = get_list(l,j);
 
