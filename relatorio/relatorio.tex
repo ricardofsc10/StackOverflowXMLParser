@@ -44,9 +44,7 @@ acompanhar a submissão da solução implementada. Além de servir de
 treino das capacidades de comunicação escrita dos estudantes, servirá
 também como elemento de avaliação para a utilização de \LaTeX{} pelos
 alunos. Sendo assim o código fonte \LaTeX{} do relatório deve ser
-mantido no repositório \texttt{svn} atribuído ao grupo\footnote{A
-  ficha de LI1 dedicada ao \LaTeX{} disponibiliza informação técnica
-  adicional sobre a utilização desta ferramenta.}. Um relatório desta
+mantido no repositório \texttt{svn} atribuído ao grupo. Um relatório desta
 natureza tem geralmente uma dimensão entre 4 e 8 páginas, para além de
 eventuais anexos.
 
@@ -136,6 +134,22 @@ calculado como se fosse uma pergunta, mudando apenas o novo
 \textbf{value} associado.
 
 \subsection{Query 2}
+
+Pretendemos obter o top N utilizadores com maior número de posts de 
+sempre. Para isto, são considerados tanto perguntas quanto respostas 
+dadas pelo respectivo utilizador.
+
+Nesta questão, utilizamos uma \textit{\textbf{GList*}} para armazenar 
+os \textbf{values} de cada \textbf{utilizador}, sendo isto realizado
+pela função da \textit{glib}, \textbf{g\_hash\_table\_get\_values}.
+
+De seguida, percorremos a \textbf{lista} referida, e em cada posição
+acedemos ao parâmetro \textbf{posts\_u}, que referencia o número de 
+posts do utilizador em questão. Enquanto isso, fazemos a filtração
+para o \textbf{set\_list}, tendo em conta se o utilizador que estamos
+no momento atual possui mais \textbf{posts totais} que os \textbf{N} 
+utilizadores que se encontram no set. Caso se conclua tal facto,
+colocamos o seu \textbf{id} na posição estabelecida.
 
 \subsection{Query 3}
 
