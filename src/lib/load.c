@@ -109,7 +109,6 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
     else printf("nao contem..\n");*/
 }
 
-
 void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    cur = cur->xmlChildrenNode;
@@ -141,6 +140,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            POSTS value_post = create_posts();
            set_key_id_post(value_post, id_l);
            set_data(value_post, stringToDias( (char *) creation_date_l));
+           set_data_string(value_post, (char *) creation_date_l);
            set_score(value_post, atoi( (const char *) score_l));
            set_owner_user_id(value_post, owner_user_id_l);
            set_body(value_post,(char *) body_l);
@@ -180,16 +180,8 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            //g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) value_post);
            set_posts(com, id_l,  value_post);
 
-           /*
-           GList* list;
-           list = NULL;
-           list = g_list_append(list,creation_date_l); // ou g_slist_append ??
-           // g_slist_append: https://github.com/steshaw/gtk-examples/blob/master/ch02.glib/list.c
-           tad->date_posts = list;
-
-           // no fim de tudo
-           g_list_sort(tad->date_posts,strcmp);
-           */
+           // insere na estrutura supostamente ordenada por datas
+           adiciona_date_posts(com, value_post);
           
            xmlFree(post_type_id_l);
            xmlFree(creation_date_l);
@@ -205,6 +197,15 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
        }
        cur = cur->next;
    }
+   ordena(com);
+   
+   /*// teste de ordenação
+   GList* cabeca = get_date_posts(com);
+   while(cabeca != NULL){
+      printf("%s\n\n", get_data_string(cabeca->data));
+      cabeca = cabeca->next;
+   }*/
+
    printf("[load] %d Posts...\n", i);
 }
 

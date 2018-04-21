@@ -1,6 +1,8 @@
 #include <stdlib.h>
-#include "common.h"
+#include <string.h>
 #include <glib.h>
+#include "common.h"
+#include "posts.h"
 #include "tcd.h"
 
 struct TCD_community{
@@ -37,11 +39,16 @@ void set_posts(TAD_community tad, long key, POSTS value){
 	g_hash_table_insert(tad->posts, (gpointer) key, (gpointer) value);
 }
 
-void set_date_posts(TAD_community tad, gpointer data, gint position){
-	GList* gl __unused = g_list_insert(tad->date_posts, data, position);
-	// a função insert do g_list retorna o novo apontador para a cabeça portanto nao sei se seria bom o retornar
-	// dá warning
-	// so meti unused para nao dar warning
+void adiciona_date_posts(TAD_community tad, POSTS value){
+	tad->date_posts = g_list_insert(tad->date_posts, (gpointer) value, 0);
+}
+
+gint compara(gconstpointer a, gconstpointer b) { // Compara duas strings
+  return strcmp( get_data_string( (POSTS) a) , get_data_string( (POSTS) b) ) ;
+}
+
+void ordena(TAD_community tad){
+	tad->date_posts = g_list_sort(tad->date_posts, compara);
 }
 
 void free_tad(TAD_community tad){

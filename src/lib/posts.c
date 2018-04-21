@@ -7,6 +7,7 @@
 struct posts{
     gint key_id_post;
     Date data;
+    gchar* data_string;
     gint score;
     gint owner_user_id;
     gchar* title;
@@ -23,6 +24,7 @@ POSTS create_posts(){
     POSTS p = malloc(sizeof(struct posts));
     p->key_id_post = 0;
     p->data = createDate(0,0,0);
+    p->data_string = NULL;
     p->score = 0;
     p->owner_user_id = 0;
     p->title = NULL;
@@ -42,6 +44,10 @@ long get_key_id_post(POSTS p){
 
 Date get_data(POSTS p){
     return p->data;
+}
+
+gchar* get_data_string(POSTS p){
+    return p ? mystrdup(p->data_string) : NULL;
 }
 
 long get_score(POSTS p){
@@ -92,6 +98,11 @@ void set_data(POSTS p, Date data){
     p->data = data;
 }
 
+void set_data_string(POSTS p, char* str){
+    free(p->data_string);
+    p->data_string = mystrdup(str);
+}
+
 void set_score(POSTS p, int score){
     p->score = score;
 }
@@ -138,6 +149,7 @@ void set_dif_votes(POSTS p, int dif_votes){
 void free_posts(POSTS p){
     if(p){
         free_date(p->data);
+        free(p->data_string);
         free(p->title);
         free(p->body);
         free(p->tags);
