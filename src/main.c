@@ -180,10 +180,9 @@ int main(){
     if(menu==-1) break;
   }
 
-  /*
-  printf("[clean] Estrutura a ser limpa ...\n");
   tda = clean(tda);
-  printf("[clean] Estrutura limpa.\n");*/
+  free(tda);
+  printf("[clean] Estrutura limpa...\n");
   
   printf("[main] Program Done...\n");
   return 0;

@@ -177,7 +177,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            set_dif_votes(value_post, 0);
 
            // insere todos os parametros do post na chave (id) associado
-           //g_hash_table_insert (com->posts, (gpointer) id_l, (gpointer) value_post);
            set_posts(com, id_l,  value_post);
 
            // insere na estrutura supostamente ordenada por datas
