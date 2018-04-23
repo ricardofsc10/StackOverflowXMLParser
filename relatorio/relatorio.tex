@@ -105,7 +105,7 @@ Esta secção tem as \emph{estruturas} do projeto.
 
 \subsection{Init}
 
-\subsection{Query 0}
+\subsection{Load}
 
 \subsection{Query 1}
 
@@ -152,6 +152,18 @@ utilizadores que se encontram no set. Caso se conclua tal facto,
 colocamos o seu \textbf{id} na posição estabelecida.
 
 \subsection{Query 3}
+
+Dado um intervalo de tempo arbitrário, obter o número total de posts 
+(identificando perguntas e respostas separadamente) neste período.
+
+Nesta questão, utilizamos uma \textit{\textbf{GList*}} para armazenar 
+os \textbf{posts} ordenados por data que se encontram na estrutura 
+\textbf{date\_posts}, para de seguida percorrer estes mesmos posts.
+
+Enquanto isso, verificamos se a \textbf{data} do post se encontra entre 
+os limites referenciados pela query, através da função \textbf{difDatas},
+e caso seja uma pergunta, é incrementada a primeira coordenada do par,
+caso contrário é uma resposta, e é incrementada a segunda coordenada.
 
 \subsection{Query 4}
 
