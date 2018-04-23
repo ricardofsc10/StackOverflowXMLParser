@@ -97,8 +97,8 @@ int main(){
     }
     if(menu == 6){ ////////////////////////////////// feita
       int tamanho;
-      Date begin = createDate(01,01,2015);
-      Date end = createDate(31,02,2016);
+      Date begin = createDate(01,01,2010);
+      Date end = createDate(31,02,2012);
       printf("Qual o número de respostas que pretende?\n");
       scanf("%d",&tamanho);
       LONG_list l = create_list(tamanho);
@@ -155,19 +155,18 @@ int main(){
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
-    }
+    }*/
     if(menu == 10){ ////////////////////////////////// feita
       int id;
-      printf("Resposta:\n");
       printf("Qual o Id da pergunta?\n");
       scanf("%d", &id);
+      printf("Resposta:\n");
       start = clock();
-      long i = better_answer(tda,id);
+      better_answer(tda,id);
       stop = clock();
-      printf("%ld\n", i);
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
-    }
+    }/*
     if(menu == 11){
       printf("Ainda nao está acabada.\n");
       printf("Resposta:\n");
