@@ -1,5 +1,3 @@
-/*
-
 #include <stdio.h>
 #include "list.h"
 #include "interface.c"
@@ -21,17 +19,22 @@ LONG_list contains_word(TAD_community com, char* word, int N){
     set_list(l,i,0); // tem os id's das perguntas
   }
   
-  for(int i=0; i < com->posts_t ; i++){
-    if (com->posts[i]->post_type_id == 1){ // se é pergunta
+  GList* gl = g_hash_table_get_values(get_posts(com));
+  GList* glista;
+ 
+  for(glista = gl; glista!=NULL; glista = g_list_next(glista)){
+    if (get_post_type_id(glista->data) == 1){ // se é pergunta
+      
       char* ret;
-      ret = strstr((const char *) com->posts[i]->title,word);
+      ret = strstr((const char *) get_title(glista->data),word);
+      
       if (ret!=NULL) { // se o titulo contem a palavra
         for(int j=N-2;j>=0;j--){
           temp = posts[j+1];
           posts[j+1] = posts[j];
           posts[j] = temp;
         }
-        posts[0] = com->posts[i]->id_post;
+        posts[0] = get_id_post(glista->data);
       }
     }
   }
@@ -47,4 +50,3 @@ LONG_list contains_word(TAD_community com, char* word, int N){
 
   return l; 
 }
-*/
