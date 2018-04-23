@@ -8,9 +8,7 @@ struct utilizador{
 	gint key_id;
 	gchar* nome;
 	gchar* bio;
-	gint* posts_frequentados; // so contem o id das perguntas em que ele interage
-	gint contador_posts_frequentados;
-	gint espaco_posts_frequentados;
+	GList* posts_frequentados; // so contem o id das perguntas em que ele interage
 	gint posts_u;
 	gint reputacao;
 };
@@ -20,10 +18,7 @@ UTILIZADOR create_utilizador(){
 	u->key_id = 0;
 	u->nome = NULL;
 	u->bio = NULL;
-	u->posts_frequentados = malloc(sizeof(int)*10);
-	for(int i=0; i<10; i++) u->posts_frequentados[i] = 0;
-	u->contador_posts_frequentados = 0;
-	u->espaco_posts_frequentados = 0;
+	u->posts_frequentados = NULL;
 	u->posts_u = 0;
 	u->reputacao = 0;
 	return u;
@@ -41,18 +36,8 @@ gchar* get_bio_utilizador(UTILIZADOR u){
 	return u ? mystrdup(u->bio) : NULL;
 }
 
-gint* get_posts_frequentados(UTILIZADOR u, int tam){
-	long* u1 = malloc(sizeof(int)*tam);
-	memcpy(u1, u->posts_frequentados, sizeof(int)*tam);
-	return (gint*) u1;
-}
-
-long get_contador_posts_frequentados(UTILIZADOR u){
-	return u->contador_posts_frequentados;
-}
-
-long get_espaco_posts_frequentados(UTILIZADOR u){
-	return u->espaco_posts_frequentados;
+GList* get_posts_frequentados(UTILIZADOR u){
+	return u->posts_frequentados;
 }
 
 long get_posts_u(UTILIZADOR u){
@@ -77,16 +62,20 @@ void set_bio(UTILIZADOR u, char* str){
 	u->bio = mystrdup(str);
 }
 
-void set_posts_frequentados(UTILIZADOR u, int index, int value){
-	u->posts_frequentados[index] = value;
-}
-
-void set_contador_posts_frequentados(UTILIZADOR u, int contador_posts_frequentados){
-	u->contador_posts_frequentados = contador_posts_frequentados;
-}
-
-void set_espaco_posts_frequentados(UTILIZADOR u, int espaco_posts_frequentados){
-	u->espaco_posts_frequentados = espaco_posts_frequentados;
+void set_posts_frequentados(UTILIZADOR u, long value){
+	int contem = 0;
+	GList* glista = u->posts_frequentados;
+	// ciclo para ver se contém o value, pára se o o glista->data for maior, uma vez q está ordenado
+	while(glista != NULL && (long)glista->data >= value){
+		if((long)glista->data == value){
+			contem = 1;
+			break;
+		}
+		glista = g_list_next(glista);
+	}
+	// se nao contiver o value, insere-o, e ordena
+	if(contem == 0)
+		u->posts_frequentados = g_list_insert(u->posts_frequentados, (gpointer) value, 0);
 }
 
 void set_posts_u(UTILIZADOR u, int posts_u_l){
