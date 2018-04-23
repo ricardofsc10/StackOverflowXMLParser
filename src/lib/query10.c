@@ -1,26 +1,33 @@
-/*
+
 #include <stdio.h>
 #include "interface.c"
 
 // query 10
 
 long better_answer(TAD_community com, long id){
+  
+
   int melhor_media = 0, melhor_id = 0;
-  for(int i=0; i < com->posts_t; i++){
-    
-    if(com->posts[i]->parent_id == id){
-      int media;
-      int id_bin = procura_binaria_u (com, com->posts[i]->owner_user_id, com->n_utilizadores);
+  int media;
+
+  GList* gl = g_hash_table_get_values(get_posts(com));
+  GList* glista;
+  
+
+  for(glista = gl; glista!=NULL; glista = g_list_next(glista)){
+
+    if(get_parent_id(glista->data) == id){
       
-      media = (0.45 * com->posts[i]->score) + (0.25 * com->utilizador[id_bin]->reputacao) + (0.2 * com->posts[i]->dif_votes) + (0.1 * com->posts[i]->comment_count);
+      UTILIZADOR value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id);
+
+      media = (0.45 * get_score(glista->data)) + (0.25 * get_reputacao(value_user)) + (0.2 * get_dif_votes(glista->data)) + (0.1 * get_comment_count(glista->data));
     
       if (media>melhor_media){
         melhor_media = media;
-        melhor_id = com->posts[i]->id_post;
-      }
+        melhor_id =get_key_id_post(glista->data);
+      } 
     }
   }
   // printf("melhor media: %d\n", melhor_media);
   return melhor_id;
 }
-*/
