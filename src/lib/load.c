@@ -49,15 +49,6 @@ int myelem (int* l, int id, int N){ // ve se um elemento esta num array
     return 0; // caso de nao ter
 }
 
-/*
-void redimensiona_posts_frequentados(TAD_community com, int id_bin){ // recebe a posição do array onde esta o utilizador a redimensionar
-    com->utilizador[id_bin]->posts_frequentados = realloc(com->utilizador[id_bin]->posts_frequentados, sizeof(int) * (com->utilizador[id_bin]->espaco_posts_frequentados + 5));
-    for(int i = com->utilizador[id_bin]->espaco_posts_frequentados ; i < com->utilizador[id_bin]->espaco_posts_frequentados + 5 ; i++){
-        com->utilizador[id_bin]->posts_frequentados[i] = 0;
-    }
-    com->utilizador[id_bin]->espaco_posts_frequentados += 5;
-}*/
-
 void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { 
 
     cur = cur->xmlChildrenNode;
@@ -94,19 +85,6 @@ void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
         cur = cur->next;
     }
     printf("[load] %d Users...\n", i);
-
-    
-    /*// testa se contem elementos
-    long key;
-    key = 10;
-    gboolean g = g_hash_table_contains(get_utilizador(com), (gpointer) key);
-    if(g == TRUE){
-      printf("contem..\n");
-      UTILIZADOR u = g_hash_table_lookup(get_utilizador(com), (gpointer) key);
-      printf("id: %d\n", get_key_id(u) );
-      printf("reputação: %d\n", get_reputacao(u));
-    }
-    else printf("nao contem..\n");*/
 }
 
 void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
@@ -145,27 +123,27 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            set_owner_user_id(value_post, owner_user_id_l);
            set_body(value_post,(char *) body_l);
            set_post_type_id(value_post, atoi( (const char *) post_type_id_l));
+           set_comment_count(value_post, atoi( (const char *) comment_count_l));
+           set_dif_votes(value_post, 0);
 
            if(get_post_type_id(value_post)==2) {
               set_parent_id(value_post, atoi( (const char *) parent_id_l));
               set_title(value_post, NULL);
               // inserir o id da pergunta no utilizador que faz a pergunta
-             // if(myelem(value_user->posts_frequentados, value_post->parent_id, value_user->contador_posts_frequentados) == 0){
-                // se nao tem o id no array, insere-o
-                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value_post->parent_id;
-               // value_user->contador_posts_frequentados++;
-              //}
+              set_posts_frequentados(value_user, get_parent_id(value_post));
+              /*
+              value_user->posts_frequentados[value_user->contador_posts_frequentados] = value_post->parent_id;
+              value_user->contador_posts_frequentados++;*/
            }
            else{
               set_title(value_post,(char *) title_l);
               set_parent_id(value_post, 0);
               strToTag(value_post, (char *) tags_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
-              //if(myelem(value_user->posts_frequentados, atoi((const char *) id_l), value_user->contador_posts_frequentados) == 0){
-                // se nao tem o id no array, insere-o
-                //value_user->posts_frequentados[value_user->contador_posts_frequentados] = value_post->parent_id;
-                //value_user->contador_posts_frequentados++;
-              //}
+              set_posts_frequentados(value_user, get_key_id_post(value_post));
+              /*
+              value_user->posts_frequentados[value_user->contador_posts_frequentados] = value_post->parent_id;
+              value_user->contador_posts_frequentados++;*/
            }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
               set_answer_count(value_post, 0);
@@ -173,8 +151,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
            else{
               set_answer_count(value_post, atoi( (const char *) answer_count_l));
            }
-           set_comment_count(value_post, atoi( (const char *) comment_count_l));
-           set_dif_votes(value_post, 0);
 
            // insere todos os parametros do post na chave (id) associado
            set_posts(com, id_l,  value_post);
@@ -197,13 +173,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
        cur = cur->next;
    }
    ordena(com);
-   
-   /*// teste de ordenação
-   GList* cabeca = get_date_posts(com);
-   while(cabeca != NULL){
-      printf("%s\n\n", get_data_string(cabeca->data));
-      cabeca = cabeca->next;
-   }*/
 
    printf("[load] %d Posts...\n", i);
 }
