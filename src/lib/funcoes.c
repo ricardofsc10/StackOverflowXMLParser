@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "posts.h"
 #include "funcoes.h"
 
 // funções auxiliares mais tarde para serem postas noutro ficheiro
@@ -39,4 +40,16 @@ int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas o
     
     if (inicio== 0 && fim ==0) return 0;
     else return -1;
+}
+
+gint compara_strings(gconstpointer a, gconstpointer b) { // Compara duas strings
+  return strcmp( get_data_string( (POSTS) a) , get_data_string( (POSTS) b) ) ;
+}
+
+gint compara_votes(gconstpointer a, gconstpointer b) { // Compara duas strings
+  return (get_dif_votes( (POSTS) a) > get_dif_votes( (POSTS) b) ) ? -1 : 1 ;
+}
+
+gint compara_answer(gconstpointer a, gconstpointer b) { // Compara duas strings
+  return (get_answer_count( (POSTS) a) > get_answer_count( (POSTS) b) ) ? -1 : 1 ;
 }

@@ -3,12 +3,9 @@
 #include "tcd.h"
 #include "posts.h"
 #include "funcoes.h"
+#include "query6.h"
 
 // query 6
-
-gint compara2(gconstpointer a, gconstpointer b) { // Compara duas strings
-  return (get_dif_votes( (POSTS) a) > get_dif_votes( (POSTS) b) ) ? -1 : 1 ;
-}
 
 LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ // da com mais respostas para a q tem menos
 
@@ -35,7 +32,7 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
   }
 
   // ordena a lista por ordem crescente
-  glvotes = g_list_sort(glvotes, compara2);
+  glvotes = g_list_sort(glvotes, compara_votes);
 
   int i = 0;
   while(glvotes != NULL && i < N){
