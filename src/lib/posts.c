@@ -66,7 +66,7 @@ gchar* get_body(POSTS p){
     return p ? mystrdup(p->body) : NULL;
 }
 
-long get_post_type_id(POSTS p){
+int get_post_type_id(POSTS p){
     return p->post_type_id;
 }
 

@@ -50,11 +50,11 @@ int main(){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_list(l);
       menu = 0;
-    }/*
+    }
     if(menu == 3){ ///////////////////////////////// feita
       LONG_pair lp = create_long_pair(0,0);
-      Date begin = createDate(03,10,2014);
-      Date end = createDate(05,03,2016);
+      Date begin = createDate(03,10,2010);
+      Date end = createDate(05,03,2017);
       printf("Resposta:\n");
       start = clock();
       lp = total_posts(tda,begin,end);
@@ -64,7 +64,7 @@ int main(){
       free_date(begin);
       free_date(end);
       menu = 0;
-    }
+    }/*
     if(menu == 4){ /////////////////////////////////// erros e falta redimensionar
       int tamanho;
       Date begin = createDate(01,01,2014);
@@ -81,7 +81,7 @@ int main(){
       free_date(end);
       //free_list(l);
       menu = 0;
-    }
+    }*/
     if(menu == 5){ ///////////////////////////////// feita
       USER new_user;
       int id;
@@ -99,7 +99,7 @@ int main(){
       int tamanho;
       Date begin = createDate(01,01,2015);
       Date end = createDate(31,02,2016);
-      printf("Qual o número de utilizadores que pretende?\n");
+      printf("Qual o número de respostas que pretende?\n");
       scanf("%d",&tamanho);
       LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
@@ -111,7 +111,7 @@ int main(){
       free_date(end);
       free_list(l);
       menu = 0;
-    }
+    }/*
     if(menu == 7){ ////////////////////////////////// feita
       int tamanho;
       Date begin = createDate(01,01,2015);

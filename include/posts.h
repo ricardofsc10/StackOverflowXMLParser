@@ -14,7 +14,7 @@ long get_score(POSTS p);
 long get_owner_user_id(POSTS p);
 gchar* get_title(POSTS p);
 gchar* get_body(POSTS p);
-long get_post_type_id(POSTS p);
+int get_post_type_id(POSTS p);
 long get_parent_id(POSTS p);
 gchar* get_tags(POSTS p);
 long get_answer_count(POSTS p);

@@ -1,37 +1,38 @@
-/*
-
 #include <stdio.h>
 #include "user.h"
-#include "interface.c"
+#include "tcd.h"
+#include "posts.h"
 
 // query 5
 
 USER get_user_info(TAD_community com, long id){
 
-
-  int id_bin = 0; //procura_binaria_u(com, id, com->n_utilizadores);
-  char* nbio = get_bio(com->utilizador[id_bin]->user);
-
   long posts[10] = {0};
-  long temp;
-  int i,j;
+  USER new_user = create_user(NULL,posts);
+  UTILIZADOR value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) id);
+  
+  if(value_user == NULL){
+    printf("Não existe utilizador com o id %ld\n", id );
+    return new_user;
+  }
+  
+  char* nbio = get_bio_utilizador(value_user);
+  int contador = 0;
+  GList* glista = get_date_posts(com);
+  glista = g_list_last(glista);
 
-  for(i=0;i<com->posts_t;i++){
-    if (com->posts[i]->owner_user_id == id){
-      for(j=8;j>=0;j--){
-        temp = posts[j+1];
-        posts[j+1] = posts[j];
-        posts[j] = temp;
-      }
-      posts[0] = com->posts[i]->id_post;
+  while(glista != NULL && contador < 10){
+    if(get_owner_user_id(glista->data) == id){
+      posts[contador] = get_key_id_post(glista->data);
+      contador++;
     }
+    glista = g_list_previous(glista);
   }
 
-  USER new_user = create_user(nbio,posts);
+  USER new_user2 = create_user(nbio,posts);
   
   printf("%s\n", nbio);
-  for(i=0;i<10;i++) printf("%ld\n", posts[i]);
+  for(int i=0;i<10;i++) printf("%ld\n", posts[i]);
     
-  return new_user;
+  return new_user2;
 }
-*/

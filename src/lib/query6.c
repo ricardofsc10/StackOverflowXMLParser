@@ -1,9 +1,14 @@
-/*
 #include <stdio.h>
 #include "list.h"
-#include "interface.c"
+#include "tcd.h"
+#include "posts.h"
+#include "funcoes.h"
 
 // query 6
+
+gint compara2(gconstpointer a, gconstpointer b) { // Compara duas strings
+  return ((long) a > (long)b) ? -1 : 1 ;
+}
 
 LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ // da com mais respostas para a q tem menos
   LONG_list l = create_list(N);
@@ -17,17 +22,24 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
     set_list(res,i,0); // lista q vai ser devolvida
   }
 
-  for(int i=0; i < com->posts_t ; i++){
-    if (com->posts[i]->post_type_id == 2){ // se é resposta
+  GList* gl = get_date_posts(com);
+  GList* glista = gl;
+  GList* glvotes = NULL;
 
-      if(difDatas(com->posts[i]->data,begin,end) == 0){ // se está dentro das datas
+  while(glista != NULL){
+    if(get_post_type_id(glista->data) == 2){ // se é resposta
+      if(difDatas(get_data(glista->data),begin,end) == 0){ // se está dentro das datas
         
+        glvotes = g_list_insert(glvotes, (gpointer)get_dif_votes(glista->data), 0);
+
+
+/*
         for(int j = 0; j < N ; j++){
           int k = get_list(l,j);
-          if(com->posts[i]->dif_votes > k){
+          if(get_dif_votes(glista->data) > k){
             if(j == N-1) { // se está na última posição
-              set_list(l,j,com->posts[i]->dif_votes); 
-              set_list(lid,j,com->posts[i]->id_post);
+              set_list(l,j,get_dif_votes(glista->data)); 
+              set_list(lid,j,get_key_id_post(glista->data));
               break;
             }
             else{
@@ -36,14 +48,23 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
             }
           }
           else{
-            set_list(l,j-1, com->posts[i]->dif_votes);
-            set_list(lid,j-1,com->posts[i]->id_post);
+            set_list(l,j-1, get_dif_votes(glista->data));
+            set_list(lid,j-1,get_key_id_post(glista->data));
             break;
           }
-        }
+        }*/
       }
     }
+    glista = glista->next;
   }
+
+  glvotes = g_list_sort(glvotes, compara2);
+
+  while(glvotes != NULL){
+    printf("%ld\n", (long) glvotes->data );
+    glvotes = glvotes->next;
+  }
+  /*
   // no fim do 'for' a lista lid tem os id's dos posts por ordem crescente, necessário inverter a ordem
   int j = N-1;
   for (int i = 0 ; i < N ; i++){
@@ -58,12 +79,10 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
     printf("POST_ID: %ld\n", get_list(res,i) );
     printf("Dif votos: %ld\n", get_list(l,j) );
     j--;
-  }
+  }*/
 
   free_list(l);
   free_list(lid);
 
   return res;
 }
-
-*/
