@@ -3,6 +3,7 @@
 #include "tcd.h"
 #include "posts.h"
 #include "funcoes.h"
+#include "query6.h"
 
 // query 6
 
