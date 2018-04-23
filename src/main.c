@@ -128,7 +128,7 @@ int main(){
       free_date(end);
       free_list(l);
       menu = 0;
-    }/*
+    }
     if(menu == 8){ /////////////////////////////////// feita
       int tamanho;
       char palavra[50];
@@ -143,7 +143,7 @@ int main(){
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
-    }
+    }/*
     if(menu == 9){ ////////////////////////////////// feita
       int tamanho;
       printf("Qual o tamanho do array das perguntas?\n");

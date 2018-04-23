@@ -6,10 +6,6 @@
 
 // query 7
 
-gint compara3(gconstpointer a, gconstpointer b) { // Compara duas strings
-  return (get_answer_count( (POSTS) a) > get_answer_count( (POSTS) b) ) ? -1 : 1 ;
-}
-
 LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end){ // da com mais respostas para a q tem menos
 
   LONG_list res = create_list(N);
@@ -35,7 +31,7 @@ LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end
   }
 
   // ordena a lista por ordem crescente
-  glvotes = g_list_sort(glvotes, compara3);
+  glvotes = g_list_sort(glvotes, compara_answer);
 
   int i = 0;
   while(glvotes != NULL && i < N){

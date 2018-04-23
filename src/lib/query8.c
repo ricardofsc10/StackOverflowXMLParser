@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "list.h"
-#include "interface.c"
+#include "tcd.h"
+#include "posts.h"
+#include "funcoes.h"
 
 // query 8
 
@@ -34,7 +36,7 @@ LONG_list contains_word(TAD_community com, char* word, int N){
           posts[j+1] = posts[j];
           posts[j] = temp;
         }
-        posts[0] = get_id_post(glista->data);
+        posts[0] = get_key_id_post(glista->data);
       }
     }
   }

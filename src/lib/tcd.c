@@ -4,6 +4,7 @@
 #include "common.h"
 #include "posts.h"
 #include "tcd.h"
+#include "funcoes.h"
 
 struct TCD_community{
   GHashTable* utilizador;
@@ -43,12 +44,8 @@ void adiciona_date_posts(TAD_community tad, POSTS value){
 	tad->date_posts = g_list_insert(tad->date_posts, (gpointer) value, 0);
 }
 
-gint compara(gconstpointer a, gconstpointer b) { // Compara duas strings
-  return strcmp( get_data_string( (POSTS) a) , get_data_string( (POSTS) b) ) ;
-}
-
 void ordena(TAD_community tad){
-	tad->date_posts = g_list_sort(tad->date_posts, compara);
+	tad->date_posts = g_list_sort(tad->date_posts, compara_strings);
 }
 
 void free_tad(TAD_community tad){
