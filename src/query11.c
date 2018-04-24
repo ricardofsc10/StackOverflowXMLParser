@@ -1,37 +1,39 @@
-/*
 #include <stdio.h>
-#include <libxml/xmlmemory.h>
-#include <libxml/parser.h>
 #include "list.h"
+#include "tcd.h"
+#include "funcoes.h"
 #include "query11.h"
 
 // query 11
 
-void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
-   xmlChar *id_tag_l, *tag_name_l;
-   cur = cur->xmlChildrenNode;
-
-   while (cur != NULL) {
-       if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-          id_tag_l = xmlGetProp(cur, (const xmlChar *) "Id");
-          tag_name_l = xmlGetProp(cur, (const xmlChar *) "TagName");
-         
-
-         xmlFree(id_tag_l);
-         xmlFree(tag_name_l);
-       }
-       cur = cur->next;
-   }
-}
-
-
 LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
-
-  LONG_list l_topusers = create_list(N);
-  int conta __unused; // so para nao dar warning
-  for(int i=0; i<N; i++) 
-    set_list(l_topusers,i,0);
   
+  GList* gl = g_hash_table_get_values(get_utilizador(com));
+  GList* glista = gl;
+
+  glista = g_list_sort(glista, compara_reputacao);
+  
+  LONG_list l = create_list(N);
+  int i = 0;
+  while(glista != NULL && i < N){
+    if(difDatas(get_data(glista->data),begin,end) == 0){ //verifica se esta entre o intervalo de tempo
+      set_list(l,i,get_tags(glista->data));
+      i++;
+    }
+    glista = g_list_next(glista);
+  }
+
+  LONG_list aux = remove_trash(l, N);
+
+
+
+  // deixei aqui para se testar se for preciso
+  for(int i=0; i<N; i++){
+    if( (void*) get_list(aux,i) == NULL) break;
+    printf("%dº: id utilizador: %ld\n\n", i+1, get_list(aux,i));
+  }
+
+
 
 // inserir ordenadamente
 // percorrer o resto dos users inserindo ordenadamente
@@ -40,10 +42,5 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
 // percorrer os posts todos verificar se pertence a um "top user"
 // verificar se está entre as datas e fazer um levantamento das tags
 
-  int i=0; // so declarei para nao dar erro
-  if(difDatas(com->posts[i]->data,begin,end) == 0){ //verifica se esta entre o intervalo de tempo
-
-  } 
-  return l_topusers;
+  return aux;
 }
-*/

@@ -58,6 +58,10 @@ gint compara_posts_u(gconstpointer a, gconstpointer b){
     return (get_posts_u( (UTILIZADOR) a) > get_posts_u( (UTILIZADOR) b) ) ? -1 : 1 ;
 }
 
+gint compara_reputacao(gconstpointer a, gconstpointer b){
+    return (get_reputacao( (UTILIZADOR) a) > get_reputacao( (UTILIZADOR) b) ) ? -1 : 1 ;
+}
+
 Date stringToDias (char* data) { // "2011-11-11"
     char ano[5];
     char mes[3];

@@ -8,6 +8,7 @@
 #include "tcd.h"
 #include "utilizador.h"
 #include "posts.h"
+#include "tag.h"
 #include "common.h"
 #include "funcoes.h"
 
@@ -171,11 +172,36 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
     printf("[load] %d Votes...\n", i);
 }
 
+void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
+
+   cur = cur->xmlChildrenNode;
+
+   while (cur != NULL) {
+       if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
+
+          xmlChar *tag_name_l;
+          long id_tag_l;
+
+          id_tag_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
+          tag_name_l = xmlGetProp(cur, (const xmlChar *) "TagName");
+         
+          TAG value_tag = create_tag();
+          set_key_id_tag(value_tag, id_tag_l);
+          set_tag_name(value_tag, (char *) tag_name_l);
+
+          set_tag(com,id_tag_l,value_tag);
+
+          xmlFree(tag_name_l);
+        }
+       cur = cur->next;
+   }
+}
+
 
 TAD_community load(TAD_community com, char* dump_path){
     
-    xmlDocPtr doc_user, doc_posts, doc_votes, doc_tags __unused ;
-    xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags __unused;
+    xmlDocPtr doc_user, doc_posts, doc_votes, doc_tags;
+    xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags;
 
     ////////////////////////////////// Faz-se o parse do Users
     char path_users[50];
@@ -277,7 +303,7 @@ TAD_community load(TAD_community com, char* dump_path){
     printf("[load] Parse do documento Votes.xml foi feito com sucesso...\n");
 
    ////////////////////////////////// Faz-se o parse do Tags
-   /*char path_tags[50];
+   char path_tags[50];
    strcpy(path_tags, dump_path);
    strcat(path_tags,"./Tags.xml");
 
@@ -307,7 +333,7 @@ TAD_community load(TAD_community com, char* dump_path){
    getReferenceTags (doc_tags,cur_tags,com);
    xmlFreeDoc(doc_tags);
 
-   printf("[load] Parse do documento Tags.xml foi feito com sucesso...\n");*/
+   printf("[load] Parse do documento Tags.xml foi feito com sucesso...\n");
 
     return com;
 }

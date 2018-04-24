@@ -162,16 +162,21 @@ int main(){
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
-    }/*
+    }
     if(menu == 11){
-      printf("Ainda nao está acabada.\n");
+      int tamanho;
+      Date begin = createDate(01,01,2010);
+      Date end = createDate(31,02,2016);
+      printf("Qual o número de utilizadores que pretende?\n");
+      scanf("%d",&tamanho);
+      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
       start = clock();
-      //par = info_from_post(tda,4567);
+      l = most_used_best_rep(tda,100,begin,end);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
-    }*/
+    }
     if(menu==-1) break;
   }
 
