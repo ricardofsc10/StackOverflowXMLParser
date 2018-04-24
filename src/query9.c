@@ -56,10 +56,13 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
       glista1 = g_list_previous(glista1);
   }
   
-  // teste
-  for(int i = 0; i < N ; i++){
-    printf("%ld\n", get_list(l,i));
+  LONG_list aux = remove_trash(l, contador);
+
+  // para testar
+  for(int i = 0; i < contador; i++){
+    if( (void*) get_list(aux,i) == NULL) break;
+    printf("POST_ID: %ld\n", get_list(aux,i) );
   }
 
-  return l;
+  return aux;
 }

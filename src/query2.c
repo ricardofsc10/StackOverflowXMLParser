@@ -25,6 +25,7 @@ LONG_list top_most_active(TAD_community com, int N){
 
   // deixei aqui para se testar se for preciso
   for(int i=0; i<N; i++){
+    if( (void*) get_list(aux,i) == NULL) break;
     printf("%dº: id utilizador: %ld\n\n", i+1, get_list(aux,i));
   }
 

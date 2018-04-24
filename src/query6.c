@@ -40,11 +40,13 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
       i++;
   }
 
+  LONG_list aux = remove_trash(res, N);
   
   // para testar
   for(int i = 0; i < N; i++){
-    printf("POST_ID: %ld\n", get_list(res,i) );
+    if( (void*) get_list(aux,i) == NULL) break;
+    printf("POST_ID: %ld\n", get_list(aux,i) );
   }
 
-  return res;
+  return aux;
 }

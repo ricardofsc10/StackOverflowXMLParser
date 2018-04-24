@@ -42,10 +42,13 @@ LONG_list contains_word(TAD_community com, char* word, int N){
     set_list(l,i,posts[i]);
   }
   
+  LONG_list aux = remove_trash(l, N);
+  
   // para testar
   for(int i = 0; i < N; i++){
-    printf("ID's: %ld\n", get_list(l,i) );
+    if( (void*) get_list(aux,i) == NULL) break;
+    printf("POST_ID: %ld\n", get_list(aux,i) );
   }
 
-  return l; 
+  return aux;
 }
