@@ -2,30 +2,6 @@
 #define __LOAD__
 
 /**
-@brief Função que filtra as datas, transformando-as em elementos da struct date.
-
-@param data Data que vai ser transformada.
-
-@returns Data compatível com a struct date.
-*/
-
-Date stringToDias (char* data);
-
-void strToTag (POSTS value_post, char* str);
-
-/**
-@brief Função que diz se um id esta contido numa lista de id's.
-
-@param l Lista onde se vai encontrar ou não o elemento.
-@param id Parâmetro de comparação
-@param N Tamanho da lista l.
-
-@returns Data compatível com a struct date.
-*/
-
-int myelem (int* l, int id, int N);
-
-/**
 @brief Função que filtra os dados que são necessários do documento Users.xml 
 e coloca nos campos da estrutura.
 

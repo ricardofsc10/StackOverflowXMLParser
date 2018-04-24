@@ -1,9 +1,6 @@
 #include <stdio.h>
-#include <string.h>
 #include "list.h"
 #include "tcd.h"
-#include "posts.h"
-#include "utilizador.h"
 #include "funcoes.h"
 
 // query 9

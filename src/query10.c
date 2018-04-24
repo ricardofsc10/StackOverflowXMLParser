@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "tcd.h"
-#include "posts.h"
 #include "query10.h"
 
 // query 10
@@ -29,7 +28,7 @@ long better_answer(TAD_community com, long id){
       } 
     }
   }
-  printf("melhor id: %d\n", melhor_id);
-  printf("melhor média: %d\n", melhor_media);
+  printf("ID melhor resposta: %d\n", melhor_id);
+  printf("média: %d\n", melhor_media);
   return melhor_id;
 }

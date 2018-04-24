@@ -1,13 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <glib.h>
 #include "pair.h"
 #include "tcd.h"
-#include "utilizador.h"
-#include "posts.h"
 #include "query1.h"
-
-
 
 // query 1
 

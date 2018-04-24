@@ -53,3 +53,33 @@ gint compara_votes(gconstpointer a, gconstpointer b) { // Compara duas strings
 gint compara_answer(gconstpointer a, gconstpointer b) { // Compara duas strings
   return (get_answer_count( (POSTS) a) > get_answer_count( (POSTS) b) ) ? -1 : 1 ;
 }
+
+Date stringToDias (char* data) { // "2011-11-11"
+    char ano[5];
+    char mes[3];
+    char dia[3];
+    int i,j;
+    for (i=0,j=0;i<4;i++,j++)
+        ano[j]=data[i];
+        ano[j]='\0';
+    for(i=5,j=0; i<7;i++,j++)
+        mes[j]=data[i];
+        mes[j]='\0';
+    for(i=8,j=0; i<10;i++,j++)
+        dia[j]=data[i];
+        dia[j]='\0';
+    Date ndata = createDate (atoi(dia),atoi(mes),atoi(ano));
+    return ndata;
+}
+
+void strToTag (POSTS value_post, char* str){
+  char* token;
+  const char delim[3] = "&;"; //caracteres em que a string é dividida
+  token = strtok (str,delim);
+  while (token != NULL){
+      set_tags(value_post, token);
+      //para testar:
+      //printf("%s\n", com->posts[i]->tags);
+      token = strtok (NULL, delim);
+  }
+}

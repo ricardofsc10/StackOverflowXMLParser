@@ -22,4 +22,15 @@ gint compara_votes(gconstpointer a, gconstpointer b);
 
 gint compara_answer(gconstpointer a, gconstpointer b);
 
+/**
+@brief Função que filtra as datas, transformando-as em elementos da struct date.
+
+@param data Data que vai ser transformada.
+
+@returns Data compatível com a struct date.
+*/
+Date stringToDias (char* data);
+
+void strToTag (POSTS value_post, char* str);
+
 #endif

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "pair.h"
 #include "tcd.h"
-#include "posts.h"
 #include "funcoes.h"
 #include "query3.h"
 

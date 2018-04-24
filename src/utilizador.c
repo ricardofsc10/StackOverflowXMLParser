@@ -66,7 +66,7 @@ void set_posts_frequentados(UTILIZADOR u, long value){
 	int contem = 0;
 	GList* glista = u->posts_frequentados;
 	// ciclo para ver se contém o value, pára se o o glista->data for maior, uma vez q está ordenado
-	while(glista != NULL && (long)glista->data >= value){
+	while(glista != NULL){
 		if((long)glista->data == value){
 			contem = 1;
 			break;

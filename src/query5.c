@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "user.h"
 #include "tcd.h"
-#include "posts.h"
 #include "query5.h"
 
 // query 5

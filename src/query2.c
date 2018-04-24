@@ -1,9 +1,6 @@
 #include <stdio.h>
-#include <glib.h>
 #include "list.h"
 #include "tcd.h"
-#include "utilizador.h"
-#include "posts.h"
 #include "query2.h"
 
 // query 2

@@ -9,45 +9,9 @@
 #include "utilizador.h"
 #include "posts.h"
 #include "common.h"
+#include "funcoes.h"
 
 // query 0 (load)
-
-Date stringToDias (char* data) { // "2011-11-11"
-    char ano[5];
-    char mes[3];
-    char dia[3];
-    int i,j;
-    for (i=0,j=0;i<4;i++,j++)
-        ano[j]=data[i];
-        ano[j]='\0';
-    for(i=5,j=0; i<7;i++,j++)
-        mes[j]=data[i];
-        mes[j]='\0';
-    for(i=8,j=0; i<10;i++,j++)
-        dia[j]=data[i];
-        dia[j]='\0';
-    Date ndata = createDate (atoi(dia),atoi(mes),atoi(ano));
-    return ndata;
-}
-
-void strToTag (POSTS value_post, char* str){
-  char* token;
-  const char delim[3] = "&;"; //caracteres em que a string é dividida
-  token = strtok (str,delim);
-  while (token != NULL){
-      set_tags(value_post, token);
-      //para testar:
-      //printf("%s\n", com->posts[i]->tags);
-      token = strtok (NULL, delim);
-  }
-}
-
-int myelem (int* l, int id, int N){ // ve se um elemento esta num array
-    for(int i = 0; i < N ; i++){
-      if(id == l[i]) return 1; // caso de ter
-    }
-    return 0; // caso de nao ter
-}
 
 void getReferenceUser (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) { 
 
@@ -131,9 +95,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               set_title(value_post, NULL);
               // inserir o id da pergunta no utilizador que faz a pergunta
               set_posts_frequentados(value_user, get_parent_id(value_post));
-              /*
-              value_user->posts_frequentados[value_user->contador_posts_frequentados] = value_post->parent_id;
-              value_user->contador_posts_frequentados++;*/
            }
            else{
               set_title(value_post,(char *) title_l);
@@ -141,9 +102,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               strToTag(value_post, (char *) tags_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
               set_posts_frequentados(value_user, get_key_id_post(value_post));
-              /*
-              value_user->posts_frequentados[value_user->contador_posts_frequentados] = value_post->parent_id;
-              value_user->contador_posts_frequentados++;*/
            }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
               set_answer_count(value_post, 0);
