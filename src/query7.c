@@ -17,14 +17,14 @@ LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end
 
   GList* gl = get_date_posts(com);
   GList* glista = gl;
-  GList* glvotes = NULL;
+  GList* glanswers = NULL;
 
   while(glista != NULL){
-    if(get_post_type_id(glista->data) == 2){ // se é resposta
+    if(get_post_type_id(glista->data) == 1){ // se é pergunta
       
       if(difDatas(get_data(glista->data),begin,end) == 0){ // se está dentro das datas
         // insere no inicio as respostas
-        glvotes = g_list_insert(glvotes, (gpointer) glista->data, 0);
+        glanswers = g_list_insert(glanswers, (gpointer) glista->data, 0);
 
       }
     }
@@ -32,12 +32,12 @@ LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end
   }
 
   // ordena a lista por ordem crescente
-  glvotes = g_list_sort(glvotes, compara_answer);
+  glanswers = g_list_sort(glanswers, compara_answer);
 
   int i = 0;
-  while(glvotes != NULL && i < N){
-      set_list(res,i,get_key_id_post(glvotes->data));
-      glvotes = g_list_next(glvotes);
+  while(glanswers != NULL && i < N){
+      set_list(res,i,get_key_id_post(glanswers->data));
+      glanswers = g_list_next(glanswers);
       i++;
   }
 

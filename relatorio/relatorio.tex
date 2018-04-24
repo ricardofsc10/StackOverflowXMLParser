@@ -105,6 +105,10 @@ Esta secção tem as \emph{estruturas} do projeto.
 
 \subsection{Init}
 
+Função que cria a \textbf{TAD\_community}. Por consequência, inicializa
+as estruturas relacionadas à struct \textbf{TCD\_community}, alocando
+memória e usando a função da \textit{glib}, \textbf{g\_hash\_table\_new}.
+
 \subsection{Load}
 
 \subsection{Query 1}
@@ -153,7 +157,7 @@ colocamos o seu \textbf{id} na posição estabelecida.
 
 \subsection{Query 3}
 
-Dado um intervalo de tempo arbitrário, obter o número total de posts 
+Dado um intervalo de tempo arbitrário, obtemos o número total de posts 
 (identificando perguntas e respostas separadamente) neste período.
 
 Nesta questão, utilizamos uma \textit{\textbf{GList*}} para armazenar 
@@ -169,9 +173,53 @@ caso contrário é uma resposta, e é incrementada a segunda coordenada.
 
 \subsection{Query 5}
 
+Dado um ID de utilizador, devolvemos a informação do seu perfil (short 
+bio) e os IDs dos seus 10 últimos posts (perguntas ou respostas), 
+ordenados por cronologia inversa.
+
+Nesta questão, recorremos à função da \textit{glib}, \textbf{g\_hash\_
+table\_lookup}, para termos o \textbf{value} associado ao \textbf{id}
+do utilizador. Desta forma, retornamos a \textbf{bio} do utilizador.
+
+Retornamos os últimos 10 posts acedendo à estrutura que tem os posts
+ordenados por data e, começando no último elemento da \textit{
+\textbf{GList*}}, vamos percorrendo a lista para trás. Caso o \textbf{
+owner\_user\_id} seja o requerido adicionamos o \textbf{id} do post à 
+lista a retornar.
+
 \subsection{Query 6}
 
+Dado um intervalo de tempo arbitrário, devolver os IDs das N respostas 
+com mais votos, em ordem decrescente do número de votos.
+
+Nesta questão, recorremos à estrutura \textbf{date\_posts} que possuí 
+as datas ordenadas. Caso o \textbf{post} seja uma pergunta e
+se encontre entre as datas requeridas na query, é inserida numa nova
+\textit{\textbf{GList*}} \textbf{glvotes} criada para armazenar os 
+valores necessários para a resposta final.
+
+Depois esta lista é ordenada por votos em ordem decrescente através da 
+função da \textit{glib}, \textbf{g\_list\_sort}, que usa uma função de 
+comparação \textbf{compara\_votes}, que tem em conta o \textbf{dif\_votes}
+da estrutura. Finalmente acedemos ao \textbf{id\_post} relacionado, 
+através dos dados respetivos da lista \textbf{glvotes}.
+
 \subsection{Query 7}
+
+Dado um intervalo de tempo arbitrário, devolver os IDs das N perguntas 
+com mais respostas, em ordem decrescente do número de votos.
+
+Nesta questão, recorremos à estrutura \textbf{date\_posts} que possuí 
+as datas ordenadas. Caso o \textbf{post} seja uma pergunta e
+se encontre entre as datas requeridas na query, é inserida numa nova
+\textit{\textbf{GList*}} \textbf{glanswers} criada para armazenar os 
+valores necessários para a resposta final.
+
+Depois esta lista é ordenada por número de respostas em ordem decrescente 
+através da função da \textit{glib}, \textbf{g\_list\_sort}, que usa uma 
+função de comparação \textbf{compara\_answers}, que tem em conta o \textbf
+{answer\_count} da estrutura. Finalmente acedemos ao \textbf{id\_post} 
+relacionado, através dos dados respetivos da lista \textbf{glanswers}.
 
 \subsection{Query 8}
 
