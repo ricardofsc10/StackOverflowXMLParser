@@ -66,15 +66,11 @@ int main(){
       menu = 0;
     }
     if(menu == 4){ /////////////////////////////////// erros e falta redimensionar
-      int tamanho;
-      Date begin = createDate(01,01,2010);
-      Date end = createDate(31,12,2017);
-      printf("Qual o número de utilizadores que pretende?\n");
-      scanf("%d",&tamanho);
-      LONG_list l = create_list(tamanho);
+      Date begin = createDate(01,01,2016);
+      Date end = createDate(31,12,2016);
       printf("Resposta:\n");
       start = clock();
-      l = questions_with_tag(tda, "battery", begin, end);
+      questions_with_tag(tda, "battery", begin, end);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_date(begin);
@@ -151,7 +147,7 @@ int main(){
       LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
       start = clock();
-      l = both_participated(tda, 1465, 16575, tamanho); // 1465 e 16575 / 449, 15811
+      l = both_participated(tda, 267, 12442, tamanho); // 1465 e 16575 / 449, 15811
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;

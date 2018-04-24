@@ -35,7 +35,6 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
       g_date_posts1 = g_list_next(g_date_posts1);
   }
   glista1 = g_list_sort(glista1, compara_strings);
-  printf("cheguei\n");
 
   // coloca numa nova lista os valores dos posts, do utilizador 2
   g_date_posts2 = get_posts_frequentados(value_user2);
@@ -49,7 +48,7 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 
   // neste momento as glists estao ordenadas do mais antigo ao mais recente
   // devemos começar pelo último
-  
+
   glista1 = g_list_last(glista1);
   while(glista1 != NULL && contador < N){
       GList* res = g_list_find(glista2, glista1->data);
