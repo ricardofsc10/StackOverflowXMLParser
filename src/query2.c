@@ -1,57 +1,32 @@
 #include <stdio.h>
 #include "list.h"
 #include "tcd.h"
+#include "funcoes.h"
 #include "query2.h"
 
 // query 2
 
 LONG_list top_most_active(TAD_community com, int N){
-  LONG_list l = create_list(N);
-  LONG_list lid = create_list(N);
-
-  // inicialização das listas
-  for(int i=0; i<N; i++){
-    set_list(l,i,0);
-    set_list(lid,i,0);
-  }
 
   GList* gl = g_hash_table_get_values(get_utilizador(com));
-  GList* glista;
+  GList* glista = gl;
 
-  for(glista = gl; glista!=NULL; glista = g_list_next(glista)){
-    for(int j=0; j<N;j++){
-      long k = get_list(l,j);
+  glista = g_list_sort(glista, compara_posts_u);
 
-      if(get_posts_u((UTILIZADOR) glista->data) > k){
-        // se é a última posição
-        if(j == N-1) {
-          set_list(l,j,get_posts_u((UTILIZADOR) glista->data)); 
-          set_list(lid,j,get_key_id((UTILIZADOR) glista->data));
-          break;
-        }
-        else{
-          set_list(l,j,get_list(l,j+1));
-          set_list(lid,j,get_list(lid,j+1));
-        }
-      }
-      else{
-        if(j != 0){ // se for zero nao pode escrever na posição anterior(j-1)
-          set_list(l,j-1,get_posts_u((UTILIZADOR) glista->data));
-          set_list(lid,j-1, get_key_id((UTILIZADOR) glista->data));
-          break;
-        }
-        else break;
-      }
-    }
+  LONG_list l = create_list(N);
+  int i = 0;
+  while(glista != NULL && i < N){
+    set_list(l,i,get_key_id_post(glista->data));
+    i++;
+    glista = g_list_next(glista);
   }
-  
+
+  LONG_list aux = remove_trash(l, N);
+
   // deixei aqui para se testar se for preciso
   for(int i=0; i<N; i++){
-    printf("número total de posts: %ld\n", get_list(l,i));
-    printf("id utilizador: %ld\n\n", get_list(lid,i));
+    printf("%dº: id utilizador: %ld\n\n", i+1, get_list(aux,i));
   }
 
-  free_list(l);
-
-  return lid;
+  return aux;
 }

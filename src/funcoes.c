@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "posts.h"
+#include "tcd.h"
 #include "funcoes.h"
 
 // funções auxiliares mais tarde para serem postas noutro ficheiro
@@ -54,6 +54,10 @@ gint compara_answer(gconstpointer a, gconstpointer b) { // Compara duas strings
   return (get_answer_count( (POSTS) a) > get_answer_count( (POSTS) b) ) ? -1 : 1 ;
 }
 
+gint compara_posts_u(gconstpointer a, gconstpointer b){
+    return (get_posts_u( (UTILIZADOR) a) > get_posts_u( (UTILIZADOR) b) ) ? -1 : 1 ;
+}
+
 Date stringToDias (char* data) { // "2011-11-11"
     char ano[5];
     char mes[3];
@@ -82,4 +86,17 @@ void strToTag (POSTS value_post, char* str){
       //printf("%s\n", com->posts[i]->tags);
       token = strtok (NULL, delim);
   }
+}
+
+LONG_list remove_trash(LONG_list l, int N){
+  int i;
+  for(i = 0; i < N; i++){
+      if (get_list(l,i) == 0) break;
+  }
+
+  LONG_list aux = create_list(i);
+  for(int j = 0 ; j < i ; j++){
+      set_list(aux, j, get_list(l, j));
+  }
+  return aux;
 }

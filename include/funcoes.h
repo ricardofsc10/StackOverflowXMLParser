@@ -2,6 +2,7 @@
 #define __FUNCOES__
 
 #include "date.h"
+#include "list.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -22,6 +23,8 @@ gint compara_votes(gconstpointer a, gconstpointer b);
 
 gint compara_answer(gconstpointer a, gconstpointer b);
 
+gint compara_posts_u(gconstpointer a, gconstpointer b);
+
 /**
 @brief Função que filtra as datas, transformando-as em elementos da struct date.
 
@@ -32,5 +35,7 @@ gint compara_answer(gconstpointer a, gconstpointer b);
 Date stringToDias (char* data);
 
 void strToTag (POSTS value_post, char* str);
+
+LONG_list remove_trash(LONG_list l, int N);
 
 #endif
