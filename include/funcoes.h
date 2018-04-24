@@ -36,7 +36,7 @@ gint compara_reputacao(gconstpointer a, gconstpointer b);
 */
 Date stringToDias (char* data);
 
-void strToTag (POSTS value_post, char* str);
+void strToTag (POSTS value_post, const char* str);
 
 LONG_list remove_trash(LONG_list l, int N);
 

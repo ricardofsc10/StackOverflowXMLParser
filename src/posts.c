@@ -14,7 +14,7 @@ struct posts{
     gchar* body;
     gint post_type_id; // 1-pergunta 2-resposta
     gint parent_id;
-    gchar* tags;
+    GList* tags;
     gint answer_count;
     gint comment_count;
     gint dif_votes;
@@ -74,8 +74,8 @@ long get_parent_id(POSTS p){
     return p->parent_id;
 }
 
-gchar* get_tags(POSTS p){
-    return p ? mystrdup(p->tags) : NULL;
+GList* get_tags(POSTS p){
+    return p->tags;
 }
 
 long get_answer_count(POSTS p){
@@ -130,8 +130,7 @@ void set_parent_id(POSTS p, int parent_id){
 }
 
 void set_tags(POSTS p, char* str){
-    free(p->tags);
-    p->tags = mystrdup(str);
+    p->tags = g_list_insert(p->tags, str, 0);
 }
 
 void set_answer_count(POSTS p, int answer_count){

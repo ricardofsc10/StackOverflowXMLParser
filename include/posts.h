@@ -2,6 +2,7 @@
 #define __POSTS__
 
 #include "date.h"
+#include "common.h"
 #include <glib.h>
 
 typedef struct posts* POSTS;
@@ -16,7 +17,7 @@ gchar* get_title(POSTS p);
 gchar* get_body(POSTS p);
 int get_post_type_id(POSTS p);
 long get_parent_id(POSTS p);
-gchar* get_tags(POSTS p);
+GList* get_tags(POSTS p);
 long get_answer_count(POSTS p);
 long get_comment_count(POSTS p);
 long get_dif_votes(POSTS p);

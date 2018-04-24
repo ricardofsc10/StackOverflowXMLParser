@@ -80,17 +80,18 @@ Date stringToDias (char* data) { // "2011-11-11"
     return ndata;
 }
 
-void strToTag (POSTS value_post, char* str){
-  char* token;
-  const char delim[3] = "&;"; //caracteres em que a string é dividida
-  token = strtok (str,delim);
+void strToTag (POSTS value_post, const char* str){
+  char *token, *cp;
+  const char delim[] = "<>"; //caracteres em que a string é dividida
+  cp = mystrdup (str);
+
+  token = strtok (cp ,delim);
   while (token != NULL){
       set_tags(value_post, token);
-      //para testar:
-      //printf("%s\n", com->posts[i]->tags);
       token = strtok (NULL, delim);
   }
 }
+
 
 LONG_list remove_trash(LONG_list l, int N){
   int i;

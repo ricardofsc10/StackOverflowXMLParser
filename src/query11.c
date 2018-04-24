@@ -7,13 +7,26 @@
 // query 11
 
 LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
+
+  POSTS post = (POSTS)g_hash_table_lookup(get_posts(com), (gpointer) 187278);
+  GList* ultimo = get_tags(post);
+  GList* aux_ultimo = ultimo;
+  while(aux_ultimo != NULL){
+    printf("%s\n", aux_ultimo->data );
+    aux_ultimo = g_list_next(aux_ultimo);
+  }
   
+  printf("cheguei\n");
+
+
+
+
+
   GList* gl = g_hash_table_get_values(get_utilizador(com));
   GList* glista = gl;
 
   glista = g_list_sort(glista, compara_reputacao); // ordenada por reputação
   
-  LONG_list l = create_list(N);
   GList* aux = NULL;
 
   int i = 0;
@@ -35,24 +48,19 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   }
 
   // neste momento temos cada tag e o número de vezes que foi usada
+
   
 
+  // percorrer os posts todos verificar se pertence a um "top user"
+  // verificar se está entre as datas e fazer um levantamento das tags
 
-
+  /*
   // deixei aqui para se testar se for preciso
   for(int i=0; i<N; i++){
     if( (void*) get_list(aux,i) == NULL) break;
     printf("%dº: id utilizador: %ld\n\n", i+1, get_list(aux,i));
-  }
+  }*/
 
-
-
-// inserir ordenadamente
-// percorrer o resto dos users inserindo ordenadamente
-  
-
-// percorrer os posts todos verificar se pertence a um "top user"
-// verificar se está entre as datas e fazer um levantamento das tags
-
-  return aux;
+  LONG_list l = create_list(N);
+  return l;
 }

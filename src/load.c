@@ -177,6 +177,7 @@ void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 
    cur = cur->xmlChildrenNode;
+   int i = 0;
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
@@ -194,9 +195,12 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
           set_tag(com,id_tag_l,value_tag);
 
           xmlFree(tag_name_l);
+
+          i++;
         }
        cur = cur->next;
    }
+   printf("[load] (processo filho) %d Tags...\n", i);
 }
 
 
@@ -266,12 +270,12 @@ TAD_community load(TAD_community com, char* dump_path){
            return 0;
        }
 
-       printf("[load] Ínicio do parse do documento Tags.xml...\n");
+       printf("[load] (processo filho) Ínicio do parse do documento Tags.xml...\n");
 
        getReferenceTags (doc_tags,cur_tags,com);
        xmlFreeDoc(doc_tags);
 
-       printf("[load] Parse do documento Tags.xml foi feito com sucesso...\n");
+       printf("[load] (processo filho) Parse do documento Tags.xml foi feito com sucesso...\n");
        _exit(0);
     }
     if(pid == -1)

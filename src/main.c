@@ -1,4 +1,5 @@
 #include <interface.h>
+#include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -20,7 +21,7 @@ int main(){
   clock_t stop = clock();
   
   printf("[load] Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) ); // faz-se esta conta pq tempo vem em mili
-  
+
   while(menu == 0){ // interatividade
     printf("Que questão deseja resolver? (-1, para sair do programa)\n");
     scanf("%d", &menu);
