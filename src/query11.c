@@ -11,19 +11,31 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   GList* gl = g_hash_table_get_values(get_utilizador(com));
   GList* glista = gl;
 
-  glista = g_list_sort(glista, compara_reputacao);
+  glista = g_list_sort(glista, compara_reputacao); // ordenada por reputação
   
   LONG_list l = create_list(N);
+  GList* aux = NULL;
+
   int i = 0;
   while(glista != NULL && i < N){
-    if(difDatas(get_data(glista->data),begin,end) == 0){ //verifica se esta entre o intervalo de tempo
-      set_list(l,i,get_tags(glista->data));
-      i++;
-    }
+    aux = g_list_insert(aux, glista->data, 0);
+    i++;
     glista = g_list_next(glista);
   }
+  // em aux contem os N utilizadores com melhor prestação
 
-  LONG_list aux = remove_trash(l, N);
+  while(aux != NULL){
+    GList* posts_perguntas = get_posts_perguntas(aux->data);
+    while(posts_perguntas != NULL){
+      if(difDatas(get_data(posts_perguntas->data),begin,end) == 0){
+          // falta pegar nas tags uma a uma
+      }
+    }
+    aux = g_list_next(aux);
+  }
+
+  // neste momento temos cada tag e o número de vezes que foi usada
+  
 
 
 

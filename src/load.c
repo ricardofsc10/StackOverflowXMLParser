@@ -5,6 +5,7 @@
 #include <libxml/parser.h>
 #include <gmodule.h>
 #include <glib.h>
+#include <unistd.h>
 #include "tcd.h"
 #include "utilizador.h"
 #include "posts.h"
@@ -103,6 +104,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
               strToTag(value_post, (char *) tags_l);
               // inserir o id da pergunta no utilizador que faz a pergunta
               set_posts_frequentados(value_user, get_key_id_post(value_post));
+              set_posts_perguntas(value_user, value_post);
            }
            if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
               set_answer_count(value_post, 0);
@@ -236,6 +238,46 @@ TAD_community load(TAD_community com, char* dump_path){
 
     printf("[load] Parse do documento Users.xml foi feito com sucesso...\n");
 
+    ////////////////////////////////// Faz-se o parse do Tags
+    int pid;
+    if((pid = fork()) == 0){
+       char path_tags[50];
+       strcpy(path_tags, dump_path);
+       strcat(path_tags,"./Tags.xml");
+
+       doc_tags = xmlParseFile(path_tags);
+
+       if (doc_tags == NULL) {
+             fprintf(stderr,"Document not parsed successfully. \n");
+             return 0;
+       }
+
+       cur_tags = xmlDocGetRootElement(doc_tags);
+
+       if (cur_tags == NULL) {
+           fprintf(stderr,"empty document\n");
+           xmlFreeDoc(doc_tags);
+           return 0;
+       }
+
+       if (xmlStrcmp(cur_tags->name, (const xmlChar *) "tags")) {
+           fprintf(stderr,"document of the wrong type, root node != tags\n");
+           xmlFreeDoc(doc_tags);
+           return 0;
+       }
+
+       printf("[load] Ínicio do parse do documento Tags.xml...\n");
+
+       getReferenceTags (doc_tags,cur_tags,com);
+       xmlFreeDoc(doc_tags);
+
+       printf("[load] Parse do documento Tags.xml foi feito com sucesso...\n");
+       _exit(0);
+    }
+    if(pid == -1)
+      perror("ERROR: tags falhou...");
+
+
     ////////////////////////////////// Faz-se o parse do Posts
     char path_posts[50];
     strcpy(path_posts, dump_path);
@@ -301,39 +343,6 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_votes);
 
     printf("[load] Parse do documento Votes.xml foi feito com sucesso...\n");
-
-   ////////////////////////////////// Faz-se o parse do Tags
-   char path_tags[50];
-   strcpy(path_tags, dump_path);
-   strcat(path_tags,"./Tags.xml");
-
-   doc_tags = xmlParseFile(path_tags);
-
-   if (doc_tags == NULL) {
-         fprintf(stderr,"Document not parsed successfully. \n");
-         return 0;
-   }
-
-   cur_tags = xmlDocGetRootElement(doc_tags);
-
-   if (cur_tags == NULL) {
-       fprintf(stderr,"empty document\n");
-       xmlFreeDoc(doc_tags);
-       return 0;
-   }
-
-   if (xmlStrcmp(cur_tags->name, (const xmlChar *) "tags")) {
-       fprintf(stderr,"document of the wrong type, root node != tags\n");
-       xmlFreeDoc(doc_tags);
-       return 0;
-   }
-
-   printf("[load] Ínicio do parse do documento Tags.xml...\n");
-
-   getReferenceTags (doc_tags,cur_tags,com);
-   xmlFreeDoc(doc_tags);
-
-   printf("[load] Parse do documento Tags.xml foi feito com sucesso...\n");
 
     return com;
 }

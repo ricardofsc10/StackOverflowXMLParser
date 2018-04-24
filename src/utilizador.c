@@ -9,6 +9,7 @@ struct utilizador{
 	gchar* nome;
 	gchar* bio;
 	GList* posts_frequentados; // so contem o id das perguntas em que ele interage
+	GList* posts_perguntas;
 	gint posts_u;
 	gint reputacao;
 };
@@ -19,6 +20,7 @@ UTILIZADOR create_utilizador(){
 	u->nome = NULL;
 	u->bio = NULL;
 	u->posts_frequentados = NULL;
+	u->posts_perguntas = NULL;
 	u->posts_u = 0;
 	u->reputacao = 0;
 	return u;
@@ -38,6 +40,10 @@ gchar* get_bio_utilizador(UTILIZADOR u){
 
 GList* get_posts_frequentados(UTILIZADOR u){
 	return u->posts_frequentados;
+}
+
+GList* get_posts_perguntas(UTILIZADOR u){
+	return u->posts_perguntas;
 }
 
 long get_posts_u(UTILIZADOR u){
@@ -76,6 +82,10 @@ void set_posts_frequentados(UTILIZADOR u, long value){
 	// se nao contiver o value, insere-o, e ordena
 	if(contem == 0)
 		u->posts_frequentados = g_list_insert(u->posts_frequentados, (gpointer) value, 0);
+}
+
+void set_posts_perguntas(UTILIZADOR u, POSTS value){
+	u->posts_perguntas = g_list_insert(u->posts_perguntas, (gpointer) value, 0);
 }
 
 void set_posts_u(UTILIZADOR u, int posts_u_l){
