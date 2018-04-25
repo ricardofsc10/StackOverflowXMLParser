@@ -3,8 +3,12 @@
 
 #include "date.h"
 #include "list.h"
+#include "tcd.h"
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+#include <interface.h>
+#include <math.h>
 
 /**
 @brief Função que verifica se uma data se encontra ou não entre um período.
@@ -41,5 +45,9 @@ Date stringToDias (char* data);
 void strToTag (POSTS value_post, const char* str);
 
 LONG_list remove_trash(LONG_list l, int N);
+
+char* escolhe_ficheiros();
+
+void interatividade(TAD_community tda);
 
 #endif
