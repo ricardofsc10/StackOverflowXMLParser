@@ -67,11 +67,14 @@ int main(){
       menu = 0;
     }
     if(menu == 4){ /////////////////////////////////// erros e falta redimensionar
-      Date begin = createDate(01,03,2013);
-      Date end = createDate(31,03,2013);
+      Date begin = createDate(01,01,2014);
+      Date end = createDate(31,01,2014);
+      char tag[50];
+      printf("Que palavra quer encontrar?\n");
+      scanf("%s", tag);
       printf("Resposta:\n");
       start = clock();
-      questions_with_tag(tda, "battery", begin, end);
+      questions_with_tag(tda, tag, begin, end);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_date(begin);
