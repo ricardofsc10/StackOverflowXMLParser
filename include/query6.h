@@ -1,5 +1,13 @@
+#ifndef __QUERY6__
+#define __QUERY6__
+
 /**
-@brief Função que dado um intervalo de tempo arbitrário, devolve os IDs das N respostas com mais votos, 
+@file query6.h
+Query6 do projeto.
+/*
+
+/**
+\brief Função que dado um intervalo de tempo arbitrário, devolve os IDs das N respostas com mais votos, 
 em ordem decrescente do número de votos.
 
 @param com Estrutura com os dados.
@@ -9,10 +17,6 @@ em ordem decrescente do número de votos.
 
 @returns Lista com os IDs.
 */
-
-
-#ifndef __QUERY6__
-#define __QUERY6__
 
 LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end);
 

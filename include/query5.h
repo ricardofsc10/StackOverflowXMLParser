@@ -1,5 +1,14 @@
+#ifndef __QUERY5__
+#define __QUERY5__
+
 /**
-@brief Função que dado um ID de utilizador, devolver a informação do seu perfil (short bio)
+@file query5.h
+Query5 do projeto.
+/*
+
+
+/**
+\brief Função que dado um ID de utilizador, devolver a informação do seu perfil (short bio)
  e os IDs dos seus 10 últimos posts (perguntas ou respostas), ordenados por cronologia inversa.
 
 @param com Estrutura com os dados.
@@ -8,8 +17,6 @@
 @returns Utilizador com informação pedida.
 */
 
-#ifndef __QUERY5__
-#define __QUERY5__
 
 USER get_user_info(TAD_community com, long id);
 

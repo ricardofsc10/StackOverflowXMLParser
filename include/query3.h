@@ -1,5 +1,15 @@
+#ifndef __QUERY3__
+#define __QUERY3__
+
+
 /**
-@brief Função que dado um intervalo de tempo arbitrário, obtem o número total de posts 
+@file query3.h
+Query3 do projeto.
+/*
+
+
+/**
+\brief Função que dado um intervalo de tempo arbitrário, obtem o número total de posts 
 (identificando perguntas e respostas separadamente) neste período.
 
 @param com Estrutura com os dados.
@@ -8,9 +18,6 @@
 
 @returns Lista com o total de posts no período correspondente.
 */
-
-#ifndef __QUERY3__
-#define __QUERY3__
 
 LONG_pair total_posts(TAD_community com, Date begin, Date end);
 

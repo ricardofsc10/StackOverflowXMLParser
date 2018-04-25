@@ -1,5 +1,13 @@
+#ifndef __QUERY9__
+#define __QUERY9__
+
 /**
-@brief Função que dados os IDs de dois utilizadores, devolve as últimas
+@file query9.h
+Query9 do projeto.
+/*
+
+/**
+\brief Função que dados os IDs de dois utilizadores, devolve as últimas
 N perguntas, em cronologia inversa, em que participaram os dois utilizadores específicos
 
 @param com Estrutura com os dados.
@@ -9,10 +17,6 @@ N perguntas, em cronologia inversa, em que participaram os dois utilizadores esp
 
 @returns Lista com os IDs das perguntas em que ambos participam.
 */
-
-
-#ifndef __QUERY9__
-#define __QUERY9__
 
 LONG_list both_participated(TAD_community com, long id1, long id2, int N);
 

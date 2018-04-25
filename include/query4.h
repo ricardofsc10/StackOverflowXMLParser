@@ -1,5 +1,13 @@
+#ifndef __QUERY4__
+#define __QUERY4__
+
 /**
-@brief Função que dado um intervalo de tempo arbitrário, devolve todas as perguntas que contêm
+@file query4.h
+Query4 do projeto.
+/*
+
+/**
+\brief Função que dado um intervalo de tempo arbitrário, devolve todas as perguntas que contêm
 uma determinada tag.
 
 @param com Estrutura com os dados.
@@ -9,9 +17,6 @@ uma determinada tag.
 
 @returns Retorna uma lista com os IDs das perguntas ordenadas em cronologia inversa.
 */
-
-#ifndef __QUERY4__
-#define __QUERY4__
 
 LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end);
 

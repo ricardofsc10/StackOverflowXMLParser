@@ -1,5 +1,13 @@
+#ifndef __QUERY7__
+#define __QUERY7__
+
 /**
-@brief Função que dado um intervalo de tempo arbitrário, devolve as IDs das N perguntas com mais respostas, 
+@file query7.h
+Query7 do projeto.
+/*
+
+/**
+\brief Função que dado um intervalo de tempo arbitrário, devolve as IDs das N perguntas com mais respostas, 
 em ordem decrescente do número de respostas.
 
 @param com Estrutura com os dados.
@@ -10,9 +18,6 @@ em ordem decrescente do número de respostas.
 @returns Lista com os IDs.
 */
 
-
-#ifndef __QUERY7__
-#define __QUERY7__
 
 LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end);
 
