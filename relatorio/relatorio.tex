@@ -189,7 +189,9 @@ e caso pertença é inserida no início duma \textit{GList*} \textbf{res}
 que vai conter os resultados finais, através da função 
 \textbf{g\_list\_insert}.
 
-////////////////////// POR FAZER //////////////////////
+De seguida, ordenamos a lista \textbf{res} por data através da função
+\textbf{g\_list\_sort}, de modo a depois poder retornar os \textbf{id's}
+em questão.
 
 \subsection{Query 5}
 
@@ -245,9 +247,35 @@ função de comparação \textbf{compara\_answers}, que tem em conta o
 
 \subsection{Query 8}
 
+Dado uma palavra, devolver uma lista com os IDs de N perguntas
+cujos títulos a contenham, ordenados por cronologia inversa.
+
+Nesta questão, recorremos à estrutura \textbf{date\_posts} que possuí 
+as datas ordenadas. A lista dos posts é iterada do fim para o início
+de modo a ir em conta da cronologia inversa. Caso o \textbf{post} seja 
+uma pergunta, e, usando a função \textbf{strstr}, caso a \textbf{word}
+passada como parâmetro esteja presente no \textbf{title}, acrescentamos
+o \textbf{id\_post} à lista a retornar no final.
+
 \subsection{Query 9}
 
 \subsection{Query 10}
+
+Dado o ID de uma pergunta, obter a melhor resposta, tendo em conta
+uma média ponderada.
+
+Nesta questão, utilizamos uma \textit{\textbf{GList*}} para armazenar 
+os \textbf{values} de cada \textbf{utilizador}, sendo isto realizado
+pela função da \textit{glib}, \textbf{g\_hash\_table\_get\_values}.
+
+Depois, identificamos a pergunta ao qual o \textbf{post} está a responder,
+através do \textbf{parent\_id}. Caso essa pergunta seja o \textbf{id}
+passado como parâmetro, calculamos a média ponderada tendo em conta o
+\textbf{score}, o \textbf{comment\_count} e a \textbf{reputação}. Este
+último parâmetro é acedido na estrutura do utilizador através da função
+\textbf{g\_hash\_table\_lookup}. Quando encontramos uma média melhor é
+alterado o \textbf{id\_post} a retornar no final.
+
 
 \subsection{Query 11}
 
