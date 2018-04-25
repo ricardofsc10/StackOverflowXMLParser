@@ -19,7 +19,7 @@ int difDatas(Date x,Date begin, Date end);
 
 gint compara_strings(gconstpointer a, gconstpointer b);
 
-gint compara_votes(gconstpointer a, gconstpointer b);
+gint compara_score(gconstpointer a, gconstpointer b);
 
 gint compara_answer(gconstpointer a, gconstpointer b);
 

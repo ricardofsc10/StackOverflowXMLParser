@@ -20,7 +20,6 @@ long get_parent_id(POSTS p);
 GList* get_tags(POSTS p);
 long get_answer_count(POSTS p);
 long get_comment_count(POSTS p);
-long get_dif_votes(POSTS p);
 void set_key_id_post(POSTS p, int key_id_post);
 void set_data(POSTS p, Date data);
 void set_data_string(POSTS p, char* str);
@@ -33,6 +32,5 @@ void set_parent_id(POSTS p, int parent_id);
 void set_tags(POSTS p, char* str);
 void set_answer_count(POSTS p, int answer_count);
 void set_comment_count(POSTS p, int comment_count);
-void set_dif_votes(POSTS p, int dif_votes);
 void free_posts(POSTS p);
 #endif

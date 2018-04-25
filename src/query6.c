@@ -31,7 +31,7 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
   }
 
   // ordena a lista por ordem crescente
-  glvotes = g_list_sort(glvotes, compara_votes);
+  glvotes = g_list_sort(glvotes, compara_score);
 
   int i = 0;
   while(glvotes != NULL && i < N){

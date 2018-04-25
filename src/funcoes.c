@@ -47,8 +47,8 @@ gint compara_strings(gconstpointer a, gconstpointer b) { // Compara duas strings
   return strcmp( get_data_string( (POSTS) a) , get_data_string( (POSTS) b) ) ;
 }
 
-gint compara_votes(gconstpointer a, gconstpointer b) { // Compara duas strings
-  return (get_dif_votes( (POSTS) a) > get_dif_votes( (POSTS) b) ) ? -1 : 1 ;
+gint compara_score(gconstpointer a, gconstpointer b) { // Compara duas strings
+  return (get_score( (POSTS) a) > get_score( (POSTS) b) ) ? -1 : 1 ;
 }
 
 gint compara_answer(gconstpointer a, gconstpointer b) { // Compara duas strings

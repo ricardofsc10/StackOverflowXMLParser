@@ -32,22 +32,6 @@ array está o criador do post.
 void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com);
 
 /**
-@brief Função que filtra os dados que são necessários do documento Votes.xml 
-e coloca nos campos da estrutura.
-
-Utiliza a função <b>Hash()</b>, para a descobrir em que posição do
-array está o criador do post.
-
-@param doc Documento Votes.xml.
-@param cur Raiz do documento.
-@param com Estrutura onde vao ser inseridos os dados.
-
-@returns Estrutura com os votos referentes a cada post.
-*/
-
-void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com);
-
-/**
 @brief Função que filtra os dados que são necessários do documento Tags.xml 
 e coloca nos campos da estrutura.
 

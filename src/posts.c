@@ -17,7 +17,6 @@ struct posts{
     GList* tags;
     gint answer_count;
     gint comment_count;
-    gint dif_votes;
 };
 
 POSTS create_posts(){
@@ -34,7 +33,6 @@ POSTS create_posts(){
     p->tags = NULL;
     p->answer_count = 0;
     p->comment_count = 0;
-    p->dif_votes = 0;
     return p;
 }
 
@@ -86,10 +84,6 @@ long get_comment_count(POSTS p){
     return p->comment_count;
 }
 
-long get_dif_votes(POSTS p){
-    return p->dif_votes;
-}
-
 void set_key_id_post(POSTS p, int key_id_post){
     p->key_id_post = key_id_post;
 }
@@ -139,10 +133,6 @@ void set_answer_count(POSTS p, int answer_count){
 
 void set_comment_count(POSTS p, int comment_count){
     p->comment_count = comment_count;
-}
-
-void set_dif_votes(POSTS p, int dif_votes){
-    p->dif_votes = dif_votes;
 }
 
 void free_posts(POSTS p){

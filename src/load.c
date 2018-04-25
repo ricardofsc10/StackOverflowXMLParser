@@ -91,7 +91,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
              set_body(value_post,(char *) body_l);
              set_post_type_id(value_post, atoi( (const char *) post_type_id_l));
              set_comment_count(value_post, atoi( (const char *) comment_count_l));
-             set_dif_votes(value_post, 0);
 
              if(get_post_type_id(value_post)==2) {
                 set_parent_id(value_post, atoi( (const char *) parent_id_l));
@@ -140,42 +139,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
    printf("[load] %d Posts...\n", i);
 }
 
-void getReferenceVotes (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
-
-    cur = cur->xmlChildrenNode;
-    int i = 0;
-
-    while (cur != NULL) {
-        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-
-           xmlChar *votes_l;
-           long postid_l;
-
-           votes_l = xmlGetProp(cur, (const xmlChar *) "VoteTypeId");
-           postid_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "PostId"));
-           
-           POSTS value_post = create_posts();
-           value_post = (POSTS) g_hash_table_lookup(get_posts(com), (gpointer) postid_l);
-           if(value_post != NULL){
-              // preenche os parametros do utilizador
-              if(atoi((const char *) (votes_l)) == 2){
-                set_dif_votes(value_post, (get_dif_votes(value_post)+1));
-              }
-              if(atoi((const char *) (votes_l)) == 3){
-                set_dif_votes(value_post, (get_dif_votes(value_post)-1));
-              }
-            }
-
-          xmlFree(votes_l);
-          //free_posts(value_post);
-
-          i++;
-        }
-        cur = cur->next;
-    }
-    printf("[load] %d Votes...\n", i);
-}
-
 void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 
    cur = cur->xmlChildrenNode;
@@ -208,8 +171,8 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
 
 TAD_community load(TAD_community com, char* dump_path){
     
-    xmlDocPtr doc_user, doc_posts, doc_votes, doc_tags;
-    xmlNodePtr cur_user, cur_posts, cur_votes, cur_tags;
+    xmlDocPtr doc_user, doc_posts, doc_tags;
+    xmlNodePtr cur_user, cur_posts, cur_tags;
 
     ////////////////////////////////// Faz-se o parse do Users
     char path_users[50];
@@ -316,39 +279,6 @@ TAD_community load(TAD_community com, char* dump_path){
     xmlFreeDoc(doc_posts);
 
     printf("[load] Parse do documento Posts.xml foi feito com sucesso...\n");
-
-    ////////////////////////////////// Faz-se o parse do Votes
-    char path_votes[50];
-    strcpy(path_votes, dump_path);
-    strcat(path_votes,"./Votes.xml");
-
-    doc_votes = xmlParseFile(path_votes);
-
-    if (doc_votes == NULL) {
-          fprintf(stderr,"Document not parsed successfully. \n");
-          return 0;
-    }
-
-    cur_votes = xmlDocGetRootElement(doc_votes);
-
-    if (cur_votes == NULL) {
-        fprintf(stderr,"empty document\n");
-        xmlFreeDoc(doc_votes);
-        return 0;
-    }
-
-    if (xmlStrcmp(cur_votes->name, (const xmlChar *) "votes")) {
-        fprintf(stderr,"document of the wrong type, root node != votes\n");
-        xmlFreeDoc(doc_votes);
-        return 0;
-    }
-
-    printf("[load] Ínicio do parse do documento Votes.xml...\n");
-
-    getReferenceVotes (doc_votes,cur_votes,com);
-    xmlFreeDoc(doc_votes);
-
-    printf("[load] Parse do documento Votes.xml foi feito com sucesso...\n");
 
     return com;
 }
