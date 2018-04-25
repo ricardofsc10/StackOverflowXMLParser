@@ -12,12 +12,12 @@ int main(){
   tda = init();
   printf("[init] Estrutura já foi inicializada...\n");
 
-  char* path1 = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
-  char* path2 __unused = "../../dumpexemplo/android/";
+  char* path1 __unused = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
+  char* path2 = "../../dumpexemplo/android/";
   printf("[load] Ínicio do load...\n");
 
   clock_t start = clock();
-  tda = load(tda, path1);
+  tda = load(tda, path2);
   clock_t stop = clock();
   
   printf("[load] Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) ); // faz-se esta conta pq tempo vem em mili
@@ -66,7 +66,7 @@ int main(){
       free_date(end);
       menu = 0;
     }
-    if(menu == 4){ /////////////////////////////////// erros e falta redimensionar
+    if(menu == 4){ /////////////////////////////////// feita
       Date begin = createDate(01,01,2014);
       Date end = createDate(31,01,2014);
       char tag[50];
@@ -173,8 +173,8 @@ int main(){
     }
     if(menu == 11){
       int tamanho;
-      Date begin = createDate(01,01,2016);
-      Date end = createDate(31,02,2016);
+      Date begin = createDate(01,01,2010);
+      Date end = createDate(31,12,2017);
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
       printf("Resposta:\n");

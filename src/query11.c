@@ -24,43 +24,56 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   }
   // em aux contem os N utilizadores com melhor prestação (UTILIZADOR), do de maior para o de menor
 
-  GHashTable* todas_tags = g_hash_table_new(g_direct_hash, g_direct_equal);
+  GHashTable* todas_tags = g_hash_table_new(g_str_hash, g_str_equal);
 
   // percorre os utilizadores em aux e todas as suas perguntas
   while(aux != NULL){
+    printf("                   utilizador: %ld\n",get_key_id(aux->data));
 
     GList* posts_perguntas = get_posts_perguntas(aux->data);
     while(posts_perguntas != NULL){
 
       // verifica se o post está dentro da data
       if(difDatas(get_data(posts_perguntas->data),begin,end) == 0){
+          printf("    pergunta: %ld\n", get_key_id_post(posts_perguntas->data));
 
           // tags contem as tagas do post em questão
           GList* tags = get_tags(posts_perguntas->data);
+
+          /*// teste
           GList* new_tag = tags;
           while(new_tag != NULL){
               printf("%s\n", new_tag->data );
               new_tag = g_list_next(new_tag);
-          }
+          }*/
 
           while(tags != NULL){
 
               // coloca em aux_tag o valor encontrado
               TAG_UNIQUE aux_tag = (TAG_UNIQUE) g_hash_table_lookup(todas_tags, (gpointer) tags->data);
+
+              // testa se a tag ja existe na hash de todas as tags
               if( (void*) aux_tag == NULL){
-                  printf("sou null\n");
+
                   // se nao existe a chave entao insere na tabela com uma ocorrencia
                   TAG_UNIQUE new = create_tag_unique();
                   set_key_tag_unique_name(new, tags->data);
                   set_ocorrencias(new, 1);
-                  g_hash_table_insert(todas_tags, (gpointer) tags->data, (gpointer) 1);
+                  g_hash_table_insert(todas_tags, (gpointer) tags->data, (gpointer) new);
+
+                  printf("nao existo: %s\n", tags->data );
               }
               else{
-                  printf("ja existo\n");
+
+                  g_hash_table_remove(todas_tags, (gpointer) tags->data);
                   // se ja existe substitui pelo num_ocorrencias + 1
-                  TAG_UNIQUE new = aux_tag;
-                  set_ocorrencias(new, get_ocorrencias(aux_tag)+1 );
+                  TAG_UNIQUE new = create_tag_unique();
+                  set_key_tag_unique_name(new, tags->data);
+                  int ocorrencias = get_ocorrencias(aux_tag);
+                  set_ocorrencias(new, (ocorrencias + 1) );
                   g_hash_table_replace(todas_tags, (gpointer) tags->data, (gpointer) new);
+
+                  printf("existo: %s\n", tags->data );
               }
               tags = g_list_next(tags);
           }
@@ -69,18 +82,18 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
     }
     aux = g_list_next(aux);
   }
-
   // neste momento a GHashTable* todas_tags, contem todas as tags usadas bem como o numero de ocorrencias
 
   // em values estao todos os valores da tabela de hash tags
   GList* values = g_hash_table_get_values(todas_tags);
-printf("cheguei\n");
+
+  // ordena pelas ocorrencias
+  values = g_list_sort(values, compara_ocorrencias);
+
   while(values != NULL){
     printf("%ld\n", get_ocorrencias(values->data));
     values = g_list_next(values);
   }
-
-  values = g_list_sort(values, compara_ocorrencias);
 
 
   /*
