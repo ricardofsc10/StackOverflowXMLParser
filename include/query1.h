@@ -4,7 +4,7 @@
 /**
 @file query1.h
 Query1 do projeto.
-/*
+*/
 
 /**
 \brief Função que dado o identificador de um post, retorna o título do post e o nome de utilizador do autor. 

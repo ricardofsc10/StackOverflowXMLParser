@@ -29,7 +29,7 @@ void set_key_tag_name(TAG t, char* str){
 	t->key_tag_name = mystrdup(str);
 }
 
-void set_id_tag(TAG t, int id_tag){
+void set_id_tag(TAG t, long id_tag){
 	t->id_tag = id_tag;
 }
 

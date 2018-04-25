@@ -29,24 +29,15 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
 
   // percorre os utilizadores em aux e todas as suas perguntas
   while(aux != NULL){
-    //printf("                   utilizador: %ld\n",get_key_id(aux->data));
 
     GList* posts_perguntas = get_posts_perguntas(aux->data);
     while(posts_perguntas != NULL){
 
       // verifica se o post está dentro da data
       if(difDatas(get_data(posts_perguntas->data),begin,end) == 0){
-          //printf("    pergunta: %ld\n", get_key_id_post(posts_perguntas->data));
 
           // tags contem as tagas do post em questão
           GList* tags = get_tags(posts_perguntas->data);
-
-          /*// teste
-          GList* new_tag = tags;
-          while(new_tag != NULL){
-              printf("%s\n", new_tag->data );
-              new_tag = g_list_next(new_tag);
-          }*/
 
           while(tags != NULL){
 
@@ -61,8 +52,6 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
                   set_key_tag_unique_name(new, tags->data);
                   set_ocorrencias(new, 1);
                   g_hash_table_insert(todas_tags, (gpointer) tags->data, (gpointer) new);
-
-                  //printf("nao existo: %s\n", tags->data );
               }
               else{
 
@@ -73,8 +62,6 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
                   int ocorrencias = get_ocorrencias(aux_tag);
                   set_ocorrencias(new, (ocorrencias + 1) );
                   g_hash_table_replace(todas_tags, (gpointer) tags->data, (gpointer) new);
-
-                  //printf("existo: %s\n", tags->data );
               }
               tags = g_list_next(tags);
           }
@@ -89,23 +76,15 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   GList* values = g_hash_table_get_values(todas_tags);
 
   // ordena pelas ocorrencias
-  values = g_list_sort(values, compara_ocorrencias);
-
-  /*
-  while(values != NULL){
-    printf("%ld\n", get_ocorrencias(values->data));
-    printf("%s\n", get_key_tag_unique_name(values->data));
-    values = g_list_next(values);
-  }
-  */
-  
-  
+  values = g_list_sort(values, compara_ocorrencias);  
   
   LONG_list l = create_list(g_list_length(values));
-  int j=0;
+  /*int j=0;
   while(values != NULL && j < N){
+
     printf("tag_unique: %s\n", get_key_tag_unique_name(values->data));
-    TAG value_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer) (get_key_tag_unique_name(values->data)));
+    char* palavra = "installation";
+    TAG value_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer) palavra);
     
     printf("tag: %s\n", get_key_tag_name(value_tag));
     if(get_key_tag_name(value_tag) != NULL){
@@ -114,7 +93,7 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
       j++;
     }
     values = g_list_next(values);
-  }
+  }*/
 
 
   /*

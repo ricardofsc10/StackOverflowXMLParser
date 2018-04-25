@@ -155,19 +155,9 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
          
           TAG value_tag = create_tag();
           set_key_tag_name(value_tag, tag_name_l);
-          set_id_tag(value_tag, atoi( (const char *) id_tag_l));
+          set_id_tag(value_tag, atol( (const char *) id_tag_l));
 
-          set_tag(com,tag_name_l,value_tag);
-
-          //teste
-          
-          TAG exemplo_tag = (TAG) g_hash_table_lookup(get_tag(com), "464xlat");
-            if(get_key_tag_name(exemplo_tag) != NULL){
-            printf("%ld\n", get_id_tag(exemplo_tag));
-            printf("%s\n", get_key_tag_name(exemplo_tag));
-          }
-          
-
+          set_tag(com,get_key_tag_name(value_tag),value_tag);
 
           xmlFree(tag_name_l);
 
@@ -175,6 +165,16 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
         }
        cur = cur->next;
    }
+
+    //teste
+    char* palavra = "link";
+    TAG exemplo_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer) palavra);
+      if( (void*) exemplo_tag != NULL){
+          printf("%ld\n", get_id_tag(exemplo_tag));
+          printf("%s\n", get_key_tag_name(exemplo_tag));
+      }
+      else printf("deu null\n");
+
    printf("[load] (processo filho) %d Tags...\n", i);
 }
 
