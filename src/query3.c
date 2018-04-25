@@ -15,7 +15,7 @@ LONG_pair total_posts(TAD_community com, Date begin, Date end){
   while (glista != NULL) {
     if (difDatas(get_data(glista->data),begin,end) == 0) {
       if(get_post_type_id(glista->data) == 1) set_fst_long(par,get_fst_long(par)+1); // se for pergunta
-      else set_snd_long(par,get_snd_long(par)+1); // se for resposta
+      if(get_post_type_id(glista->data) == 2) set_snd_long(par,get_snd_long(par)+1); // se for resposta
     }
     glista = g_list_next(glista);
   }

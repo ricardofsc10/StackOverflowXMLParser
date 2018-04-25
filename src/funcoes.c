@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "tcd.h"
+#include "tag_unique.h"
 #include "funcoes.h"
 
 // funções auxiliares mais tarde para serem postas noutro ficheiro
@@ -60,6 +61,10 @@ gint compara_posts_u(gconstpointer a, gconstpointer b){
 
 gint compara_reputacao(gconstpointer a, gconstpointer b){
     return (get_reputacao( (UTILIZADOR) a) > get_reputacao( (UTILIZADOR) b) ) ? -1 : 1 ;
+}
+
+gint compara_ocorrencias(gconstpointer a, gconstpointer b){
+    return (get_ocorrencias( (TAG_UNIQUE) a) > get_ocorrencias( (TAG_UNIQUE) b) ) ? -1 : 1 ;
 }
 
 Date stringToDias (char* data) { // "2011-11-11"

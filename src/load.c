@@ -60,76 +60,78 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-           xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l;
-           long owner_user_id_l, id_l;
+          xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l;
+          long owner_user_id_l, id_l;
 
-           // faz o parse dos parametros necessários
-           id_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
-           post_type_id_l = xmlGetProp(cur, (const xmlChar *) "PostTypeId");
-           creation_date_l = xmlGetProp(cur, (const xmlChar *) "CreationDate");
-           score_l = xmlGetProp(cur, (const xmlChar *) "Score");
-           body_l = xmlGetProp(cur, (const xmlChar *) "Body");
-           owner_user_id_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "OwnerUserId"));
-           parent_id_l=xmlGetProp(cur, (const xmlChar *) "ParentId");
-           title_l = xmlGetProp(cur, (const xmlChar *) "Title");
-           tags_l = xmlGetProp(cur, (const xmlChar *) "Tags");
-           answer_count_l = xmlGetProp(cur, (const xmlChar *) "AnswerCount");
-           comment_count_l = xmlGetProp(cur, (const xmlChar *) "CommentCount");
+          // faz o parse dos parametros necessários
+          id_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
+          post_type_id_l = xmlGetProp(cur, (const xmlChar *) "PostTypeId");
+          creation_date_l = xmlGetProp(cur, (const xmlChar *) "CreationDate");
+          score_l = xmlGetProp(cur, (const xmlChar *) "Score");
+          body_l = xmlGetProp(cur, (const xmlChar *) "Body");
+          owner_user_id_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "OwnerUserId"));
+          parent_id_l=xmlGetProp(cur, (const xmlChar *) "ParentId");
+          title_l = xmlGetProp(cur, (const xmlChar *) "Title");
+          tags_l = xmlGetProp(cur, (const xmlChar *) "Tags");
+          answer_count_l = xmlGetProp(cur, (const xmlChar *) "AnswerCount");
+          comment_count_l = xmlGetProp(cur, (const xmlChar *) "CommentCount");
 
-           // value_user fica com valor associado à chave passada
-           UTILIZADOR value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id_l);
-           set_posts_u(value_user, (get_posts_u(value_user)+1));
-           
-           // preenche os parametros dos posts e dos utilizadores
-           POSTS value_post = create_posts();
-           set_key_id_post(value_post, id_l);
-           set_data(value_post, stringToDias( (char *) creation_date_l));
-           set_data_string(value_post, (char *) creation_date_l);
-           set_score(value_post, atoi( (const char *) score_l));
-           set_owner_user_id(value_post, owner_user_id_l);
-           set_body(value_post,(char *) body_l);
-           set_post_type_id(value_post, atoi( (const char *) post_type_id_l));
-           set_comment_count(value_post, atoi( (const char *) comment_count_l));
-           set_dif_votes(value_post, 0);
+          if(atoi( (const char *) post_type_id_l) == 1 || atoi( (const char *) post_type_id_l) == 2){
+             // value_user fica com valor associado à chave passada
+             UTILIZADOR value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id_l);
+             set_posts_u(value_user, (get_posts_u(value_user)+1));
+             
+             // preenche os parametros dos posts e dos utilizadores
+             POSTS value_post = create_posts();
+             set_key_id_post(value_post, id_l);
+             set_data(value_post, stringToDias( (char *) creation_date_l));
+             set_data_string(value_post, (char *) creation_date_l);
+             set_score(value_post, atoi( (const char *) score_l));
+             set_owner_user_id(value_post, owner_user_id_l);
+             set_body(value_post,(char *) body_l);
+             set_post_type_id(value_post, atoi( (const char *) post_type_id_l));
+             set_comment_count(value_post, atoi( (const char *) comment_count_l));
+             set_dif_votes(value_post, 0);
 
-           if(get_post_type_id(value_post)==2) {
-              set_parent_id(value_post, atoi( (const char *) parent_id_l));
-              set_title(value_post, NULL);
-              // inserir o id da pergunta no utilizador que faz a pergunta
-              set_posts_frequentados(value_user, get_parent_id(value_post));
-           }
-           else{
-              set_title(value_post,(char *) title_l);
-              set_parent_id(value_post, 0);
-              strToTag(value_post, (char *) tags_l);
-              // inserir o id da pergunta no utilizador que faz a pergunta
-              set_posts_frequentados(value_user, get_key_id_post(value_post));
-              set_posts_perguntas(value_user, value_post);
-           }
-           if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
-              set_answer_count(value_post, 0);
-           }
-           else{
-              set_answer_count(value_post, atoi( (const char *) answer_count_l));
-           }
+             if(get_post_type_id(value_post)==2) {
+                set_parent_id(value_post, atoi( (const char *) parent_id_l));
+                set_title(value_post, NULL);
+                // inserir o id da pergunta no utilizador que faz a pergunta
+                set_posts_frequentados(value_user, get_parent_id(value_post));
+             }
+             if(get_post_type_id(value_post)==1){
+                set_title(value_post,(char *) title_l);
+                set_parent_id(value_post, 0);
+                strToTag(value_post, (char *) tags_l);
+                set_posts_frequentados(value_user, get_key_id_post(value_post));
+                set_posts_perguntas(value_user, value_post);
+             }
+             if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
+                set_answer_count(value_post, 0);
+             }
+             if(answer_count_l != NULL){
+                set_answer_count(value_post, atoi( (const char *) answer_count_l));
+             }
 
-           // insere todos os parametros do post na chave (id) associado
-           set_posts(com, id_l,  value_post);
+             // insere todos os parametros do post na chave (id) associado
+             set_posts(com, id_l,  value_post);
 
-           // insere na estrutura supostamente ordenada por datas
-           adiciona_date_posts(com, value_post);
+             // insere na estrutura supostamente ordenada por datas
+             adiciona_date_posts(com, value_post);
+
+             i++;
+          }
           
-           xmlFree(post_type_id_l);
-           xmlFree(creation_date_l);
-           xmlFree(score_l);
-           xmlFree(body_l);
-           xmlFree(parent_id_l);
-           xmlFree(title_l);
-           xmlFree(tags_l);
-           xmlFree(answer_count_l);
-           xmlFree(comment_count_l);
+          xmlFree(post_type_id_l);
+          xmlFree(creation_date_l);
+          xmlFree(score_l);
+          xmlFree(body_l);
+          xmlFree(parent_id_l);
+          xmlFree(title_l);
+          xmlFree(tags_l);
+          xmlFree(answer_count_l);
+          xmlFree(comment_count_l);
 
-           i++;
        }
        cur = cur->next;
    }

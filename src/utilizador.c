@@ -9,7 +9,7 @@ struct utilizador{
 	gchar* nome;
 	gchar* bio;
 	GList* posts_frequentados; // so contem o id das perguntas em que ele interage
-	GList* posts_perguntas;
+	GList* posts_perguntas; // contem os todas as perguntas que colocou em forma de POSTS
 	gint posts_u;
 	gint reputacao;
 };

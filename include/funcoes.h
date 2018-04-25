@@ -27,6 +27,8 @@ gint compara_posts_u(gconstpointer a, gconstpointer b);
 
 gint compara_reputacao(gconstpointer a, gconstpointer b);
 
+gint compara_ocorrencias(gconstpointer a, gconstpointer b);
+
 /**
 @brief Função que filtra as datas, transformando-as em elementos da struct date.
 

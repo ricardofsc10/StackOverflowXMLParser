@@ -12,12 +12,12 @@ int main(){
   tda = init();
   printf("[init] Estrutura já foi inicializada...\n");
 
-  char* path1 __unused = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
-  char* path2 = "../../dumpexemplo/android/";
+  char* path1 = "../../dumpexemplo/ubuntu/"; // usa-se o __unused para evitar warnings, se trocar de caminho por __unused no outro
+  char* path2 __unused = "../../dumpexemplo/android/";
   printf("[load] Ínicio do load...\n");
 
   clock_t start = clock();
-  tda = load(tda, path2);
+  tda = load(tda, path1);
   clock_t stop = clock();
   
   printf("[load] Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) ); // faz-se esta conta pq tempo vem em mili
@@ -54,8 +54,8 @@ int main(){
     }
     if(menu == 3){ ///////////////////////////////// feita
       LONG_pair lp = create_long_pair(0,0);
-      Date begin = createDate(03,10,2010);
-      Date end = createDate(05,03,2017);
+      Date begin = createDate(01,07,2016);
+      Date end = createDate(31,7,2016);
       printf("Resposta:\n");
       start = clock();
       lp = total_posts(tda,begin,end);
@@ -67,8 +67,8 @@ int main(){
       menu = 0;
     }
     if(menu == 4){ /////////////////////////////////// erros e falta redimensionar
-      Date begin = createDate(01,01,2010);
-      Date end = createDate(31,12,2017);
+      Date begin = createDate(01,03,2013);
+      Date end = createDate(31,03,2013);
       printf("Resposta:\n");
       start = clock();
       questions_with_tag(tda, "battery", begin, end);
@@ -94,8 +94,8 @@ int main(){
     }
     if(menu == 6){ ////////////////////////////////// feita
       int tamanho;
-      Date begin = createDate(01,01,2010);
-      Date end = createDate(31,02,2012);
+      Date begin = createDate(1,5,2013);
+      Date end = createDate(6,5,2013);
       printf("Qual o número de respostas que pretende?\n");
       scanf("%d",&tamanho);
       LONG_list l = create_list(tamanho);
@@ -111,8 +111,8 @@ int main(){
     }
     if(menu == 7){ ////////////////////////////////// feita
       int tamanho;
-      Date begin = createDate(01,01,2010);
-      Date end = createDate(31,02,2016);
+      Date begin = createDate(1,1,2012);
+      Date end = createDate(31,12,2012);
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
       LONG_list l = create_list(tamanho);
@@ -142,13 +142,17 @@ int main(){
       menu = 0;
     }
     if(menu == 9){ ////////////////////////////////// feita
-      int tamanho;
+      int tamanho,user1,user2;
       printf("Qual o tamanho do array das perguntas?\n");
       scanf("%d", &tamanho);
+      printf("User1:\n");
+      scanf("%d", &user1);
+      printf("User2:\n");
+      scanf("%d", &user2);
       LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
       start = clock();
-      l = both_participated(tda, 16575, 1465, tamanho); // 1465 e 16575 / 449, 15811
+      l = both_participated(tda, user1, user2, tamanho); // 1465 e 16575 / 449, 15811
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
@@ -166,14 +170,13 @@ int main(){
     }
     if(menu == 11){
       int tamanho;
-      Date begin = createDate(01,01,2010);
+      Date begin = createDate(01,01,2016);
       Date end = createDate(31,02,2016);
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
-      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
       start = clock();
-      l = most_used_best_rep(tda,100,begin,end);
+      most_used_best_rep(tda,tamanho,begin,end);
       stop = clock();
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
