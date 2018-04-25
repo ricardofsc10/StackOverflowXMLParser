@@ -4,7 +4,7 @@
 /**
 @file query11.h
 Query11 do projeto.
-/*
+*/
 
 /**
 \brief Função que dado um inteiro N e um intervalo de tempo arbitrário devolve uma lista com

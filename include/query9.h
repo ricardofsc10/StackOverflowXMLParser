@@ -4,7 +4,7 @@
 /**
 @file query9.h
 Query9 do projeto.
-/*
+*/
 
 /**
 \brief Função que dados os IDs de dois utilizadores, devolve as últimas

@@ -4,7 +4,7 @@
 /**
 @file query6.h
 Query6 do projeto.
-/*
+*/
 
 /**
 \brief Função que dado um intervalo de tempo arbitrário, devolve os IDs das N respostas com mais votos, 

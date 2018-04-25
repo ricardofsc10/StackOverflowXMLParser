@@ -76,25 +76,21 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   GList* values = g_hash_table_get_values(todas_tags);
 
   // ordena pelas ocorrencias
-  values = g_list_sort(values, compara_ocorrencias);  
+  values = g_list_sort(values, compara_ocorrencias); 
   
   LONG_list l = create_list(g_list_length(values));
-  /*int j=0;
+  int j=0;
   while(values != NULL && j < N){
 
-    printf("tag_unique: %s\n", get_key_tag_unique_name(values->data));
-    char* palavra = "installation";
-    TAG value_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer) palavra);
+    TAG value_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer)  get_key_tag_unique_name(values->data));
     
-    printf("tag: %s\n", get_key_tag_name(value_tag));
     if(get_key_tag_name(value_tag) != NULL){
       printf("%ld\n", get_id_tag(value_tag));
       set_list(l,j,get_id_tag(value_tag));
       j++;
     }
     values = g_list_next(values);
-  }*/
-
+  }
 
   /*
   POSTS post = (POSTS)g_hash_table_lookup(get_posts(com), (gpointer) 187278);
@@ -105,13 +101,11 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
     aux_ultimo = g_list_next(aux_ultimo);
   }*/
 
-  /*
-  // deixei aqui para se testar se for preciso
+
   for(int i=0; i<N; i++){
     if( (void*) get_list(l,i) == NULL) break;
     printf("%dº: id utilizador: %ld\n\n", i+1, get_list(l,i));
   }
-  */
 
   return l;
 }

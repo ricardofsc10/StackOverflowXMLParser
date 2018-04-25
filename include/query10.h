@@ -4,7 +4,7 @@
 /**
 @file query10.h
 Query10 do projeto.
-/*
+*/
 
 /**
 \brief Função que dado o ID de uma pergunta, obtém a melhor resposta segundo uma média dada por:

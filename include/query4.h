@@ -4,7 +4,7 @@
 /**
 @file query4.h
 Query4 do projeto.
-/*
+*/
 
 /**
 \brief Função que dado um intervalo de tempo arbitrário, devolve todas as perguntas que contêm

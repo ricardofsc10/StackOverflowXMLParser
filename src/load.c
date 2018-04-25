@@ -166,16 +166,7 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
        cur = cur->next;
    }
 
-    //teste
-    char* palavra = "link";
-    TAG exemplo_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer) palavra);
-      if( (void*) exemplo_tag != NULL){
-          printf("%ld\n", get_id_tag(exemplo_tag));
-          printf("%s\n", get_key_tag_name(exemplo_tag));
-      }
-      else printf("deu null\n");
-
-   printf("[load] (processo filho) %d Tags...\n", i);
+   printf("[load] %d Tags...\n", i);
 }
 
 
@@ -218,8 +209,6 @@ TAD_community load(TAD_community com, char* dump_path){
     printf("[load] Parse do documento Users.xml foi feito com sucesso...\n");
 
     ////////////////////////////////// Faz-se o parse do Tags
-    int pid;
-    if((pid = fork()) == 0){
        char path_tags[50];
        strcpy(path_tags, dump_path);
        strcat(path_tags,"./Tags.xml");
@@ -245,16 +234,12 @@ TAD_community load(TAD_community com, char* dump_path){
            return 0;
        }
 
-       printf("[load] (processo filho) Ínicio do parse do documento Tags.xml...\n");
+       printf("[load] Ínicio do parse do documento Tags.xml...\n");
 
        getReferenceTags (doc_tags,cur_tags,com);
-       xmlFreeDoc(doc_tags);
+       xmlFreeDoc(doc_tags); 
 
-       printf("[load] (processo filho) Parse do documento Tags.xml foi feito com sucesso...\n");
-       _exit(0);
-    }
-    if(pid == -1)
-      perror("ERROR: tags falhou...");
+       printf("[load] Parse do documento Tags.xml foi feito com sucesso...\n");
 
 
     ////////////////////////////////// Faz-se o parse do Posts

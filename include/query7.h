@@ -4,7 +4,7 @@
 /**
 @file query7.h
 Query7 do projeto.
-/*
+*/
 
 /**
 \brief Função que dado um intervalo de tempo arbitrário, devolve as IDs das N perguntas com mais respostas, 
