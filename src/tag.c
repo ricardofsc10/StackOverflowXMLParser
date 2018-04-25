@@ -5,37 +5,37 @@
 #include <string.h>
 
 struct tag{
-	gint key_id_tag;
-	gchar* tag_name;
+	gchar* key_tag_name;
+	gint id_tag;
 };
 
 TAG create_tag(){
 	TAG t = malloc(sizeof(struct tag));
-	t->key_id_tag = 0;
-	t->tag_name = NULL;
+	t->key_tag_name = NULL;
+	t->id_tag = 0;
 	return t;
 }
 
-long get_key_id_tag(TAG t){
-	return t->key_id_tag;
+gchar* get_key_tag_name(TAG t){
+	return t ? mystrdup(t->key_tag_name) : NULL;
 }
 
-gchar* get_tag_name(TAG t){
-	return t ? mystrdup(t->tag_name) : NULL;
+long get_id_tag(TAG t){
+	return t->id_tag;
 }
 
-void set_key_id_tag(TAG t, int key_id_tag){
-	t->key_id_tag = key_id_tag;
+void set_key_tag_name(TAG t, char* str){
+	free(t->key_tag_name);
+	t->key_tag_name = mystrdup(str);
 }
 
-void set_tag_name(TAG t, char* str){
-	free(t->tag_name);
-	t->tag_name = mystrdup(str);
+void set_id_tag(TAG t, int id_tag){
+	t->id_tag = id_tag;
 }
 
 void free_tag(TAG t){
 	if(t){
-    	free(t->tag_name);
+    	free(t->key_tag_name);
     	free(t);
 	}
 }

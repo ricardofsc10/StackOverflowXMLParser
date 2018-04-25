@@ -282,8 +282,8 @@ void interatividade(TAD_community tda){
     }
     if(menu == 11){
       int tamanho;
-      Date begin = createDate(01,01,2010);
-      Date end = createDate(31,12,2017);
+      Date begin = createDate(01,01,2014);
+      Date end = createDate(31,12,2014);
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
       printf("Resposta:\n");

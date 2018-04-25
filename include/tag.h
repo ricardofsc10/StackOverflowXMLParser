@@ -6,9 +6,9 @@
 typedef struct tag * TAG;
 
 TAG create_tag();
+gchar* get_key_tag_name(TAG t);
 long get_id_tag(TAG t);
-gchar* get_tag_name(TAG t);
-void set_key_id_tag(TAG t, int key_id_tag);
-void set_tag_name(TAG t, char* str);
+void set_key_tag_name(TAG t, char* str);
+void set_id_tag(TAG t, int id_tag);
 void free_tag(TAG t);
 #endif

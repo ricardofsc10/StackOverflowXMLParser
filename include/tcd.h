@@ -18,7 +18,7 @@ void set_posts(TAD_community tad, long key, POSTS value);
 void adiciona_date_posts(TAD_community tad, POSTS value);
 gint compara(gconstpointer a, gconstpointer b);
 void ordena(TAD_community tad);
-void set_tag(TAD_community tad, long key, TAG value);
+void set_tag(TAD_community tad, char* key, TAG value);
 void free_tad(TAD_community tad);
 
 #endif

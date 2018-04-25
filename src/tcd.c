@@ -17,7 +17,7 @@ TAD_community create_tad(){
     tad->utilizador = g_hash_table_new(g_direct_hash, g_direct_equal);
     tad->posts = g_hash_table_new(g_direct_hash, g_direct_equal);
     tad->date_posts = NULL;
-    tad->tag = g_hash_table_new(g_direct_hash, g_direct_equal);
+    tad->tag = g_hash_table_new(g_str_hash, g_str_equal);
     return tad;
 }
 
@@ -53,7 +53,7 @@ void ordena(TAD_community tad){
 	tad->date_posts = g_list_sort(tad->date_posts, compara_strings);
 }
 
-void set_tag(TAD_community tad, long key, TAG value){
+void set_tag(TAD_community tad, char* key, TAG value){
 	g_hash_table_insert(tad->tag, (gpointer) key, (gpointer) value);
 }
 

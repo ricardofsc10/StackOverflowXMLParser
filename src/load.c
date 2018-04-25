@@ -147,17 +147,27 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
 
-          xmlChar *tag_name_l;
-          long id_tag_l;
+          xmlChar* id_tag_l;
+          char* tag_name_l;
 
-          id_tag_l = atol((const char *) xmlGetProp(cur, (const xmlChar *) "Id"));
-          tag_name_l = xmlGetProp(cur, (const xmlChar *) "TagName");
+          id_tag_l = xmlGetProp(cur, (const xmlChar *) "Id");
+          tag_name_l = (char*) xmlGetProp(cur, (const xmlChar *) "TagName");
          
           TAG value_tag = create_tag();
-          set_key_id_tag(value_tag, id_tag_l);
-          set_tag_name(value_tag, (char *) tag_name_l);
+          set_key_tag_name(value_tag, tag_name_l);
+          set_id_tag(value_tag, atoi( (const char *) id_tag_l));
 
-          set_tag(com,id_tag_l,value_tag);
+          set_tag(com,tag_name_l,value_tag);
+
+          //teste
+          /*
+          TAG exemplo_tag = (TAG) g_hash_table_lookup(get_tag(com), "464xlat");
+            if(get_key_tag_name(exemplo_tag) != NULL){
+            printf("%ld\n", get_id_tag(exemplo_tag));
+            printf("%s\n", get_key_tag_name(exemplo_tag));
+          }
+          */
+
 
           xmlFree(tag_name_l);
 
