@@ -5,7 +5,7 @@
 /**
 @file query2.h
 Query2 do projeto.
-/*
+*/
 
 
 /**
