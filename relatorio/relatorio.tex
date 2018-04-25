@@ -143,19 +143,18 @@ Pretendemos obter o top N utilizadores com maior número de posts de
 sempre. Para isto, são considerados tanto perguntas quanto respostas 
 dadas pelo respectivo utilizador.
 
-////////////////////// POR FAZER //////////////////////
-
 Nesta questão, utilizamos uma \textit{\textbf{GList*}} para armazenar 
 os \textbf{values} de cada \textbf{utilizador}, sendo isto realizado
 pela função da \textit{glib}, \textbf{g\_hash\_table\_get\_values}.
 
-De seguida, percorremos a \textbf{lista} referida, e em cada posição
-acedemos ao parâmetro \textbf{posts\_u}, que referencia o número de 
-posts do utilizador em questão. Enquanto isso, fazemos a filtração
-para o \textbf{set\_list}, tendo em conta se o utilizador que estamos
-no momento atual possui mais \textbf{posts totais} que os \textbf{N} 
-utilizadores que se encontram no set. Caso se conclua tal facto,
-colocamos o seu \textbf{id} na posição estabelecida.
+Depois esta lista é ordenada por número de posts (de cada utilizador)
+em ordem decrescente através da função da \textit{glib}, 
+\textbf{g\_list\_sort}, que usa uma função de comparação 
+\textbf{compara\_posts\_u}, que tem em conta o parâmetro
+\textbf{posts\_u} da estrutura.
+
+De seguida, fazemos a filtração para o \textbf{set\_list} do 
+\textbf{id} de cada utilizador.
 
 \subsection{Query 3}
 
@@ -173,21 +172,41 @@ caso contrário é uma resposta, e é incrementada a segunda coordenada.
 
 \subsection{Query 4}
 
+Dado um intervalo de tempo arbitrário, retornamos todas as perguntas 
+contendo uma determinada tag. O retorno da função é uma lista com os IDs das perguntas ordenadas em cronologia inversa.
+
+Nesta questão, utilizamos uma \textit{\textbf{GList*}} para armazenar 
+os \textbf{posts} ordenados por data que se encontram na estrutura 
+\textbf{date\_posts}.
+
+Enquanto isso, verificamos se a \textbf{data} do post se encontra entre 
+os limites referenciados pela query, através da função \textbf{difDatas},
+e se é uma pergunta. Nos posts em que os dois parâmetros são cumpridos,
+colocamos as tags desses mesmos posts uma nova \textit{GList*}
+usando a função \textbf{get\_tags}. Verificamos se a \textbf{tag} passada 
+como parâmetro pertence à lista anterior usando a função \textbf{strcmp},
+e caso pertença é inserida no início duma \textit{GList*} \textbf{res} 
+que vai conter os resultados finais, através da função 
+\textbf{g\_list\_insert}.
+
+////////////////////// POR FAZER //////////////////////
+
 \subsection{Query 5}
 
 Dado um ID de utilizador, devolvemos a informação do seu perfil (short 
 bio) e os IDs dos seus 10 últimos posts (perguntas ou respostas), 
 ordenados por cronologia inversa.
 
-Nesta questão, recorremos à função da \textit{glib}, \textbf{g\_hash\_
-table\_lookup}, para termos o \textbf{value} associado ao \textbf{id}
-do utilizador. Desta forma, retornamos a \textbf{bio} do utilizador.
+Nesta questão, recorremos à função da \textit{glib}, 
+\textbf{g\_hash\_table\_lookup}, para termos o \textbf{value} 
+associado ao \textbf{id} do utilizador. Desta forma, retornamos a 
+\textbf{bio} do utilizador.
 
 Retornamos os últimos 10 posts acedendo à estrutura que tem os posts
 ordenados por data e, começando no último elemento da \textit{
-\textbf{GList*}}, vamos percorrendo a lista para trás. Caso o \textbf{
-owner\_user\_id} seja o requerido adicionamos o \textbf{id} do post à 
-lista a retornar.
+\textbf{GList*}}, vamos percorrendo a lista para trás. Caso o 
+\textbf{owner\_user\_id} seja o requerido adicionamos o \textbf{id} 
+do post à lista a retornar.
 
 \subsection{Query 6}
 
@@ -219,9 +238,10 @@ valores necessários para a resposta final.
 
 Depois esta lista é ordenada por número de respostas em ordem decrescente 
 através da função da \textit{glib}, \textbf{g\_list\_sort}, que usa uma 
-função de comparação \textbf{compara\_answers}, que tem em conta o \textbf
-{answer\_count} da estrutura. Finalmente acedemos ao \textbf{id\_post} 
-relacionado, através dos dados respetivos da lista \textbf{glanswers}.
+função de comparação \textbf{compara\_answers}, que tem em conta o 
+\textbf{answer\_count} da estrutura. Finalmente acedemos ao 
+\textbf{id\_post} relacionado, através dos dados respetivos da lista 
+\textbf{glanswers}.
 
 \subsection{Query 8}
 
