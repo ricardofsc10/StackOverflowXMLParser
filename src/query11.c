@@ -4,6 +4,7 @@
 #include "funcoes.h"
 #include "tag_unique.h"
 #include "query11.h"
+#include "common.h"
 
 // query 11
 
@@ -104,7 +105,7 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   int j=0;
   while(values != NULL && j < N){
     printf("tag_unique: %s\n", get_key_tag_unique_name(values->data));
-    TAG value_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer) get_key_tag_unique_name(values->data));
+    TAG value_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer) (get_key_tag_unique_name(values->data)));
     
     printf("tag: %s\n", get_key_tag_name(value_tag));
     if(get_key_tag_name(value_tag) != NULL){

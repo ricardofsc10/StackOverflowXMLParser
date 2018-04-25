@@ -160,13 +160,13 @@ void getReferenceTags (xmlDocPtr doc, xmlNodePtr cur, TAD_community com){
           set_tag(com,tag_name_l,value_tag);
 
           //teste
-          /*
+          
           TAG exemplo_tag = (TAG) g_hash_table_lookup(get_tag(com), "464xlat");
             if(get_key_tag_name(exemplo_tag) != NULL){
             printf("%ld\n", get_id_tag(exemplo_tag));
             printf("%s\n", get_key_tag_name(exemplo_tag));
           }
-          */
+          
 
 
           xmlFree(tag_name_l);
