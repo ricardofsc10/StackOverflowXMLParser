@@ -5,7 +5,6 @@
 #include <libxml/parser.h>
 #include <gmodule.h>
 #include <glib.h>
-#include <unistd.h>
 #include "tcd.h"
 #include "utilizador.h"
 #include "posts.h"

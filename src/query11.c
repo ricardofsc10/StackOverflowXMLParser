@@ -78,23 +78,30 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   // ordena pelas ocorrencias
   values = g_list_sort(values, compara_ocorrencias); 
   
-  LONG_list l = create_list(g_list_length(values));
-  int j=0;
-  while(values != NULL && j < N){
+  // extrai o tamanho correto da lista, só queremos devolver no maximo N
+  int tamanho;
+  if(g_list_length(values) > N) tamanho = N;
+  else tamanho = g_list_length(values);
 
+  // coloca na lista os id's
+  LONG_list l = create_list(tamanho);
+  int j=0;
+  while(values != NULL && j < tamanho){
+
+    // procura a tag na estrutura das tags
     TAG value_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer)  get_key_tag_unique_name(values->data));
     
     if(get_key_tag_name(value_tag) != NULL){
-      printf("%ld\n", get_id_tag(value_tag));
       set_list(l,j,get_id_tag(value_tag));
       j++;
     }
     values = g_list_next(values);
   }
 
-  for(int i=0; i<N; i++){
+  // pritf da lista
+  for(int i=0; i < tamanho; i++){
     if( (void*) get_list(l,i) == NULL) break;
-    printf("%dº: id utilizador: %ld\n\n", i+1, get_list(l,i));
+    printf("%dº tag: %ld\n\n", i+1, get_list(l,i));
   }
 
   return l;

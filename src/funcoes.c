@@ -280,9 +280,9 @@ void interatividade(TAD_community tda){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       menu = 0;
     }
-    if(menu == 11){
+    if(menu == 11){ ////////////////////////////////// feita
       int tamanho;
-      Date begin = createDate(01,01,2014);
+      Date begin = createDate(1,1,2014);
       Date end = createDate(31,12,2014);
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
