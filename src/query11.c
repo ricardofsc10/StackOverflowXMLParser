@@ -92,16 +92,6 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
     values = g_list_next(values);
   }
 
-  /*
-  POSTS post = (POSTS)g_hash_table_lookup(get_posts(com), (gpointer) 187278);
-  GList* ultimo = get_tags(post);
-  GList* aux_ultimo = ultimo;
-  while(aux_ultimo != NULL){
-    printf("%s\n", aux_ultimo->data );
-    aux_ultimo = g_list_next(aux_ultimo);
-  }*/
-
-
   for(int i=0; i<N; i++){
     if( (void*) get_list(l,i) == NULL) break;
     printf("%dº: id utilizador: %ld\n\n", i+1, get_list(l,i));
