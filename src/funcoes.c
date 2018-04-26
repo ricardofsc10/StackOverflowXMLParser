@@ -67,6 +67,18 @@ gint compara_ocorrencias(gconstpointer a, gconstpointer b){
     return (get_ocorrencias( (TAG_UNIQUE) a) > get_ocorrencias( (TAG_UNIQUE) b) ) ? -1 : 1 ;
 }
 
+void free_table_utilizador(gpointer key, gpointer value, gpointer user_data){
+    free_utilizador(value);
+}
+
+void free_table_posts(gpointer key, gpointer value, gpointer user_data){
+    free_posts(value);
+}
+
+void free_table_tag(gpointer key, gpointer value, gpointer user_data){
+    free_tag(value);
+}
+
 Date stringToDias (char* data) { // "2011-11-11"
     char ano[5];
     char mes[3];

@@ -33,6 +33,12 @@ gint compara_reputacao(gconstpointer a, gconstpointer b);
 
 gint compara_ocorrencias(gconstpointer a, gconstpointer b);
 
+void free_table_utilizador(gpointer key, gpointer value, gpointer user_data);
+
+void free_table_posts(gpointer key, gpointer value, gpointer user_data);
+
+void free_table_tag(gpointer key, gpointer value, gpointer user_data);
+
 /**
 @brief Função que filtra as datas, transformando-as em elementos da struct date.
 

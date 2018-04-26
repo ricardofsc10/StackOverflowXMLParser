@@ -100,7 +100,19 @@ void free_utilizador(UTILIZADOR u){
 	if(u){
     	free(u->nome);
     	free(u->bio);
-    	free(u->posts_frequentados);
+
+    	// liberta a glist posts_frequentados
+    	while(u->posts_frequentados != NULL){
+    		u->posts_frequentados = g_list_remove(u->posts_frequentados, (u->posts_frequentados)->data);
+    	}
+    	g_list_free (u->posts_frequentados);
+
+    	// liberta a glist posts_perguntas
+    	while(u->posts_perguntas != NULL){
+    		u->posts_perguntas = g_list_remove(u->posts_perguntas, (u->posts_perguntas)->data);
+    	}
+    	g_list_free (u->posts_perguntas);
+    	
     	free(u);
 	}
 }

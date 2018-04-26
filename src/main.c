@@ -27,7 +27,7 @@ int main(){
 
   // limpeza da estrutura 
   tda = clean(tda);
-  free(tda);
+
   printf("[clean] Estrutura limpa...\n");
   
   printf("[main] Program Done...\n");

@@ -58,8 +58,22 @@ void set_tag(TAD_community tad, char* key, TAG value){
 }
 
 void free_tad(TAD_community tad){
+
+	// vai a cada elemento da tabela de hash e faz free, depois destroi a tabela
+	g_hash_table_foreach(tad->utilizador, free_table_utilizador, NULL);
 	g_hash_table_destroy(tad->utilizador);
+
+	// vai a cada elemento da tabela de hash e faz free, depois destroi a tabela
+	g_hash_table_foreach(tad->posts, free_table_posts, NULL);
 	g_hash_table_destroy(tad->posts);
-	g_list_free(tad->date_posts);
+
+	// liberta a glist date_posts
+	while(tad->date_posts != NULL){
+        tad->date_posts = g_list_remove(tad->date_posts, (tad->date_posts)->data);
+    }
+    g_list_free (tad->date_posts);
+
+    // vai a cada elemento da tabela de hash e faz free, depois destroi a tabela
+	g_hash_table_foreach(tad->tag, free_table_tag, NULL);
 	g_hash_table_destroy(tad->tag);	
 }

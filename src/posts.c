@@ -141,7 +141,13 @@ void free_posts(POSTS p){
         free(p->data_string);
         free(p->title);
         free(p->body);
-        free(p->tags);
+
+        // liberta a glist tags
+        while(p->tags != NULL){
+            p->tags = g_list_remove(p->tags, (p->tags)->data);
+        }
+        g_list_free (p->tags);
+
         free(p);
     }
 }
