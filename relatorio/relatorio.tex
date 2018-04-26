@@ -25,7 +25,7 @@
 \end{abstract}
 
 \tableofcontents
-\listoffigures
+%\listoffigures
 
 \section{Introdução}
 \label{sec:intro}
@@ -56,7 +56,7 @@ trabalho desenvolvido mas também a motivação por trás dele.
 
 Este trabalho tem por base o parse de elementos de ficheiros XML
 relacionados com a informação do website Stack Overflow, de forma
-a seguidamente.
+a seguidamente...
 
 Esta secção termina normalmente com uma apresentação da estrutura do
 relatório, sendo aqui apresentada uma sugestão. Neste caso, a Secção
@@ -64,73 +64,110 @@ relatório, sendo aqui apresentada uma sugestão. Neste caso, a Secção
 no projeto, a Secção~\ref{sec:estrategias} indica as estratégias usadas 
 para resolver as  questões apresentadas. O relatório termina com conclusões na
 Secção~\ref{sec:conclusao}, onde é também apresentada uma análise
-crítica dos resultados obtidos.Secção~\ref{sec:modularizacao}.
+crítica dos resultados obtidos.Secção~\ref{sec:modularidade}.
 
 \section{Estruturas de Dados}
 \label{sec:estruturas}
 
-////////////////////// TCD e TAD (ver aviso BB) //////////////////////
-
-O trabalho tem por base uma estrutura principal denominada \textbf{TCD}, 
+Este trabalho tem por base uma estrutura principal denominada \textbf{TCD}, 
 sendo que depois é utilizada esta mesma mas com abstração de dados, a 
 \textbf{TAD}.
 
 Esta estrutura possui:
 \begin{itemize}
-\item Uma \textbf{struct utilizador} que contêm os atributos do utilizador
+	\item Uma \textbf{struct utilizador} que contêm os atributos do utilizador
 e está definida como \textit{\textbf{GHashTable*}};
-\item Uma \textbf{struct posts} que contêm os atributos de um post e
+	\item Uma \textbf{struct posts} que contêm os atributos de um post e
 está definida como \textit{\textbf{GHashTable*}};
-\item Uma \textbf{struct date\_posts} que contêm os atributos de um post
+	\item Uma \textbf{struct date\_posts} que contêm os atributos de um post
 está definida como \textit{\textbf{GList*}}, sendo esta ordenada por data;
-\item Uma \textbf{struct tags} que contêm os atributos de uma tag e
+	\item Uma \textbf{struct tags} que contêm os atributos de uma tag e
 está definida como \textit{\textbf{GHashTable*}}.
 \end{itemize}
 
-
-\subsection{Estrutura TCD}
+\subsection{Estrutura \textit{TCD}}
 \begin{figure}[ht]
 \centering
 \includegraphics[scale=0.50]{image_tcd}
-\caption{Estrutura TCD} 
+\caption{Estrutura \textit{TCD}}
 \label{img:tcd}
 \end{figure}
 
-\subsection{Estrutura Utilizador}
+\subsection{Estrutura \textit{Utilizador}}
 \begin{figure}[ht]
 \centering
 \includegraphics[scale=0.50]{image_utilizador}
-\caption{Estrutura Utilizador} 
+\caption{Estrutura \textit{Utilizador}}
 \label{img:utilizador}
 \end{figure}
 
-\subsection{Estrutura Posts}
+\subsection{Estrutura \textit{Posts}}
 \begin{figure}[ht]
 \centering
 \includegraphics[scale=0.50]{image_posts}
-\caption{Estrutura Posts} 
+\caption{Estrutura \textit{Posts}}
 \label{img:posts}
 \end{figure}
 
-\section{Modularização}
-\label{sec:modularizacao}
+%\subsection{Estrutura \textit{Tag}}
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[scale=0.50]{image_tag}
+%\caption{Estrutura \textit{Tag}}
+%\label{img:tag}
+%\end{figure}
 
-////////////////////// POR FAZER //////////////////////
+\section{Modularidade}
+\label{sec:modularidade}
 
-Divisão do código fonte em unidades separadas coerentes.
+Modularidade, por definição, é a divisão do código fonte em unidades 
+separadas coerentes. É algo que temos em conta no nosso projeto,
+existindo, por base, o ficheiro \textbf{main.c}, e depois todos os
+ficheiros individuais relacionados com as \textbf{estruturas de dados}
+usadas e as \textbf{queries} propostas. Estes possuem os ficheiros 
+\textbf{.c} que contêm o código fonte e os \textbf{.h/header files} que
+definem o que é invocável do exterior.
+
+Modularidade torna-se portanto fundamental para lidar com a complexidade
+do código, de tal forma que o código dos programas deve ser dividido por
+unidades modulares pequenas e autônomas, devendo-se ter em especial atenção
+a criação dos módulos que representam \textbf{abstração de dados}.
 
 \section{Encapsulamento}
 
-////////////////////// POR FAZER //////////////////////
+Encapsulamento baseia-se na garantia de \textbf{protecção} e 
+\textbf{acessos controlados aos dados}. É mais um aspeto que temos em 
+conta no nosso projeto de forma a que exista uma divisão entre as operações 
+que são públicas e aquelas que são internas ao módulo. Estas são privadas e,
+portanto, são apenas acessíveis do exterior atráves das funções
+disponibilizadas na \textbf{API}. Algo vísivel na figura 
+~\ref{img:encapsulamento_posts}, neste caso abordando as \textbf{tags}.
 
-Garantia de protecção e acessos controlados aos dados.
+Desta forma um tipo de dados permite ter várias instanciações,
+visto que os módulos das estruturas e das queries se tornam mais genéricos.
 
-\subsection{Exemplo Encapsulamento Tags}
+\subsection{Exemplo Encapsulamento \textit{Tags}}
 \begin{figure}[ht]
 \centering
 \includegraphics[scale=0.50]{image_exemplo_encapsulamento}
-\caption{Exemplo Encapsulamento Tags} 
+\caption{Exemplo Encapsulamento \textit{Tags}}
 \label{img:encapsulamento_posts}
+\end{figure}
+
+\section{Abstração de Dados}
+
+A declaração abstrata duma estrutura esconde dos utilizadores do módulo a
+implementação concreta, não tendo desta forma acesso à implementação
+da mesma. Por isso mesmo, previamente, temos a declaração abstrata da estrutura 
+\textbf{utilizador}, denominada de \textbf{UTILIZADOR}, 
+no \textit{header file}, como mostra o exemplo ~\ref{img:declaracao_utilizador}.
+
+\subsection{Exemplo Declaração Abstrata \textit{utilizador}}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.50]{image_declaracao_utilizador}
+\caption{Exemplo Declaração Abstrata \textit{utilizador}}
+\label{img:declaracao_utilizador}
 \end{figure}
 
 \section{Estratégias das Interrogações}
@@ -139,8 +176,8 @@ Garantia de protecção e acessos controlados aos dados.
 \subsection{Init}
 
 Função que cria a \textbf{TCD\_community}. Por consequência, inicializa
-as estruturas relacionadas à struct \textbf{TCD\_community}, alocando
-memória e usando a função da \textit{glib}, \textbf{g\_hash\_table\_new}.
+as estruturas relacionadas a essa mesma struct, alocando memória e usando
+a função da \textit{glib}, \textbf{g\_hash\_table\_new}.
 
 \subsection{Load}
 
@@ -299,9 +336,9 @@ via pergunta ou respostas.
 
 Nesta questão recorremos à estrutura \textbf{utilizador} que contém a 
 informação sobre todos os utilizadores, para retirar a informação relativa 
-aos \textbf{posts\_frequentados}, de cada utilizador que nos são passados 
-como argumentos. Resta apenas comparar estas duas \textbf{GList*} para
-retirar os \textbf{id\_post} que coincidem.
+aos \textbf{posts\_} \textbf{frequentados}, de cada utilizador que nos são 
+passados como argumentos. Resta apenas comparar estas duas 
+\textit{\textbf{GList*}} para retirar os \textbf{id\_post} que coincidem.
 
 \subsection{Query 10}
 
@@ -333,5 +370,12 @@ alterado o \textbf{id\_post} a retornar no final.
 A secção de \emph{conclusões} resume o restante documento, devendo
 também apresentar uma análise crítica dos resultados atingidos tendo
 em conta os objetivos definidos.
+
+\section{Bibliografia}
+
+\begin{enumerate} 
+	\item Prof. F. Mário Martins, \textit{Programação Modular em C};
+	\item Prof. F. Mário Martins, \textit{Tipos Incompletos em C}.
+\end{enumerate}
 
 \end{document}
