@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "user.h"
 #include "tcd.h"
 #include "query5.h"
@@ -33,6 +34,10 @@ USER get_user_info(TAD_community com, long id){
   
   printf("%s\n", nbio);
   for(int i=0;i<10;i++) printf("%ld\n", posts[i]);
-    
+  
+  // free das estruturas auxiliares
+  free_user(new_user);
+  free(nbio);
+
   return new_user2;
 }

@@ -29,7 +29,7 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
             if(strcmp(tag,tag_aux->data) == 0){
 
                 // coloca-se na glist res o post e sai-se do ciclo
-                res = g_list_insert(res, (gpointer) glista->data, 0);
+                res = g_list_prepend(res, (gpointer) glista->data);
                 break;
             }
 
@@ -39,10 +39,8 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
     }
     glista = g_list_next(glista);
   }
-  // ordena por data, do mais antigo ao mais recente
-  res = g_list_sort(res, compara_strings);
-  // fica com o apontador para o último por causa da cronologia inversa
-  res = g_list_last(res);
+  // neste momento 'res' está ordenada do mais recente para o mais antigo
+
   // cria-se uma lista do tamanho da glist
   LONG_list l = create_list(g_list_length(res));
 
@@ -50,7 +48,7 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
 
   while(res != NULL){ // inicialização da lista
     set_list(l,contador,get_key_id_post(res->data)); // vai conter os numeros das perguntas
-    res = g_list_previous(res);
+    res = g_list_next(res);
     contador++;
   }
 
@@ -61,6 +59,9 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
     if( (void*) get_list(aux,i) == NULL) break;
     printf("POST_ID: %ld\n", get_list(aux,i) );
   }
+
+  // free das estruturas auxiliares
+  free_list(l);
 
   return aux;
 }

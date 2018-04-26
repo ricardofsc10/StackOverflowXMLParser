@@ -124,7 +124,7 @@ void set_parent_id(POSTS p, int parent_id){
 }
 
 void set_tags(POSTS p, char* str){
-    p->tags = g_list_insert(p->tags, str, 0);
+    p->tags = g_list_prepend(p->tags, str);
 }
 
 void set_answer_count(POSTS p, int answer_count){

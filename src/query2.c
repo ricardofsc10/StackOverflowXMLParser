@@ -8,12 +8,15 @@
 
 LONG_list top_most_active(TAD_community com, int N){
 
-  GList* gl = g_hash_table_get_values(get_utilizador(com));
-  GList* glista = gl;
+  GList* glista = g_hash_table_get_values(get_utilizador(com));
 
   glista = g_list_sort(glista, compara_posts_u);
 
   LONG_list l = create_list(N);
+  for (int i=0; i < N ; i++){ // inicialização da lista
+    set_list(l,i,0); // lista q vai ser devolvida
+  }
+
   int i = 0;
   while(glista != NULL && i < N){
     set_list(l,i,get_key_id_post(glista->data));
@@ -28,6 +31,13 @@ LONG_list top_most_active(TAD_community com, int N){
     if( (void*) get_list(aux,i) == NULL) break;
     printf("%dº: id utilizador: %ld\n\n", i+1, get_list(aux,i));
   }
+
+  // free das estruturas auxiliares
+  free_list(l);
+  while(glista != NULL){
+        glista = g_list_remove(glista, glista->data);
+  }
+  g_list_free (glista);
 
   return aux;
 }

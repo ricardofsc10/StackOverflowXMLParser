@@ -76,6 +76,7 @@ void free_table_posts(gpointer key, gpointer value, gpointer user_data){
 }
 
 void free_table_tag(gpointer key, gpointer value, gpointer user_data){
+    free(key);
     free_tag(value);
 }
 
@@ -200,7 +201,6 @@ void interatividade(TAD_community tda){
       printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
       free_date(begin);
       free_date(end);
-      //free_list(l);
       menu = 0;
     }
     if(menu == 5){ ///////////////////////////////// feita

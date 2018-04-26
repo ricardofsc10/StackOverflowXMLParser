@@ -81,11 +81,11 @@ void set_posts_frequentados(UTILIZADOR u, long value){
 	}
 	// se nao contiver o value, insere-o, e ordena
 	if(contem == 0)
-		u->posts_frequentados = g_list_insert(u->posts_frequentados, (gpointer) value, 0);
+		u->posts_frequentados = g_list_prepend(u->posts_frequentados, (gpointer) value);
 }
 
 void set_posts_perguntas(UTILIZADOR u, POSTS value){
-	u->posts_perguntas = g_list_insert(u->posts_perguntas, (gpointer) value, 0);
+	u->posts_perguntas = g_list_prepend(u->posts_perguntas, (gpointer) value);
 }
 
 void set_posts_u(UTILIZADOR u, int posts_u_l){

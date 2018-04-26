@@ -46,7 +46,7 @@ void set_posts(TAD_community tad, long key, POSTS value){
 }
 
 void adiciona_date_posts(TAD_community tad, POSTS value){
-	tad->date_posts = g_list_insert(tad->date_posts, (gpointer) value, 0);
+	tad->date_posts = g_list_prepend(tad->date_posts, (gpointer) value);
 }
 
 void ordena(TAD_community tad){

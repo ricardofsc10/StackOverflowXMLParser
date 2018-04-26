@@ -8,14 +8,7 @@
 
 LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ // da com mais respostas para a q tem menos
 
-  LONG_list res = create_list(N);
-
-  for (int i=0; i < N ; i++){ // inicialização da lista
-    set_list(res,i,0); // lista q vai ser devolvida
-  }
-
-  GList* gl = get_date_posts(com);
-  GList* glista = gl;
+  GList* glista = get_date_posts(com);
   GList* glvotes = NULL;
 
   while(glista != NULL){
@@ -23,15 +16,21 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
       
       if(difDatas(get_data(glista->data),begin,end) == 0){ // se está dentro das datas
         // insere no inicio as respostas
-        glvotes = g_list_insert(glvotes, (gpointer) glista->data, 0);
+        glvotes = g_list_prepend(glvotes, (gpointer) glista->data);
 
       }
     }
     glista = glista->next;
   }
 
-  // ordena a lista por ordem crescente
+  // ordena a lista por ordem crescente de score
   glvotes = g_list_sort(glvotes, compara_score);
+
+  LONG_list res = create_list(N);
+
+  for (int i=0; i < N ; i++){ // inicialização da lista
+    set_list(res,i,0); // lista q vai ser devolvida
+  }
 
   int i = 0;
   while(glvotes != NULL && i < N){
@@ -47,6 +46,9 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
     if( (void*) get_list(aux,i) == NULL) break;
     printf("POST_ID: %ld\n", get_list(aux,i) );
   }
+
+  // free de estrturas auxiliares
+  free_list(res);
 
   return aux;
 }

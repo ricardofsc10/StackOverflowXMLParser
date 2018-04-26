@@ -32,10 +32,14 @@ STR_pair info_from_post(TAD_community com, long id) {
       UTILIZADOR value_user2 = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id);
       set_snd_str(par, (char *) get_nome(value_user2));
     }
-  }
 
-  printf("Título: %s\n", get_fst_str(par));
-  printf("Nome de utilizador: %s\n", get_snd_str(par) );
+    printf("Título: %s\n", get_fst_str(par));
+    printf("Nome de utilizador: %s\n", get_snd_str(par) );
   
-  return par;
+    return par;
+  }
+  else{
+    printf("Não existe um post com o Id passado\n");
+    return par;
+  }
 }
