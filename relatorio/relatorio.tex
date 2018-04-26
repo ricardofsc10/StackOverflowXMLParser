@@ -54,6 +54,10 @@ contextualização e a abordagem proposta pelos alunos para o
 resolver. Deve passar ao leitor não só uma perspetiva geral do
 trabalho desenvolvido mas também a motivação por trás dele.
 
+Este trabalho tem por base o parse de elementos de ficheiros XML
+relacionados com a informação do website Stack Overflow, de forma
+a seguidamente.
+
 Esta secção termina normalmente com uma apresentação da estrutura do
 relatório, sendo aqui apresentada uma sugestão. Neste caso, a Secção
 ~\ref{sec:estruturas} apresenta as estruturas de dados utilizadas 
@@ -65,11 +69,24 @@ crítica dos resultados obtidos.Secção~\ref{sec:modularizacao}.
 \section{Estruturas de Dados}
 \label{sec:estruturas}
 
-////////////////////// POR FAZER //////////////////////
-
 ////////////////////// TCD e TAD (ver aviso BB) //////////////////////
 
-Esta secção tem as \emph{estruturas} do projeto.
+O trabalho tem por base uma estrutura principal denominada \textbf{TCD}, 
+sendo que depois é utilizada esta mesma mas com abstração de dados, a 
+\textbf{TAD}.
+
+Esta estrutura possui:
+\begin{itemize}
+\item Uma \textbf{struct utilizador} que contêm os atributos do utilizador
+e está definida como \textit{\textbf{GHashTable*}};
+\item Uma \textbf{struct posts} que contêm os atributos de um post e
+está definida como \textit{\textbf{GHashTable*}};
+\item Uma \textbf{struct date\_posts} que contêm os atributos de um post
+está definida como \textit{\textbf{GList*}}, sendo esta ordenada por data;
+\item Uma \textbf{struct tags} que contêm os atributos de uma tag e
+está definida como \textit{\textbf{GHashTable*}}.
+\end{itemize}
+
 
 \subsection{Estrutura TCD}
 \begin{figure}[ht]
@@ -100,12 +117,28 @@ Esta secção tem as \emph{estruturas} do projeto.
 
 ////////////////////// POR FAZER //////////////////////
 
+Divisão do código fonte em unidades separadas coerentes.
+
+\section{Encapsulamento}
+
+////////////////////// POR FAZER //////////////////////
+
+Garantia de protecção e acessos controlados aos dados.
+
+\subsection{Exemplo Encapsulamento Tags}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.50]{image_exemplo_encapsulamento}
+\caption{Exemplo Encapsulamento Tags} 
+\label{img:encapsulamento_posts}
+\end{figure}
+
 \section{Estratégias das Interrogações}
 \label{sec:estrategias}
 
 \subsection{Init}
 
-Função que cria a \textbf{TAD\_community}. Por consequência, inicializa
+Função que cria a \textbf{TCD\_community}. Por consequência, inicializa
 as estruturas relacionadas à struct \textbf{TCD\_community}, alocando
 memória e usando a função da \textit{glib}, \textbf{g\_hash\_table\_new}.
 
@@ -173,7 +206,8 @@ caso contrário é uma resposta, e é incrementada a segunda coordenada.
 \subsection{Query 4}
 
 Dado um intervalo de tempo arbitrário, retornamos todas as perguntas 
-contendo uma determinada tag. O retorno da função é uma lista com os IDs das perguntas ordenadas em cronologia inversa.
+contendo uma determinada tag. O retorno da função é uma lista com os IDs 
+das perguntas ordenadas em cronologia inversa.
 
 Nesta questão, utilizamos uma \textit{\textbf{GList*}} para armazenar 
 os \textbf{posts} ordenados por data que se encontram na estrutura 
@@ -258,6 +292,16 @@ passada como parâmetro esteja presente no \textbf{title}, acrescentamos
 o \textbf{id\_post} à lista a retornar no final.
 
 \subsection{Query 9}
+
+Dados os IDs de dois utilizadores, devolver as últimas N perguntas, em
+cronologia inversa, em que participaram dois utilizadores específicos, 
+via pergunta ou respostas.
+
+Nesta questão recorremos à estrutura \textbf{utilizador} que contém a 
+informação sobre todos os utilizadores, para retirar a informação relativa 
+aos \textbf{posts\_frequentados}, de cada utilizador que nos são passados 
+como argumentos. Resta apenas comparar estas duas \textbf{GList*} para
+retirar os \textbf{id\_post} que coincidem.
 
 \subsection{Query 10}
 
