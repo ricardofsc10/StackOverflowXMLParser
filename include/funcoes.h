@@ -1,6 +1,12 @@
 #ifndef __FUNCOES__
 #define __FUNCOES__
 
+
+/**
+@file funcoes.h
+Funcções auxiliares do projeto.
+*/
+
 #include "date.h"
 #include "list.h"
 #include "tcd.h"
@@ -11,7 +17,7 @@
 #include <math.h>
 
 /**
-@brief Função que verifica se uma data se encontra ou não entre um período.
+\brief Função que verifica se uma data se encontra ou não entre um período.
 
 @param x Data usada para comparar
 @param begin Data do ínicio da comparação.
