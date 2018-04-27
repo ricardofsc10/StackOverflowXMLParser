@@ -86,6 +86,7 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   // coloca na lista os id's
   LONG_list l = create_list(tamanho);
   int j=0;
+  
   while(values != NULL && j < tamanho){
 
     // procura a tag na estrutura das tags

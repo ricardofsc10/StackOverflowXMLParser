@@ -6,6 +6,17 @@
 
 long better_answer(TAD_community com, long id){
   
+  POSTS p = (POSTS) g_hash_table_lookup(get_posts(com), (gpointer) id);
+  
+  // testa possiveis casos de erro
+  if(p == NULL){
+      printf("Não existe nenhum post com o id = %ld.\n",id );
+      return 0;
+  }
+  if(get_post_type_id(p) == 2){
+      printf("O Id passado corresponde a uma resposta.\n");
+      return 0;
+  }
 
   int melhor_media = 0, melhor_id = 0;
   int media;
@@ -24,11 +35,13 @@ long better_answer(TAD_community com, long id){
     
       if (media>melhor_media){
         melhor_media = media;
-        melhor_id =get_key_id_post(glista->data);
+        melhor_id = get_key_id_post(glista->data);
       } 
     }
   }
-  printf("ID melhor resposta: %d\n", melhor_id);
+
+  printf("ID melhor resposta (valor de retorno): %d\n", melhor_id);
   printf("média: %d\n", melhor_media);
+
   return melhor_id;
 }
