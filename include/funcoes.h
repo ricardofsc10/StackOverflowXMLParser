@@ -27,21 +27,107 @@ Funcções auxiliares do projeto.
 */
 int difDatas(Date x,Date begin, Date end);
 
+/** 
+\brief Função que compara duas strings e devolve um inteiro que corresponde à diferença entre elas.
+
+@param a Pointer para a string a.
+@param b Pointer para a string b.
+
+@returns Inteiro que corresponde à diferença.
+*/
+
 gint compara_strings(gconstpointer a, gconstpointer b);
+
+/** 
+\brief Função que compara dois scores e devolve um inteiro que corresponde à diferença entre eles.
+
+@param a Pointer para o score a.
+@param b Pointer para o score b.
+
+@returns Inteiro que corresponde à diferença.
+*/
+
 
 gint compara_score(gconstpointer a, gconstpointer b);
 
+/** 
+\brief Função que compara duas respostas e devolve um inteiro que corresponde à diferença entre elas.
+
+@param a Pointer para a resposta a.
+@param b Pointer para a resposta b.
+
+@returns Inteiro que corresponde à diferença.
+*/
+
+
 gint compara_answer(gconstpointer a, gconstpointer b);
+
+/** 
+\brief Função que compara dois posts e devolve um inteiro que corresponde à diferença entre eles.
+
+@param a Pointer para o post a.
+@param b Pointer para o post b.
+
+@returns Inteiro que corresponde à diferença.
+*/
+
 
 gint compara_posts_u(gconstpointer a, gconstpointer b);
 
+/** 
+\brief Função que compara duas reputações e devolve um inteiro que corresponde à diferença entre elas.
+
+@param a Pointer para a reputação a.
+@param b Pointer para a reputação b.
+
+@returns Inteiro que corresponde à diferença.
+*/
+
+
 gint compara_reputacao(gconstpointer a, gconstpointer b);
+
+/** 
+\brief Função que compara duas ocorrências e devolve um inteiro que corresponde à diferença entre elas.
+
+@param a Pointer para a ocorrência a.
+@param b Pointer para a ocorrência b.
+
+@returns Inteiro que corresponde à diferença.
+*/
+
 
 gint compara_ocorrencias(gconstpointer a, gconstpointer b);
 
+/** 
+\brief Função que liberta a memória alocada para um utilizador.
+
+@param key Chave.
+@param value ID do utilizador.
+@param user_data Dados do utilizador.
+*/
+
+
 void free_table_utilizador(gpointer key, gpointer value, gpointer user_data);
 
+/** 
+\brief Função que liberta a memória alocada para um post.
+
+@param key Chave.
+@param value ID do utilizador.
+@param user_data Dados do utilizador.
+*/
+
+
 void free_table_posts(gpointer key, gpointer value, gpointer user_data);
+
+/** 
+\brief Função que liberta a memória alocada para uma tag.
+
+@param key Chave.
+@param value ID do utilizador.
+@param user_data Dados do utilizador.
+*/
+
 
 void free_table_tag(gpointer key, gpointer value, gpointer user_data);
 
@@ -53,6 +139,13 @@ void free_table_tag(gpointer key, gpointer value, gpointer user_data);
 @returns Data compatível com a struct date.
 */
 Date stringToDias (char* data);
+
+/**
+@brief Função que transforma uma string para uma tag, no respetivo formato..
+
+@param value_post Post ao qual corresponde a tag..
+@param str String a transformar
+*/
 
 void strToTag (POSTS value_post, const char* str);
 
