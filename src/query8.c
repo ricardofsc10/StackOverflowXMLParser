@@ -42,7 +42,6 @@ LONG_list contains_word(TAD_community com, char* word, int N){
   
   // para testar
   for(int i = 0; i < contador; i++){
-    if( (void*) get_list(l,i) == NULL) break;
     printf("POST_ID: %ld\n", get_list(l,i) );
   }
 

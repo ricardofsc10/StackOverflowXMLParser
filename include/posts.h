@@ -120,18 +120,6 @@ long get_parent_id(POSTS p);
 */
 
 GList* get_tags(POSTS p);
-<<<<<<< Updated upstream
-=======
-
-/**
-@brief Função que recebe uma estrutura POSTS e retorna o número de respostas à pergunta.
-
-@param p Estrutura POSTS.
-
-@returns Número de respostas da pergunta.
-*/
-
-long get_answer_count(POSTS p);
 
 /**
 @brief Função que recebe uma estrutura POSTS e retorna o número de comentários.
@@ -141,7 +129,6 @@ long get_answer_count(POSTS p);
 @returns Nº de comentários da resposta.
 */
 
->>>>>>> Stashed changes
 long get_comment_count(POSTS p);
 
 /**
@@ -223,16 +210,6 @@ void set_parent_id(POSTS p, int parent_id);
 */
 
 void set_tags(POSTS p, char* str);
-<<<<<<< Updated upstream
-=======
-
-/**
-@brief Função que recebe uma estrutura POSTS e coloca o número de respostas.
-
-@param p Estrutura POSTS.
-*/
-
-void set_answer_count(POSTS p, int answer_count);
 
 /**
 @brief Função que recebe uma estrutura POSTS e coloca o número de comentários.
@@ -240,7 +217,6 @@ void set_answer_count(POSTS p, int answer_count);
 @param p Estrutura POSTS.
 */
 
->>>>>>> Stashed changes
 void set_comment_count(POSTS p, int comment_count);
 
 /**

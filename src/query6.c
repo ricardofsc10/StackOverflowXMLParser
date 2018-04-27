@@ -10,6 +10,7 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
 
   GList* glista = get_date_posts(com);
   GList* glvotes = NULL;
+  int i = 0;
 
   while(glista != NULL){
     if(get_post_type_id(glista->data) == 2){ // se é resposta
@@ -17,7 +18,7 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
       if(difDatas(get_data(glista->data),begin,end) == 0){ // se está dentro das datas
         // insere no inicio as respostas
         glvotes = g_list_prepend(glvotes, (gpointer) glista->data);
-
+        i++;
       }
     }
     glista = glista->next;
@@ -26,29 +27,23 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
   // ordena a lista por ordem crescente de score
   glvotes = g_list_sort(glvotes, compara_score);
 
-  LONG_list res = create_list(N);
+  int tamanho;
+  if(i > N) tamanho = N;
+  else tamanho = i;
 
-  for (int i=0; i < N ; i++){ // inicialização da lista
-    set_list(res,i,0); // lista q vai ser devolvida
-  }
+  LONG_list res = create_list(tamanho);
 
-  int i = 0;
-  while(glvotes != NULL && i < N){
+  i = 0;
+  while(glvotes != NULL && i < tamanho){
       set_list(res,i,get_key_id_post(glvotes->data));
       glvotes = g_list_next(glvotes);
       i++;
   }
-
-  LONG_list aux = remove_trash(res, N);
   
   // para testar
-  for(int i = 0; i < N; i++){
-    if( (void*) get_list(aux,i) == NULL) break;
-    printf("POST_ID: %ld\n", get_list(aux,i) );
+  for(i = 0; i < tamanho; i++){
+    printf("POST_ID: %ld\n", get_list(res,i) );
   }
 
-  // free de estrturas auxiliares
-  free_list(res);
-
-  return aux;
+  return res;
 }

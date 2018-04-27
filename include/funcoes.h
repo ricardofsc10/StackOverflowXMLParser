@@ -153,6 +153,8 @@ LONG_list remove_trash(LONG_list l, int N);
 
 char* escolhe_ficheiros();
 
+Date pergunta_data();
+
 void interatividade(TAD_community tda);
 
 #endif

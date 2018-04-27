@@ -73,7 +73,7 @@ LONG_list most_answered_questions(TAD_community com, int N, Date begin, Date end
 
   // para testar
   for(i = 0; i < tamanho; i++){
-    printf("POST_ID: %ld\n", get_list(l,i) );
+    printf("%dº POST_ID: %ld\n", i+1, get_list(l,i) );
   }
 
   return l;
