@@ -59,7 +59,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
 
    while (cur != NULL) {
        if ((!xmlStrcmp(cur->name, (const xmlChar *)"row"))) {
-          xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *answer_count_l, *comment_count_l;
+          xmlChar *post_type_id_l, *creation_date_l, *score_l, *body_l, *parent_id_l, *title_l, *tags_l, *comment_count_l;
           long owner_user_id_l, id_l;
 
           // faz o parse dos parametros necessários
@@ -72,7 +72,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
           parent_id_l=xmlGetProp(cur, (const xmlChar *) "ParentId");
           title_l = xmlGetProp(cur, (const xmlChar *) "Title");
           tags_l = xmlGetProp(cur, (const xmlChar *) "Tags");
-          answer_count_l = xmlGetProp(cur, (const xmlChar *) "AnswerCount");
           comment_count_l = xmlGetProp(cur, (const xmlChar *) "CommentCount");
 
           if(atoi( (const char *) post_type_id_l) == 1 || atoi( (const char *) post_type_id_l) == 2){
@@ -96,6 +95,7 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                 set_title(value_post, NULL);
                 // inserir o id da pergunta no utilizador que faz a pergunta
                 set_posts_frequentados(value_user, get_parent_id(value_post));
+
              }
              if(get_post_type_id(value_post)==1){
                 set_title(value_post,(char *) title_l);
@@ -103,12 +103,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
                 strToTag(value_post, (char *) tags_l);
                 set_posts_frequentados(value_user, get_key_id_post(value_post));
                 set_posts_perguntas(value_user, value_post);
-             }
-             if(answer_count_l == NULL){ // alguns posts sem answer_count, dava segmentation fault sem esta condição
-                set_answer_count(value_post, 0);
-             }
-             if(answer_count_l != NULL){
-                set_answer_count(value_post, atoi( (const char *) answer_count_l));
              }
 
              // insere todos os parametros do post na chave (id) associado
@@ -127,7 +121,6 @@ void getReferencePosts (xmlDocPtr doc, xmlNodePtr cur, TAD_community com) {
           xmlFree(parent_id_l);
           xmlFree(title_l);
           xmlFree(tags_l);
-          xmlFree(answer_count_l);
           xmlFree(comment_count_l);
 
        }

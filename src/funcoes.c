@@ -3,11 +3,12 @@
 #include <stdlib.h>
 #include "tcd.h"
 #include "tag_unique.h"
+#include "answer_count.h"
 #include "funcoes.h"
 
 // funções auxiliares mais tarde para serem postas noutro ficheiro
 
-int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas ou n
+int difDatas(Date x,Date begin, Date end) {
     int inicio = 0,fim;
     if(get_year(x) < get_year(begin)) inicio=-1;
     else {
@@ -39,20 +40,22 @@ int difDatas(Date x,Date begin, Date end) { // 0 ou -1 se está entre as datas o
         else fim = 0;
     }
     
-    if (inicio== 0 && fim ==0) return 0;
-    else return -1;
+    if (inicio == 0 && fim == 0) return 0; // está entre
+    if (inicio == -1 && fim == 0) return -1; // está antes do intervalo
+    if (inicio == 0 && fim == -1) return 1; // está depois do intervalo
+    else return 2; // situação anormal
 }
 
 gint compara_strings(gconstpointer a, gconstpointer b) { // Compara duas strings
   return strcmp( get_data_string( (POSTS) a) , get_data_string( (POSTS) b) ) ;
 }
 
-gint compara_score(gconstpointer a, gconstpointer b) { // Compara duas strings
+gint compara_score(gconstpointer a, gconstpointer b) { // Compara dois scores
   return (get_score( (POSTS) a) > get_score( (POSTS) b) ) ? -1 : 1 ;
 }
 
-gint compara_answer(gconstpointer a, gconstpointer b) { // Compara duas strings
-  return (get_answer_count( (POSTS) a) > get_answer_count( (POSTS) b) ) ? -1 : 1 ;
+gint compara_answer(gconstpointer a, gconstpointer b) { // Compara dois answer_count
+  return (get_num_respostas( (ANSWER_COUNT) a) > get_num_respostas( (ANSWER_COUNT) b) ) ? -1 : 1 ;
 }
 
 gint compara_posts_u(gconstpointer a, gconstpointer b){
