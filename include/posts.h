@@ -14,7 +14,7 @@ typedef struct posts* POSTS;
 
 
 /**
-@brief Função que cria uma estrutura POSTS.
+\brief Função que cria uma estrutura POSTS.
 
 @returns Estrutura inicializada de POSTS.
 */
@@ -22,7 +22,7 @@ typedef struct posts* POSTS;
 POSTS create_posts();
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna a key_id_post.
+\brief Função que recebe uma estrutura POSTS e retorna a key_id_post.
 
 @param p Estrutura POSTS.
 
@@ -32,7 +32,7 @@ POSTS create_posts();
 long get_key_id_post(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna a Data em formato Date.
+\brief Função que recebe uma estrutura POSTS e retorna a Data em formato Date.
 
 @param p Estrutura POSTS.
 
@@ -42,7 +42,7 @@ long get_key_id_post(POSTS p);
 Date get_data(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna a data em formato gchar*.
+\brief Função que recebe uma estrutura POSTS e retorna a data em formato gchar*.
 
 @param p Estrutura POSTS.
 
@@ -52,7 +52,7 @@ Date get_data(POSTS p);
 gchar* get_data_string(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna o score do post.
+\brief Função que recebe uma estrutura POSTS e retorna o score do post.
 
 @param p Estrutura POSTS.
 
@@ -62,7 +62,7 @@ gchar* get_data_string(POSTS p);
 long get_score(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna o ID do utilizador que fez o post.
+\brief Função que recebe uma estrutura POSTS e retorna o ID do utilizador que fez o post.
 
 @param p Estrutura POSTS.
 
@@ -72,7 +72,7 @@ long get_score(POSTS p);
 long get_owner_user_id(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna o título do post.
+\brief Função que recebe uma estrutura POSTS e retorna o título do post.
 
 @param p Estrutura POSTS.
 
@@ -82,7 +82,7 @@ long get_owner_user_id(POSTS p);
 gchar* get_title(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna o corpo da pergunta.
+\brief Função que recebe uma estrutura POSTS e retorna o corpo da pergunta.
 
 @param p Estrutura POSTS.
 
@@ -92,7 +92,7 @@ gchar* get_title(POSTS p);
 gchar* get_body(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna o tipo de post.
+\brief Função que recebe uma estrutura POSTS e retorna o tipo de post.
 
 @param p Estrutura POSTS.
 
@@ -102,7 +102,7 @@ gchar* get_body(POSTS p);
 int get_post_type_id(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna o ID do pai, ou seja da pergunta à qual corresponde.
+\brief Função que recebe uma estrutura POSTS e retorna o ID do pai, ou seja da pergunta à qual corresponde.
 
 @param p Estrutura POSTS.
 
@@ -112,7 +112,7 @@ int get_post_type_id(POSTS p);
 long get_parent_id(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna uma lista com as Tags da pergunta.
+\brief Função que recebe uma estrutura POSTS e retorna uma lista com as Tags da pergunta.
 
 @param p Estrutura POSTS.
 
@@ -120,11 +120,10 @@ long get_parent_id(POSTS p);
 */
 
 GList* get_tags(POSTS p);
-<<<<<<< Updated upstream
-=======
+
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna o número de respostas à pergunta.
+\brief Função que recebe uma estrutura POSTS e retorna o número de respostas à pergunta.
 
 @param p Estrutura POSTS.
 
@@ -134,18 +133,17 @@ GList* get_tags(POSTS p);
 long get_answer_count(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e retorna o número de comentários.
+\brief Função que recebe uma estrutura POSTS e retorna o número de comentários.
 
 @param p Estrutura POSTS.
 
 @returns Nº de comentários da resposta.
 */
 
->>>>>>> Stashed changes
 long get_comment_count(POSTS p);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca uma key_id_post.
+\brief Função que recebe uma estrutura POSTS e coloca uma key_id_post.
 
 @param p Estrutura POSTS.
 */
@@ -153,7 +151,7 @@ long get_comment_count(POSTS p);
 void set_key_id_post(POSTS p, int key_id_post);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca uma data em formato Date.
+\brief Função que recebe uma estrutura POSTS e coloca uma data em formato Date.
 
 @param p Estrutura POSTS.
 */
@@ -161,7 +159,7 @@ void set_key_id_post(POSTS p, int key_id_post);
 void set_data(POSTS p, Date data);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca uma data em formato String.
+\brief Função que recebe uma estrutura POSTS e coloca uma data em formato String.
 
 @param p Estrutura POSTS.
 */
@@ -169,7 +167,7 @@ void set_data(POSTS p, Date data);
 void set_data_string(POSTS p, char* str);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca um score.
+\brief Função que recebe uma estrutura POSTS e coloca um score.
 
 @param p Estrutura POSTS.
 */
@@ -177,7 +175,7 @@ void set_data_string(POSTS p, char* str);
 void set_score(POSTS p, int score);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca um ID de utilizador.
+\brief Função que recebe uma estrutura POSTS e coloca um ID de utilizador.
 
 @param p Estrutura POSTS.
 */
@@ -185,7 +183,7 @@ void set_score(POSTS p, int score);
 void set_owner_user_id(POSTS p, int owner_user_id);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca um título.
+\brief Função que recebe uma estrutura POSTS e coloca um título.
 
 @param p Estrutura POSTS.
 */
@@ -193,7 +191,7 @@ void set_owner_user_id(POSTS p, int owner_user_id);
 void set_title(POSTS p, char* str);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca um corpo de texto.
+\brief Função que recebe uma estrutura POSTS e coloca um corpo de texto.
 
 @param p Estrutura POSTS.
 */
@@ -201,7 +199,7 @@ void set_title(POSTS p, char* str);
 void set_body(POSTS p, char* str);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca o post_type_id.
+\brief Função que recebe uma estrutura POSTS e coloca o post_type_id.
 
 @param p Estrutura POSTS.
 */
@@ -209,7 +207,7 @@ void set_body(POSTS p, char* str);
 void set_post_type_id(POSTS p, int post_type_id);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca o ID do pai do post.
+\brief Função que recebe uma estrutura POSTS e coloca o ID do pai do post.
 
 @param p Estrutura POSTS.
 */
@@ -217,17 +215,15 @@ void set_post_type_id(POSTS p, int post_type_id);
 void set_parent_id(POSTS p, int parent_id);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca as tags da pergunta.
+\brief Função que recebe uma estrutura POSTS e coloca as tags da pergunta.
 
 @param p Estrutura POSTS.
 */
 
 void set_tags(POSTS p, char* str);
-<<<<<<< Updated upstream
-=======
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca o número de respostas.
+\brief Função que recebe uma estrutura POSTS e coloca o número de respostas.
 
 @param p Estrutura POSTS.
 */
@@ -235,16 +231,16 @@ void set_tags(POSTS p, char* str);
 void set_answer_count(POSTS p, int answer_count);
 
 /**
-@brief Função que recebe uma estrutura POSTS e coloca o número de comentários.
+\brief Função que recebe uma estrutura POSTS e coloca o número de comentários.
 
 @param p Estrutura POSTS.
 */
 
->>>>>>> Stashed changes
+
 void set_comment_count(POSTS p, int comment_count);
 
 /**
-@brief Função que liberta a memória alocada por uma estrutura POSTS.
+\brief Função que liberta a memória alocada por uma estrutura POSTS.
 
 @param p Estrutura POSTS.
 */
