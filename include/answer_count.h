@@ -3,11 +3,8 @@
 
 /**
 @file answer_count.h
-<<<<<<< HEAD
 Funções sobre o nº de respostas de uma pergunta do projeto.
-=======
 Contém uma pequena estrutura auxiliar denominada de answer_count.
->>>>>>> 4bee2a125072dc1d5c6f2bab9e31ab2040102cb1
 */
 
 #include <glib.h>
@@ -15,16 +12,10 @@ Contém uma pequena estrutura auxiliar denominada de answer_count.
 typedef struct answer_count * ANSWER_COUNT;
 
 /**
-<<<<<<< HEAD
 \brief Função que cria uma estrutura ANSWER_COUNT.
-=======
-@brief Função que cria uma estrutura ANSWER_COUNT.
->>>>>>> 4bee2a125072dc1d5c6f2bab9e31ab2040102cb1
 
 @returns Estrutura inicializada de ANSWER_COUNT.
 */
-
-<<<<<<< HEAD
 
 ANSWER_COUNT create_answer_count();
 
@@ -73,10 +64,6 @@ void set_num_respostas(ANSWER_COUNT t, int incremento);
 
 void set_id_pergunta(ANSWER_COUNT t, long id_l);
 
-/**
-\brief Função que recebe uma estrutura ANSWER_COUNT e liberta a memória por esta alocada.
-=======
-ANSWER_COUNT create_answer_count();
 
 /**
 @brief Função que recebe uma estrutura ANSWER_COUNT e retorna a o número de resposta associado.
@@ -122,7 +109,6 @@ void set_id_pergunta(ANSWER_COUNT t, long id_l);
 
 /**
 @brief Função que liberta a memória alocada por uma estrutura ANSWER_COUNT.
->>>>>>> 4bee2a125072dc1d5c6f2bab9e31ab2040102cb1
 
 @param t Estrutura ANSWER_COUNT.
 */

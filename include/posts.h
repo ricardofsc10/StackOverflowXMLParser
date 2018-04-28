@@ -120,8 +120,6 @@ long get_parent_id(POSTS p);
 */
 
 GList* get_tags(POSTS p);
-<<<<<<< HEAD
-
 
 /**
 \brief Função que recebe uma estrutura POSTS e retorna o número de respostas à pergunta.
@@ -132,8 +130,6 @@ GList* get_tags(POSTS p);
 */
 
 long get_answer_count(POSTS p);
-=======
->>>>>>> 4bee2a125072dc1d5c6f2bab9e31ab2040102cb1
 
 /**
 \brief Função que recebe uma estrutura POSTS e retorna o número de comentários.
@@ -224,7 +220,6 @@ void set_parent_id(POSTS p, int parent_id);
 */
 
 void set_tags(POSTS p, char* str);
-<<<<<<< HEAD
 
 /**
 \brief Função que recebe uma estrutura POSTS e coloca o número de respostas.
@@ -233,8 +228,6 @@ void set_tags(POSTS p, char* str);
 */
 
 void set_answer_count(POSTS p, int answer_count);
-=======
->>>>>>> 4bee2a125072dc1d5c6f2bab9e31ab2040102cb1
 
 /**
 \brief Função que recebe uma estrutura POSTS e coloca o número de comentários.
@@ -242,10 +235,6 @@ void set_answer_count(POSTS p, int answer_count);
 @param p Estrutura POSTS.
 */
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 4bee2a125072dc1d5c6f2bab9e31ab2040102cb1
 void set_comment_count(POSTS p, int comment_count);
 
 /**

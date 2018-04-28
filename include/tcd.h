@@ -2,7 +2,7 @@
 #define __TCD__
 
 /**
-@file tag_unique.h
+@file tcd.h
 Funções que trabalham a estrutura da comunidade do projeto.
 */
 
