@@ -2,8 +2,8 @@
 #define __DATE_H__
 
 /**
-@file clean.h
-Função clean do projeto.
+@file date.h
+Função date do projeto.
 */
 
 typedef struct date* Date;
