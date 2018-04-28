@@ -52,16 +52,10 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
     contador++;
   }
 
-  LONG_list aux = remove_trash(l, contador);
-
   // para testar
   for(int i = 0; i < contador; i++){
-    if( (void*) get_list(aux,i) == NULL) break;
-    printf("POST_ID: %ld\n", get_list(aux,i) );
+    printf("POST_ID: %ld\n", get_list(l,i) );
   }
 
-  // free das estruturas auxiliares
-  free_list(l);
-
-  return aux;
+  return l;
 }

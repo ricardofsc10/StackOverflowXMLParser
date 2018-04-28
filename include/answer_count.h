@@ -3,7 +3,11 @@
 
 /**
 @file answer_count.h
+<<<<<<< HEAD
 Funções sobre o nº de respostas de uma pergunta do projeto.
+=======
+Contém uma pequena estrutura auxiliar denominada de answer_count.
+>>>>>>> 4bee2a125072dc1d5c6f2bab9e31ab2040102cb1
 */
 
 #include <glib.h>
@@ -11,11 +15,16 @@ Funções sobre o nº de respostas de uma pergunta do projeto.
 typedef struct answer_count * ANSWER_COUNT;
 
 /**
+<<<<<<< HEAD
 \brief Função que cria uma estrutura ANSWER_COUNT.
+=======
+@brief Função que cria uma estrutura ANSWER_COUNT.
+>>>>>>> 4bee2a125072dc1d5c6f2bab9e31ab2040102cb1
 
 @returns Estrutura inicializada de ANSWER_COUNT.
 */
 
+<<<<<<< HEAD
 
 ANSWER_COUNT create_answer_count();
 
@@ -66,6 +75,54 @@ void set_id_pergunta(ANSWER_COUNT t, long id_l);
 
 /**
 \brief Função que recebe uma estrutura ANSWER_COUNT e liberta a memória por esta alocada.
+=======
+ANSWER_COUNT create_answer_count();
+
+/**
+@brief Função que recebe uma estrutura ANSWER_COUNT e retorna a o número de resposta associado.
+
+@param t Estrutura ANSWER_COUNT.
+
+@returns Um long associado ao número de respostas.
+*/
+
+long get_num_respostas(ANSWER_COUNT t);
+
+/**
+@brief Função que recebe uma estrutura ANSWER_COUNT e retorna a o Id da pergunta associado.
+
+@param t Estrutura ANSWER_COUNT.
+
+@returns Um long associado ao número de respostas.
+*/
+
+long get_id_pergunta(ANSWER_COUNT t);
+
+/**
+@brief Função que recebe uma estrutura ANSWER_COUNT e altera o número de respostas associado.
+
+@param t Estrutura ANSWER_COUNT.
+@param incremento Valor a adicionar ao corrente número de respostas.
+
+@returns Um long associado ao número de respostas.
+*/
+
+void set_num_respostas(ANSWER_COUNT t, int incremento);
+
+/**
+@brief Função que recebe uma estrutura ANSWER_COUNT e altera o Id associado.
+
+@param t Estrutura ANSWER_COUNT.
+@param id_l Valor de Id a ser alterado na estrutura.
+
+@returns Um long associado ao número de respostas.
+*/
+
+void set_id_pergunta(ANSWER_COUNT t, long id_l);
+
+/**
+@brief Função que liberta a memória alocada por uma estrutura ANSWER_COUNT.
+>>>>>>> 4bee2a125072dc1d5c6f2bab9e31ab2040102cb1
 
 @param t Estrutura ANSWER_COUNT.
 */

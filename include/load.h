@@ -2,6 +2,11 @@
 #define __LOAD__
 
 /**
+@file load.h
+Load do projeto.
+*/
+
+/**
 @brief Função que filtra os dados que são necessários do documento Users.xml 
 e coloca nos campos da estrutura.
 

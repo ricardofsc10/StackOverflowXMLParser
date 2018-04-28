@@ -4,6 +4,7 @@
 \usepackage[portuges]{babel}
 \usepackage{indentfirst}
 \usepackage{graphicx}
+\usepackage{float}
 
 \title{Projeto de Laboratórios de Informática 3\\Grupo 21}
 \author{Diogo Braga A82547 \and João Silva A82005 \and Ricardo Caçador A81064}
@@ -14,57 +15,37 @@
 \maketitle
 
 \begin{abstract}
-  Este documento apresenta o projeto de Laboratórios de Informática
-  3 (LI3), do curso de Engenharia Informática da Universidade
-  do Minho.
+Este documento apresenta o projeto de Laboratórios de Informática
+3 (LI3), do curso de Engenharia Informática da Universidade
+do Minho.
 
-  O projeto baseia-se na criação de um sistema de análise de ficheiros 
-  XML que possuem informações do Stack Overflow, um website de perguntas
-  e respostas sobre programação de computadores.
+O projeto baseia-se na criação de um sistema de análise de ficheiros 
+XML que possuem informações do Stack Overflow, um website de perguntas
+e respostas sobre programação de computadores.
 
 \end{abstract}
 
 \tableofcontents
-%\listoffigures
+\listoffigures
 
 \section{Introdução}
 \label{sec:intro}
 
-////////////////////// POR FAZER //////////////////////
-
-Este documento apresenta uma possível estrutura para o relatório da 2ª
-fase do projeto da disciplina de Laboratórios de Informática 1 (LI1),
-da Licenciatura em Engenharia Informática da Universidade do Minho,
-que toma a forma de um projeto de média dimensão a ser desenvolvido na
-linguagem de programação funcional Haskell.
-
-Nesse contexto, este relatório deve relatar o trabalho desenvolvido
-pelos alunos para atingir o resultado final nesse projeto, devendo
-acompanhar a submissão da solução implementada. Além de servir de
-treino das capacidades de comunicação escrita dos estudantes, servirá
-também como elemento de avaliação para a utilização de \LaTeX{} pelos
-alunos. Sendo assim o código fonte \LaTeX{} do relatório deve ser
-mantido no repositório \texttt{svn} atribuído ao grupo. Um relatório desta
-natureza tem geralmente uma dimensão entre 4 e 8 páginas, para além de
-eventuais anexos.
-
-A \emph{introdução} de um relatório apresenta de modo geral o trabalho
-descrito no relatório: o problema que se pretende resolver, a sua
-contextualização e a abordagem proposta pelos alunos para o
-resolver. Deve passar ao leitor não só uma perspetiva geral do
-trabalho desenvolvido mas também a motivação por trás dele.
-
 Este trabalho tem por base o parse de elementos de ficheiros XML
 relacionados com a informação do website Stack Overflow, de forma
-a seguidamente...
+a seguidamente responder a uma série de questões relacionadas com
+posts, utilizadores e tags do mesmo website. Aliado a tal está o desafio
+de procurar sempre o melhor algoritmo de resolução das queries, de 
+forma a tornar o código mais eficiente e o mais rápido possível.
 
-Esta secção termina normalmente com uma apresentação da estrutura do
-relatório, sendo aqui apresentada uma sugestão. Neste caso, a Secção
-~\ref{sec:estruturas} apresenta as estruturas de dados utilizadas 
-no projeto, a Secção~\ref{sec:estrategias} indica as estratégias usadas 
-para resolver as  questões apresentadas. O relatório termina com conclusões na
+A Secção ~\ref{sec:estruturas} apresenta as estruturas de dados utilizadas 
+no projeto, a Secção~\ref{sec:modularidade} aborda a modularidade, 
+a Secção ~\ref{sec:encapsulamento} aborda o encapsulamento, a 
+Secção ~\ref{sec:abstracao_de_dados} aborda a abstração de dados e a 
+Secção~\ref{sec:estrategias} indica as estratégias usadas para resolver 
+as questões apresentadas. O relatório termina com conclusões na
 Secção~\ref{sec:conclusao}, onde é também apresentada uma análise
-crítica dos resultados obtidos.Secção~\ref{sec:modularidade}.
+crítica dos resultados obtidos.
 
 \section{Estruturas de Dados}
 \label{sec:estruturas}
@@ -85,37 +66,35 @@ está definida como \textit{\textbf{GList*}}, sendo esta ordenada por data;
 está definida como \textit{\textbf{GHashTable*}}.
 \end{itemize}
 
-\subsection{Estrutura \textit{TCD}}
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.50]{image_tcd}
+\includegraphics[scale=0.70]{image_tcd}
 \caption{Estrutura \textit{TCD}}
 \label{img:tcd}
 \end{figure}
 
-\subsection{Estrutura \textit{Utilizador}}
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.50]{image_utilizador}
+\includegraphics[scale=0.70]{image_utilizador}
 \caption{Estrutura \textit{Utilizador}}
 \label{img:utilizador}
 \end{figure}
 
-\subsection{Estrutura \textit{Posts}}
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.50]{image_posts}
+\includegraphics[scale=0.70]{image_posts}
 \caption{Estrutura \textit{Posts}}
 \label{img:posts}
 \end{figure}
 
-%\subsection{Estrutura \textit{Tag}}
-%\begin{figure}[ht]
-%\centering
-%\includegraphics[scale=0.50]{image_tag}
-%\caption{Estrutura \textit{Tag}}
-%\label{img:tag}
-%\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.70]{image_tag}
+\caption{Estrutura \textit{Tag}}
+\label{img:tag}
+\end{figure}
+
+\newpage
 
 \section{Modularidade}
 \label{sec:modularidade}
@@ -134,6 +113,7 @@ unidades modulares pequenas e autônomas, devendo-se ter em especial atenção
 a criação dos módulos que representam \textbf{abstração de dados}.
 
 \section{Encapsulamento}
+\label{sec:encapsulamento}
 
 Encapsulamento baseia-se na garantia de \textbf{protecção} e 
 \textbf{acessos controlados aos dados}. É mais um aspeto que temos em 
@@ -146,26 +126,25 @@ disponibilizadas na \textbf{API}. Algo vísivel na figura
 Desta forma um tipo de dados permite ter várias instanciações,
 visto que os módulos das estruturas e das queries se tornam mais genéricos.
 
-\subsection{Exemplo Encapsulamento \textit{Tags}}
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.50]{image_exemplo_encapsulamento}
+\includegraphics[scale=0.60]{image_exemplo_encapsulamento}
 \caption{Exemplo Encapsulamento \textit{Tags}}
 \label{img:encapsulamento_posts}
 \end{figure}
 
 \section{Abstração de Dados}
+\label{sec:abstracao_de_dados}
 
 A declaração abstrata duma estrutura esconde dos utilizadores do módulo a
 implementação concreta, não tendo desta forma acesso à implementação
-da mesma. Por isso mesmo, previamente, temos a declaração abstrata da estrutura 
-\textbf{utilizador}, denominada de \textbf{UTILIZADOR}, 
-no \textit{header file}, como mostra o exemplo ~\ref{img:declaracao_utilizador}.
+da mesma. Por isso mesmo, previamente, temos a declaração abstrata da 
+estrutura \textbf{utilizador}, denominada de \textbf{UTILIZADOR}, no
+\textit{header file}, como mostra o exemplo ~\ref{img:declaracao_utilizador}.
 
-\subsection{Exemplo Declaração Abstrata \textit{utilizador}}
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
-\includegraphics[scale=0.50]{image_declaracao_utilizador}
+\includegraphics[scale=0.70]{image_declaracao_utilizador}
 \caption{Exemplo Declaração Abstrata \textit{utilizador}}
 \label{img:declaracao_utilizador}
 \end{figure}
@@ -180,6 +159,27 @@ as estruturas relacionadas a essa mesma struct, alocando memória e usando
 a função da \textit{glib}, \textbf{g\_hash\_table\_new}.
 
 \subsection{Load}
+
+Função que realiza o parse de todos os ficheiros necessários à realização
+do trabalho. Após receber um \textbf{dump\_path} para os ficheiros XML,
+caso não existam falhas na estrutura XML são realizadas três funções:
+o \textbf{getReferenceUser}, o \textbf{getReferencePosts} e o
+\textbf{getReferenceTags}.
+
+A primeira realiza todo o parse relacionado com os \textbf{utilizadores}, 
+como por exemplo o \textbf{id} ou a \textbf{reputação}. De seguida são 
+colocados na estrutura todos estes elementos através da função
+\textbf{set\_utilizador}.
+
+A segunda realiza todo o parse relacionado com os \textbf{posts}, 
+como por exemplo o \textbf{id\_post} ou o \textbf{post\_type\_id}. 
+De seguida são colocados na estrutura todos estes elementos através da 
+função \textbf{set\_posts}.
+
+A terceira realiza todo o parse relacionado com as \textbf{tags}, 
+como por exemplo o \textbf{id\_tag} ou o \textbf{tag\_name}. 
+De seguida são colocados na estrutura todos estes elementos através da 
+função \textbf{set\_tag}.
 
 \subsection{Query 1}
 
@@ -304,17 +304,24 @@ Dado um intervalo de tempo arbitrário, devolver os IDs das N perguntas
 com mais respostas, em ordem decrescente do número de votos.
 
 Nesta questão, recorremos à estrutura \textbf{date\_posts} que possuí 
-as datas ordenadas. Caso o \textbf{post} seja uma pergunta e
-se encontre entre as datas requeridas na query, é inserida numa nova
-\textit{\textbf{GList*}} \textbf{glanswers} criada para armazenar os 
-valores necessários para a resposta final.
+as datas ordenadas, para filtrar todas as perguntas que estão dentro da 
+data passada como argumento, bem como o número de respostas que cada 
+pergunta contém. Para tal, usamos uma pequena estrutura auxiliar
+\textbf{answer\_count} que armazena o Id de cada pergunta \textbf{id\_pergunta}
+e o número de repostas à pergunta \textbf{num\_respostas}. Ordenou-se a 
+\textbf{GList*} auxiliar que contém elementos do tipo \textbf{Answer\_Count}, 
+com auxílio da função da \textit{glib} \textbf{g\_list\_sort}, consoante o 
+número de repostas de cada pergunta. Por último adicionaram-se à 
+\textbf{LONG\_list} os primeiros N Id's contidos na \textbf{GList*} auxiliar.
 
-Depois esta lista é ordenada por número de respostas em ordem decrescente 
-através da função da \textit{glib}, \textbf{g\_list\_sort}, que usa uma 
-função de comparação \textbf{compara\_answers}, que tem em conta o 
-\textbf{answer\_count} da estrutura. Finalmente acedemos ao 
-\textbf{id\_post} relacionado, através dos dados respetivos da lista 
-\textbf{glanswers}.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.70]{image_answer_count}
+\caption{Estrutura \textit{Answer\_Count}}
+\label{img:answer_count}
+\end{figure}
+
+\newpage 
 
 \subsection{Query 8}
 
@@ -357,19 +364,79 @@ passado como parâmetro, calculamos a média ponderada tendo em conta o
 \textbf{g\_hash\_table\_lookup}. Quando encontramos uma média melhor é
 alterado o \textbf{id\_post} a retornar no final.
 
-
 \subsection{Query 11}
+
+Dado um intervalo arbitrário de tempo, devolver os identificadores das N tags
+mais usadas pelos N utilizadores com melhor reputação. Em ordem decrescente 
+do número de vezes em que a tag foi usada.
+
+Nesta questão, utilizamos uma \textit{\textbf{GList*}} denominada 
+\textbf{glista} para armazenar os \textbf{values} de cada \textbf{utilizador},
+sendo isto realizado pela função da \textit{glib}, 
+\textbf{g\_hash\_table\_get\_values}. Esta lista é depois ordenada tendo em
+conta a reputação através da função \textbf{g\_list\_sort}, para depois 
+manter só os \textbf{N utilizadores} necessários, algo que fica guardado
+numa \textit{\textbf{GList*}} de nome \textbf{aux}.
+
+Criamos uma \textit{\textbf{GHashTable*}} que vai conter todos as tags.
+De seguida, percorremos a \textit{\textbf{GList*}} \textbf{posts\_perguntas}
+que só contêm as \textbf{N perguntas} da lista \textbf{aux}.
+
+Caso o \textbf{post\_pergunta} esteja entre as datas passadas como argumentos,
+colocamos numa \textit{\textbf{GList*}} denominada \textbf{tags} as tags desse
+mesmo \textbf{post\_pergunta}. Vamos então percorrer esta lista e procurar
+as tags desta lista na \textit{\textbf{GHashTable*}} \textbf{todas\_tags}.
+
+Nesse instante, caso a tag não exista na lista é criada uma nova instância
+da estrutura \textbf{Tag\_Unique} e são passados o \textbf{tag\_name} e
+a \textbf{ocorrência}, que será igual a 1. Caso já exista, as 
+\textbf{ocorrências} são incrementas em 1 valor.
+
+De seguida, é ordenada a lista com as \textbf{N tags} de acordo com o
+número de ocorrências. 
+
+Para finalizar usamos a função \textbf{g\_hash\_table\_lookup} para procurar
+o \textbf{id\_tag} relacionado com o \textbf{tag\_name} no ficheiro Tags.xml.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.70]{image_tag_unique}
+\caption{Estrutura \textit{Tag\_Unique}}
+\label{img:tag_unique}
+\end{figure}
 
 \subsection{Clean}
 
-\section{Conclusões}
+Função que liberta a memória da \textbf{TCD\_community}. Por consequência,
+realiza o \textbf{free} da estrutura \textbf{utilizador}, utilizando a 
+função da \textit{glib}, \textbf{g\_hash\_table} \textbf{\_foreach}. 
+De seguida, libertamos a própria \textit{\textbf{GHashTable*}} através da 
+função \textbf{g\_hash\_table\_destroy}. O mesmo sucede-se com a estrutura
+\textbf{posts} e \textbf{tag}. A estrutura \textbf{date\_posts}, sendo
+uma \textit{\textbf{GList*}} tem uma forma diferente de libertar a 
+memória. Para tal ser efetuado vamos a todos os parâmetros da mesma
+e usamos a função \textbf{g\_list\_remove} para libertar a memória
+de todos os elementos constituintes da lista em questão. De seguida,
+realizamos o \textbf{g\_list\_free} de forma a libertar a própria 
+estrutura.
+
+\section{Conclusão}
 \label{sec:conclusao}
 
-////////////////////// POR FAZER //////////////////////
+Tendo em conta os objetivos definidos, o grupo acha que os resultados 
+principais foram obtidos. Além de aprender a trabalhar com ficheiros 
+do tipo \textbf{XML}, aprendemos a trabalhar com a biblioteca \textbf{GLib}.
+Aliamos também uma evolução da nossa aprendizagem no tema do 
+\textbf{encapsulamento}, da \textbf{modularidade} e 
+da \textbf{abstração de dados}.
 
-A secção de \emph{conclusões} resume o restante documento, devendo
-também apresentar uma análise crítica dos resultados atingidos tendo
-em conta os objetivos definidos.
+Outros objetivos alcançados são a resolução total das queries e a eficiência
+que se faz notar nestas mesmas.
+
+De uma forma natural, o grupo sentiu dificuldades durante o projeto, sendo 
+uma, por exemplo, a necessidade de alterar a base total do trabalho devido
+a termos inicialmente considerado a ordenação dos ficheiros, quando só nos
+faltava resolver a query 11.
 
 \section{Bibliografia}
 

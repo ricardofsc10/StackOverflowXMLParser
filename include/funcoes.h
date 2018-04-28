@@ -141,7 +141,8 @@ void free_table_tag(gpointer key, gpointer value, gpointer user_data);
 Date stringToDias (char* data);
 
 /**
-@brief Função que transforma uma string para uma tag, no respetivo formato..
+@brief Função que transforma uma string numa tag, e insere numa GList de tags 
+correspondente a cada post que seja pergunta.
 
 @param value_post Post ao qual corresponde a tag..
 @param str String a transformar
@@ -149,9 +150,43 @@ Date stringToDias (char* data);
 
 void strToTag (POSTS value_post, const char* str);
 
+/**
+@brief Função que retira todos os valores que nao interessam à lista, que são 
+todos os valores igual a 0.
+
+@param l Lista a ser transformada
+@param N Tamanho da lista.
+
+@returns Uma lista apenas com os valores importantes.
+*/
+
 LONG_list remove_trash(LONG_list l, int N);
 
+/**
+@brief Função que é utilizada no processo interativo, que permite ao utilizador 
+que está a correr o programa decidir qual dos ficheiros a estrutura deve carregar 
+para memória.
+
+@returns O caminho relativo para o ficheiro escolhido.
+*/
+
 char* escolhe_ficheiros();
+
+/**
+@brief Função que é utilizada no processo interativo, que permite ao utilizador 
+que está a correr o programa introduzir a data na qual os posts da estrutura serão 
+avaliados.
+
+@returns A data definida na estrutura Date.
+*/
+
+Date pergunta_data();
+
+/**
+@brief Função que é utilizada no processo interativo, que permite ao utilizador 
+que está a correr o programa inserir e interagir com o programa, de modo a dizer-lhe 
+qual pergunta deseja executar, com os parâmetros que quiser.
+*/
 
 void interatividade(TAD_community tda);
 

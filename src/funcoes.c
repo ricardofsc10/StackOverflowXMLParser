@@ -144,24 +144,34 @@ char* escolhe_ficheiros(){
   }
 }
 
+Date pergunta_data(){
+    int dia, mes, ano;
+    printf("Dia: ");
+    scanf("%d",&dia);
+    printf("Mês: ");
+    scanf("%d",&mes);
+    printf("Ano: ");
+    scanf("%d",&ano);
+    Date new = createDate(dia, mes, ano);
+    return new;
+}
+
 void interatividade(TAD_community tda){
   int menu = 0;
+  clock_t start,stop;
 
   while(menu == 0){ // interatividade
     printf("Que questão deseja resolver? (-1, para sair do programa)\n");
     scanf("%d", &menu);
 
     if(menu == 1){ /////////////////////////////////// feita
-      STR_pair par = create_str_pair(NULL,NULL);
       int id;
       printf("Qual o id do post?\n");
       scanf("%d", &id);
       printf("Resposta:\n");
-      clock_t start = clock();
-      par = info_from_post(tda,id);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
-      free_str_pair(par);
+      start = clock();
+      info_from_post(tda,id);
+      stop = clock();
       menu = 0;
     } 
     if(menu == 2){ /////////////////////////////////// feita
@@ -169,88 +179,80 @@ void interatividade(TAD_community tda){
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
       printf("Resposta:\n");
-      LONG_list l = create_list(tamanho);
-      clock_t start = clock();
-      l = top_most_active(tda,tamanho);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
-      free_list(l);
+      start = clock();
+      top_most_active(tda,tamanho);
+      stop = clock();
       menu = 0;
     }
     if(menu == 3){ ///////////////////////////////// feita
-      LONG_pair lp = create_long_pair(0,0);
-      Date begin = createDate(01,07,2016);
-      Date end = createDate(31,7,2016);
+      printf("Data de ínicio:\n");
+      Date begin = pergunta_data();
+      printf("Data de fim:\n");
+      Date end = pergunta_data();
       printf("Resposta:\n");
-      clock_t start = clock();
-      lp = total_posts(tda,begin,end);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
-      free_long_pair(lp);
+      start = clock();
+      total_posts(tda,begin,end);
+      stop = clock();
       free_date(begin);
       free_date(end);
       menu = 0;
     }
     if(menu == 4){ /////////////////////////////////// feita
-      Date begin = createDate(01,01,2014);
-      Date end = createDate(31,01,2014);
+      printf("Data de ínicio:\n");
+      Date begin = pergunta_data();
+      printf("Data de fim:\n");
+      Date end = pergunta_data();
       char tag[50];
       printf("Que tag quer encontrar?\n");
       scanf("%s", tag);
       printf("Resposta:\n");
-      clock_t start = clock();
+      start = clock();
       questions_with_tag(tda, tag, begin, end);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      stop = clock();
       free_date(begin);
       free_date(end);
       menu = 0;
     }
     if(menu == 5){ ///////////////////////////////// feita
-      USER new_user;
       int id;
       printf("Qual o Id do utilizador?\n");
       scanf("%d", &id);
       printf("Resposta:\n");
-      clock_t start = clock();
-      new_user = get_user_info(tda,id);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
-      free_user(new_user);
+      start = clock();
+      get_user_info(tda,id);
+      stop = clock();
       menu = 0;
     }
     if(menu == 6){ ////////////////////////////////// feita
       int tamanho;
-      Date begin = createDate(1,5,2013);
-      Date end = createDate(6,5,2013);
+      printf("Data de ínicio:\n");
+      Date begin = pergunta_data();
+      printf("Data de fim:\n");
+      Date end = pergunta_data();
       printf("Qual o número de respostas que pretende?\n");
       scanf("%d",&tamanho);
-      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
-      clock_t start = clock();
-      l = most_voted_answers(tda, tamanho, begin, end);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      start = clock();
+      most_voted_answers(tda, tamanho, begin, end);
+      stop = clock();
       free_date(begin);
       free_date(end);
-      free_list(l);
       menu = 0;
     }
     if(menu == 7){ ////////////////////////////////// feita
       int tamanho;
-      Date begin = createDate(1,1,2012);
-      Date end = createDate(31,12,2012);
+      printf("Data de ínicio:\n");
+      Date begin = pergunta_data();
+      printf("Data de fim:\n");
+      Date end = pergunta_data();
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
-      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
-      clock_t start = clock();
-      l = most_answered_questions(tda, tamanho, begin, end);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      start = clock();
+      most_answered_questions(tda, tamanho, begin, end);
+      stop = clock();
       free_date(begin);
       free_date(end);
-      free_list(l);
       menu = 0;
     }
     if(menu == 8){ /////////////////////////////////// feita
@@ -260,12 +262,10 @@ void interatividade(TAD_community tda){
       scanf("%s", palavra);
       printf("Qual o número de perguntas que pretende com a palavra '%s'?\n", palavra);
       scanf("%d",&tamanho);
-      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
-      clock_t start = clock();
-      l = contains_word(tda, palavra, tamanho);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      start = clock();
+      contains_word(tda, palavra, tamanho);
+      stop = clock();
       menu = 0;
     }
     if(menu == 9){ ////////////////////////////////// feita
@@ -276,12 +276,10 @@ void interatividade(TAD_community tda){
       scanf("%d", &user1);
       printf("User2:\n");
       scanf("%d", &user2);
-      LONG_list l = create_list(tamanho);
       printf("Resposta:\n");
-      clock_t start = clock();
-      l = both_participated(tda, user1, user2, tamanho); // 1465 e 16575 / 449, 15811
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      start = clock();
+      both_participated(tda, user1, user2, tamanho); // 1465 e 16575 / 449, 15811
+      stop = clock();
       menu = 0;
     }
     if(menu == 10){ ////////////////////////////////// feita
@@ -289,25 +287,28 @@ void interatividade(TAD_community tda){
       printf("Qual o Id da pergunta?\n");
       scanf("%d", &id);
       printf("Resposta:\n");
-      clock_t start = clock();
+      start = clock();
       better_answer(tda,id);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      stop = clock();
       menu = 0;
     }
     if(menu == 11){ ////////////////////////////////// feita
       int tamanho;
-      Date begin = createDate(1,1,2014);
-      Date end = createDate(31,12,2014);
+      printf("Data de ínicio:\n");
+      Date begin = pergunta_data();
+      printf("Data de fim:\n");
+      Date end = pergunta_data();
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
       printf("Resposta:\n");
-      clock_t start = clock();
+      start = clock();
       most_used_best_rep(tda,tamanho,begin,end);
-      clock_t stop = clock();
-      printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
+      stop = clock();
+      free_date(begin);
+      free_date(end);
       menu = 0;
     }
     if(menu==-1) break;
+    printf("Tempo de execução: %.6f segundos.\n", (stop - start)*pow(10,(-6)) );
   }
 }
