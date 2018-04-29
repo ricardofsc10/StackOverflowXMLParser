@@ -1,6 +1,11 @@
 #ifndef __UTILIZADOR__
 #define __UTILIZADOR__
 
+/**
+@file utilizador.h
+Posts do projeto.
+*/
+
 #include "date.h"
 #include "posts.h"
 #include <glib.h>
