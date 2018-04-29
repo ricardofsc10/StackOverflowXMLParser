@@ -15,6 +15,7 @@ struct posts{
     gint post_type_id; // 1-pergunta 2-resposta
     gint parent_id;
     GList* tags;
+    gint answer_count;
     gint comment_count;
 };
 
@@ -30,6 +31,7 @@ POSTS create_posts(){
     p->post_type_id = 0;
     p->parent_id = 0;
     p->tags = NULL;
+    p->answer_count = 0;
     p->comment_count = 0;
     return p;
 }
@@ -72,6 +74,10 @@ long get_parent_id(POSTS p){
 
 GList* get_tags(POSTS p){
     return p->tags;
+}
+
+long get_answer_count(POSTS p){
+    return p->answer_count;
 }
 
 long get_comment_count(POSTS p){
@@ -119,6 +125,10 @@ void set_parent_id(POSTS p, int parent_id){
 
 void set_tags(POSTS p, char* str){
     p->tags = g_list_prepend(p->tags, str);
+}
+
+void set_answer_count(POSTS p, int answer_count){
+    p->answer_count = answer_count;
 }
 
 void set_comment_count(POSTS p, int comment_count){

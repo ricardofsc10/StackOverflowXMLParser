@@ -304,24 +304,16 @@ Dado um intervalo de tempo arbitrário, devolver os IDs das N perguntas
 com mais respostas, em ordem decrescente do número de votos.
 
 Nesta questão, recorremos à estrutura \textbf{date\_posts} que possuí 
-as datas ordenadas, para filtrar todas as perguntas que estão dentro da 
-data passada como argumento, bem como o número de respostas que cada 
-pergunta contém. Para tal, usamos uma pequena estrutura auxiliar
-\textbf{answer\_count} que armazena o Id de cada pergunta \textbf{id\_pergunta}
-e o número de repostas à pergunta \textbf{num\_respostas}. Ordenou-se a 
-\textbf{GList*} auxiliar que contém elementos do tipo \textbf{Answer\_Count}, 
-com auxílio da função da \textit{glib} \textbf{g\_list\_sort}, consoante o 
-número de repostas de cada pergunta. Por último adicionaram-se à 
-\textbf{LONG\_list} os primeiros N Id's contidos na \textbf{GList*} auxiliar.
+as datas ordenadas. Caso o \textbf{post} seja uma resposta e
+se encontre entre as datas requeridas na query, é inserida numa nova
+\textit{\textbf{GList*}} \textbf{glanswers} criada para armazenar os 
+valores necessários para a resposta final.
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.70]{image_answer_count}
-\caption{Estrutura \textit{Answer\_Count}}
-\label{img:answer_count}
-\end{figure}
-
-\newpage 
+Depois esta lista é ordenada por número de respostas em ordem decrescente
+através da função da \textit{glib}, \textbf{g\_list\_sort}, que usa uma 
+função de comparação \textbf{compara\_answer}, que tem em conta o 
+\textbf{answer\_count} da estrutura. Finalmente acedemos ao \textbf{id\_post}
+relacionado, através dos dados respetivos da lista \textbf{glanswers}.
 
 \subsection{Query 8}
 

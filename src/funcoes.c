@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "tcd.h"
 #include "tag_unique.h"
-#include "answer_count.h"
 #include "funcoes.h"
 
 // funções auxiliares mais tarde para serem postas noutro ficheiro
@@ -55,7 +54,7 @@ gint compara_score(gconstpointer a, gconstpointer b) { // Compara dois scores
 }
 
 gint compara_answer(gconstpointer a, gconstpointer b) { // Compara dois answer_count
-  return (get_num_respostas( (ANSWER_COUNT) a) > get_num_respostas( (ANSWER_COUNT) b) ) ? -1 : 1 ;
+  return (get_answer_count( (POSTS) a) > get_answer_count( (POSTS) b) ) ? -1 : 1 ;
 }
 
 gint compara_posts_u(gconstpointer a, gconstpointer b){
