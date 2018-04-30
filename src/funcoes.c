@@ -46,7 +46,12 @@ int difDatas(Date x,Date begin, Date end) {
 }
 
 gint compara_strings(gconstpointer a, gconstpointer b) { // Compara duas strings
-  return strcmp( get_data_string( (POSTS) a) , get_data_string( (POSTS) b) ) ;
+  char* na = get_data_string( (POSTS) a);
+  char* nb = get_data_string( (POSTS) b);
+  int temp = strcmp( na , nb ) ;
+  free(na);
+  free(nb);
+  return temp;
 }
 
 gint compara_score(gconstpointer a, gconstpointer b) { // Compara dois scores
@@ -124,6 +129,7 @@ LONG_list remove_trash(LONG_list l, int N){
   for(int j = 0 ; j < i ; j++){
       set_list(aux, j, get_list(l, j));
   }
+  free_list(l);
   return aux;
 }
 
@@ -181,8 +187,9 @@ void interatividade(TAD_community tda){
       scanf("%d",&tamanho);
       printf("Resposta:\n");
       start = clock();
-      top_most_active(tda,tamanho);
+      LONG_list l = top_most_active(tda,tamanho);
       stop = clock();
+      free_list(l);
       menu = 0;
     }
     if(menu == 3){ ///////////////////////////////// feita
@@ -192,10 +199,11 @@ void interatividade(TAD_community tda){
       Date end = pergunta_data();
       printf("Resposta:\n");
       start = clock();
-      total_posts(tda,begin,end);
+      LONG_pair lp = total_posts(tda,begin,end);
       stop = clock();
       free_date(begin);
       free_date(end);
+      free_long_pair(lp);
       menu = 0;
     }
     if(menu == 4){ /////////////////////////////////// feita
@@ -208,10 +216,11 @@ void interatividade(TAD_community tda){
       scanf("%s", tag);
       printf("Resposta:\n");
       start = clock();
-      questions_with_tag(tda, tag, begin, end);
+      LONG_list l = questions_with_tag(tda, tag, begin, end);
       stop = clock();
       free_date(begin);
       free_date(end);
+      free_list(l);
       menu = 0;
     }
     if(menu == 5){ ///////////////////////////////// feita
@@ -220,8 +229,9 @@ void interatividade(TAD_community tda){
       scanf("%d", &id);
       printf("Resposta:\n");
       start = clock();
-      get_user_info(tda,id);
+      USER u = get_user_info(tda,id);
       stop = clock();
+      free_user(u);
       menu = 0;
     }
     if(menu == 6){ ////////////////////////////////// feita
@@ -234,10 +244,11 @@ void interatividade(TAD_community tda){
       scanf("%d",&tamanho);
       printf("Resposta:\n");
       start = clock();
-      most_voted_answers(tda, tamanho, begin, end);
+      LONG_list l = most_voted_answers(tda, tamanho, begin, end);
       stop = clock();
       free_date(begin);
       free_date(end);
+      free_list(l);
       menu = 0;
     }
     if(menu == 7){ ////////////////////////////////// feita
@@ -250,10 +261,11 @@ void interatividade(TAD_community tda){
       scanf("%d",&tamanho);
       printf("Resposta:\n");
       start = clock();
-      most_answered_questions(tda, tamanho, begin, end);
+      LONG_list l = most_answered_questions(tda, tamanho, begin, end);
       stop = clock();
       free_date(begin);
       free_date(end);
+      free_list(l);
       menu = 0;
     }
     if(menu == 8){ /////////////////////////////////// feita
@@ -265,8 +277,9 @@ void interatividade(TAD_community tda){
       scanf("%d",&tamanho);
       printf("Resposta:\n");
       start = clock();
-      contains_word(tda, palavra, tamanho);
+      LONG_list l = contains_word(tda, palavra, tamanho);
       stop = clock();
+      free_list(l);
       menu = 0;
     }
     if(menu == 9){ ////////////////////////////////// feita
@@ -279,8 +292,9 @@ void interatividade(TAD_community tda){
       scanf("%d", &user2);
       printf("Resposta:\n");
       start = clock();
-      both_participated(tda, user1, user2, tamanho); // 1465 e 16575 / 449, 15811
+      LONG_list l = both_participated(tda, user1, user2, tamanho); // 1465 e 16575 / 449, 15811
       stop = clock();
+      free_list(l);
       menu = 0;
     }
     if(menu == 10){ ////////////////////////////////// feita
@@ -303,10 +317,11 @@ void interatividade(TAD_community tda){
       scanf("%d",&tamanho);
       printf("Resposta:\n");
       start = clock();
-      most_used_best_rep(tda,tamanho,begin,end);
+      LONG_list l = most_used_best_rep(tda,tamanho,begin,end);
       stop = clock();
       free_date(begin);
       free_date(end);
+      free_list(l);
       menu = 0;
     }
     if(menu==-1) break;

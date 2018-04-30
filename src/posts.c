@@ -45,7 +45,7 @@ Date get_data(POSTS p){
 }
 
 gchar* get_data_string(POSTS p){
-    return p->data_string;
+    return p ? mystrdup(p->data_string) : NULL;
 }
 
 long get_score(POSTS p){
@@ -57,11 +57,11 @@ long get_owner_user_id(POSTS p){
 }
 
 gchar* get_title(POSTS p){
-    return p->title;
+    return p ? mystrdup(p->title) : NULL;
 }
 
 gchar* get_body(POSTS p){
-    return p->body;
+    return p ? mystrdup(p->body) : NULL;
 }
 
 int get_post_type_id(POSTS p){

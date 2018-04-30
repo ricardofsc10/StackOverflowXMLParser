@@ -19,26 +19,26 @@ STR_pair info_from_post(TAD_community com, long id) {
 
     if (get_post_type_id(value_post) == 1){ 
 
-      n_title = mystrdup((char *) get_title(value_post));
+      n_title = get_title(value_post);
       set_fst_str(par, n_title);
 
       long owner_user_id = get_owner_user_id(value_post);
       UTILIZADOR value_user = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id);
       
-      n_name = mystrdup((char *) get_nome(value_user));
+      n_name = get_nome(value_user);
       set_snd_str(par, n_name);
       }
     else { //é uma resposta
       long parent_id = get_parent_id(value_post);
       POSTS value_post2 = (POSTS) g_hash_table_lookup(get_posts(com), (gpointer) parent_id);
 
-      n_title = mystrdup((char *) get_title(value_post2));
+      n_title = get_title(value_post2);
       set_fst_str(par, n_title);
 
       long owner_user_id = get_owner_user_id(value_post2);
       UTILIZADOR value_user2 = (UTILIZADOR) g_hash_table_lookup(get_utilizador(com), (gpointer) owner_user_id);
 
-      n_name = mystrdup((char *) get_nome(value_user2));
+      n_name = get_nome(value_user2);
       set_snd_str(par, n_name);
     }
 
