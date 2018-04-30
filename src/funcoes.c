@@ -110,6 +110,7 @@ void strToTag (POSTS value_post, const char* str){
       set_tags(value_post, token);
       token = strtok (NULL, delim);
   }
+  free (cp);
 }
 
 
@@ -169,8 +170,9 @@ void interatividade(TAD_community tda){
       scanf("%d", &id);
       printf("Resposta:\n");
       start = clock();
-      info_from_post(tda,id);
+      STR_pair par = info_from_post(tda,id);
       stop = clock();
+      free_str_pair(par);
       menu = 0;
     } 
     if(menu == 2){ /////////////////////////////////// feita

@@ -76,4 +76,6 @@ void free_tad(TAD_community tad){
     // vai a cada elemento da tabela de hash e faz free, depois destroi a tabela
 	g_hash_table_foreach(tad->tag, free_table_tag, NULL);
 	g_hash_table_destroy(tad->tag);	
+
+	free(tad);
 }

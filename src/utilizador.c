@@ -31,11 +31,11 @@ long get_key_id(UTILIZADOR u){
 }
 
 gchar* get_nome(UTILIZADOR u){
-	return u ? mystrdup(u->nome) : NULL;
+	return u->nome;
 }
 
 gchar* get_bio_utilizador(UTILIZADOR u){
-	return u ? mystrdup(u->bio) : NULL;
+	return u->bio;
 }
 
 GList* get_posts_frequentados(UTILIZADOR u){
