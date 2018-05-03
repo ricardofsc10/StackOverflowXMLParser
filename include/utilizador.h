@@ -3,7 +3,7 @@
 
 /**
 @file utilizador.h
-Posts do projeto.
+Utilizador do projeto.
 */
 
 #include "date.h"

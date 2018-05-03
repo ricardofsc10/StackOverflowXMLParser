@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "tcd.h"
 #include "tag_unique.h"
+#include "debug.h"
 #include "funcoes.h"
 
 // funções auxiliares mais tarde para serem postas noutro ficheiro
@@ -179,7 +180,7 @@ void interatividade(TAD_community tda){
       int id;
       printf("Qual o id do post?\n");
       scanf("%d", &id);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       STR_pair par = info_from_post(tda,id);
       stop = clock();
@@ -190,7 +191,7 @@ void interatividade(TAD_community tda){
       int tamanho;
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       LONG_list l = top_most_active(tda,tamanho);
       stop = clock();
@@ -202,7 +203,7 @@ void interatividade(TAD_community tda){
       Date begin = pergunta_data();
       printf("Data de fim:\n");
       Date end = pergunta_data();
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       LONG_pair lp = total_posts(tda,begin,end);
       stop = clock();
@@ -219,7 +220,7 @@ void interatividade(TAD_community tda){
       char tag[50];
       printf("Que tag quer encontrar?\n");
       scanf("%s", tag);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       LONG_list l = questions_with_tag(tda, tag, begin, end);
       stop = clock();
@@ -232,7 +233,7 @@ void interatividade(TAD_community tda){
       int id;
       printf("Qual o Id do utilizador?\n");
       scanf("%d", &id);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       USER u = get_user_info(tda,id);
       stop = clock();
@@ -247,7 +248,7 @@ void interatividade(TAD_community tda){
       Date end = pergunta_data();
       printf("Qual o número de respostas que pretende?\n");
       scanf("%d",&tamanho);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       LONG_list l = most_voted_answers(tda, tamanho, begin, end);
       stop = clock();
@@ -264,7 +265,7 @@ void interatividade(TAD_community tda){
       Date end = pergunta_data();
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       LONG_list l = most_answered_questions(tda, tamanho, begin, end);
       stop = clock();
@@ -280,7 +281,7 @@ void interatividade(TAD_community tda){
       scanf("%s", palavra);
       printf("Qual o número de perguntas que pretende com a palavra '%s'?\n", palavra);
       scanf("%d",&tamanho);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       LONG_list l = contains_word(tda, palavra, tamanho);
       stop = clock();
@@ -295,7 +296,7 @@ void interatividade(TAD_community tda){
       scanf("%d", &user1);
       printf("User2:\n");
       scanf("%d", &user2);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       LONG_list l = both_participated(tda, user1, user2, tamanho); // 1465 e 16575 / 449, 15811
       stop = clock();
@@ -306,7 +307,7 @@ void interatividade(TAD_community tda){
       int id;
       printf("Qual o Id da pergunta?\n");
       scanf("%d", &id);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       better_answer(tda,id);
       stop = clock();
@@ -320,7 +321,7 @@ void interatividade(TAD_community tda){
       Date end = pergunta_data();
       printf("Qual o número de utilizadores que pretende?\n");
       scanf("%d",&tamanho);
-      printf("Resposta:\n");
+      PRINT(printf("Resposta:\n"));
       start = clock();
       LONG_list l = most_used_best_rep(tda,tamanho,begin,end);
       stop = clock();
