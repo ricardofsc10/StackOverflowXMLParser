@@ -87,6 +87,11 @@ void free_table_tag(gpointer key, gpointer value, gpointer user_data){
     free_tag(value);
 }
 
+void free_table_tu(gpointer key, gpointer value, gpointer user_data){
+    free(key);
+    free_tag_unique(value);
+}
+
 Date stringToDias (char* data) { // "2011-11-11"
     char ano[5];
     char mes[3];
@@ -115,7 +120,7 @@ void strToTag (POSTS value_post, const char* str){
       set_tags(value_post, token);
       token = strtok (NULL, delim);
   }
-  free (cp);
+  free(cp);
 }
 
 

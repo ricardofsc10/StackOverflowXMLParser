@@ -2,6 +2,7 @@
 #include "list.h"
 #include "tcd.h"
 #include "funcoes.h"
+#include "debug.h"
 #include "query2.h"
 
 // query 2
@@ -11,6 +12,7 @@ LONG_list top_most_active(TAD_community com, int N){
   GList* glista = g_hash_table_get_values(get_utilizador(com));
 
   glista = g_list_sort(glista, compara_posts_u);
+  GList* gl = glista;
 
   LONG_list l = create_list(N);
   for (int i=0; i < N ; i++){ // inicialização da lista
@@ -29,15 +31,11 @@ LONG_list top_most_active(TAD_community com, int N){
   // deixei aqui para se testar se for preciso
   for(int i=0; i<N; i++){
     if( (void*) get_list(aux,i) == NULL) break;
-    printf("%dº: id utilizador: %ld\n\n", i+1, get_list(aux,i));
+    PRINT(printf("%dº: id utilizador: %ld\n\n", i+1, get_list(aux,i)));
   }
 
   // free das estruturas auxiliares
-  free_list(l);
-  while(glista != NULL){
-        glista = g_list_remove(glista, glista->data);
-  }
-  g_list_free (glista);
+  g_list_free(gl);
 
   return aux;
 }

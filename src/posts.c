@@ -125,7 +125,8 @@ void set_parent_id(POSTS p, int parent_id){
 }
 
 void set_tags(POSTS p, char* str){
-    p->tags = g_list_prepend(p->tags, str);
+    char* cp = mystrdup(str);
+    p->tags = g_list_prepend(p->tags, (gpointer) cp);
 }
 
 void set_answer_count(POSTS p, int answer_count){
@@ -145,6 +146,9 @@ void free_posts(POSTS p){
 
         // liberta a glist tags
         while(p->tags != NULL){
+            char* cp = (char*) (p->tags)->data;
+            (p->tags)->data = NULL;
+            free(cp);
             p->tags = g_list_remove(p->tags, (p->tags)->data);
         }
         g_list_free (p->tags);

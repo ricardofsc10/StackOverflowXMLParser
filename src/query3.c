@@ -2,6 +2,7 @@
 #include "pair.h"
 #include "tcd.h"
 #include "funcoes.h"
+#include "debug.h"
 #include "query3.h"
 
 // query 3
@@ -19,8 +20,8 @@ LONG_pair total_posts(TAD_community com, Date begin, Date end){
     glista = g_list_next(glista);
   }
 
-  printf("perguntas: %ld\n", get_fst_long(par));
-  printf("respostas: %ld\n", get_snd_long(par));
+  PRINT(printf("perguntas: %ld\n", get_fst_long(par)));
+  PRINT(printf("respostas: %ld\n", get_snd_long(par)));
 
   return par;
 }

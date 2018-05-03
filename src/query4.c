@@ -3,14 +3,14 @@
 #include "list.h"
 #include "tcd.h"
 #include "funcoes.h"
+#include "debug.h"
 #include "query4.h"
 
 // query 4
 
 LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end){
 
-  GList* gl = get_date_posts(com);
-  GList* glista = gl;
+  GList* glista = get_date_posts(com);
   GList* res = NULL;
 
   while(glista != NULL){
@@ -46,15 +46,20 @@ LONG_list questions_with_tag(TAD_community com, char* tag, Date begin, Date end)
 
   int contador = 0;
 
+  GList* resaux = res;
+
   while(res != NULL){ // inicialização da lista
     set_list(l,contador,get_key_id_post(res->data)); // vai conter os numeros das perguntas
     res = g_list_next(res);
     contador++;
   }
 
+  // free de estruturas auxiliares
+  g_list_free(resaux);
+
   // para testar
   for(int i = 0; i < contador; i++){
-    printf("POST_ID: %ld\n", get_list(l,i) );
+    PRINT(printf("POST_ID: %ld\n", get_list(l,i) ));
   }
 
   return l;

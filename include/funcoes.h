@@ -131,6 +131,17 @@ void free_table_posts(gpointer key, gpointer value, gpointer user_data);
 
 void free_table_tag(gpointer key, gpointer value, gpointer user_data);
 
+/** 
+\brief Função que liberta a memória alocada para uma tag.
+
+@param key Chave.
+@param value ID do utilizador.
+@param user_data Dados do utilizador.
+*/
+
+
+void free_table_tu(gpointer key, gpointer value, gpointer user_data);
+
 /**
 @brief Função que filtra as datas, transformando-as em elementos da struct date.
 

@@ -65,5 +65,8 @@ void set_key_tag_unique_name(TAG_UNIQUE t, char* str);
 
 @param t Estrutura TAG_UNIQUE
 */
+
 void free_tag_unique(TAG_UNIQUE t);
+
+
 #endif

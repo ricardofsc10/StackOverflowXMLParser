@@ -4,6 +4,7 @@
 #include "funcoes.h"
 #include "tag_unique.h"
 #include "query11.h"
+#include "debug.h"
 #include "common.h"
 
 // query 11
@@ -11,10 +12,11 @@
 LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
 
   GList* gl = g_hash_table_get_values(get_utilizador(com));
+
+  gl = g_list_sort(gl, compara_reputacao); // ordenada por reputação
+  
   GList* glista = gl;
 
-  glista = g_list_sort(glista, compara_reputacao); // ordenada por reputação
-  
   GList* aux = NULL;
 
   int i = 0;
@@ -23,6 +25,8 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
     i++;
     glista = g_list_next(glista);
   }
+
+  GList* auxaux = aux;
   // em aux contem os N utilizadores com melhor prestação (UTILIZADOR), do de maior para o de menor
 
   GHashTable* todas_tags = g_hash_table_new(g_str_hash, g_str_equal);
@@ -51,17 +55,11 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
                   TAG_UNIQUE new = create_tag_unique();
                   set_key_tag_unique_name(new, tags->data);
                   set_ocorrencias(new, 1);
-                  g_hash_table_insert(todas_tags, (gpointer) tags->data, (gpointer) new);
+                  g_hash_table_insert(todas_tags, (gpointer) get_key_tag_unique_name(new), (gpointer) new);
               }
               else{
-
-                  g_hash_table_remove(todas_tags, (gpointer) tags->data);
-                  // se ja existe substitui pelo num_ocorrencias + 1
-                  TAG_UNIQUE new = create_tag_unique();
-                  set_key_tag_unique_name(new, tags->data);
                   int ocorrencias = get_ocorrencias(aux_tag);
-                  set_ocorrencias(new, (ocorrencias + 1) );
-                  g_hash_table_replace(todas_tags, (gpointer) tags->data, (gpointer) new);
+                  set_ocorrencias(aux_tag,(ocorrencias + 1));
               }
               tags = g_list_next(tags);
           }
@@ -76,7 +74,9 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   GList* values = g_hash_table_get_values(todas_tags);
 
   // ordena pelas ocorrencias
-  values = g_list_sort(values, compara_ocorrencias); 
+  values = g_list_sort(values, compara_ocorrencias);
+
+  GList* glvalues = values;
   
   // extrai o tamanho correto da lista, só queremos devolver no maximo N
   int tamanho;
@@ -89,20 +89,35 @@ LONG_list most_used_best_rep(TAD_community com, int N, Date begin, Date end){
   
   while(values != NULL && j < tamanho){
 
+    char* cp1 = get_key_tag_unique_name(values->data);
+
     // procura a tag na estrutura das tags
-    TAG value_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer)  get_key_tag_unique_name(values->data));
+    TAG value_tag = (TAG) g_hash_table_lookup(get_tag(com), (gpointer) cp1);
     
-    if(get_key_tag_name(value_tag) != NULL){
+    char* cp2 = get_key_tag_name(value_tag);
+
+    if(cp2 != NULL){
       set_list(l,j,get_id_tag(value_tag));
       j++;
     }
+
+    free(cp1);
+    free(cp2);
+
     values = g_list_next(values);
   }
+
+  // free de estruturas auxiliares
+  g_list_free (gl);
+  g_list_free (auxaux);
+  g_list_free (glvalues);
+  g_hash_table_foreach(todas_tags, free_table_tu, NULL);
+  g_hash_table_destroy(todas_tags);
 
   // pritf da lista
   for(int i=0; i < tamanho; i++){
     if( (void*) get_list(l,i) == NULL) break;
-    printf("%dº tag: %ld\n\n", i+1, get_list(l,i));
+    PRINT(printf("%dº tag: %ld\n\n", i+1, get_list(l,i)));
   }
 
   return l;

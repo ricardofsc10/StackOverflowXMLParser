@@ -2,6 +2,7 @@
 #include "list.h"
 #include "tcd.h"
 #include "funcoes.h"
+#include "debug.h"
 #include "query8.h"
 
 // query 8
@@ -24,7 +25,12 @@ LONG_list contains_word(TAD_community com, char* word, int N){
     if (get_post_type_id(glista->data) == 1){ // se é pergunta
       
       char* ret;
-      ret = strstr((const char *) get_title(glista->data),word);
+
+      char* cp = get_title(glista->data);
+
+      ret = strstr((const char *) cp,word);
+
+      free(cp);
       
       if (ret!=NULL) { // se o titulo contem a palavra
         posts[contador] = get_key_id_post(glista->data);
@@ -42,7 +48,7 @@ LONG_list contains_word(TAD_community com, char* word, int N){
   
   // para testar
   for(int i = 0; i < contador; i++){
-    printf("POST_ID: %ld\n", get_list(l,i) );
+    PRINT(printf("POST_ID: %ld\n", get_list(l,i) ));
   }
 
   return l;

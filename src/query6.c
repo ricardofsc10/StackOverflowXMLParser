@@ -2,6 +2,7 @@
 #include "list.h"
 #include "tcd.h"
 #include "funcoes.h"
+#include "debug.h"
 #include "query6.h"
 
 // query 6
@@ -26,6 +27,7 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
 
   // ordena a lista por ordem crescente de score
   glvotes = g_list_sort(glvotes, compara_score);
+  GList* glaux = glvotes;
 
   int tamanho;
   if(i > N) tamanho = N;
@@ -40,9 +42,12 @@ LONG_list most_voted_answers(TAD_community com, int N, Date begin, Date end){ //
       i++;
   }
   
+  // free das estruturas auxiliares
+  g_list_free(glaux);
+
   // para testar
   for(i = 0; i < tamanho; i++){
-    printf("POST_ID: %ld\n", get_list(res,i) );
+    PRINT(printf("POST_ID: %ld\n", get_list(res,i) ));
   }
 
   return res;

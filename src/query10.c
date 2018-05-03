@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "tcd.h"
+#include "debug.h"
 #include "query10.h"
 
 // query 10
@@ -10,11 +11,11 @@ long better_answer(TAD_community com, long id){
   
   // testa possiveis casos de erro
   if(p == NULL){
-      printf("Não existe nenhum post com o id = %ld.\n",id );
+      PRINT(printf("Não existe nenhum post com o id = %ld.\n",id ));
       return 0;
   }
   if(get_post_type_id(p) == 2){
-      printf("O Id passado corresponde a uma resposta.\n");
+      PRINT(printf("O Id passado corresponde a uma resposta.\n"));
       return 0;
   }
 
@@ -40,8 +41,11 @@ long better_answer(TAD_community com, long id){
     }
   }
 
-  printf("ID melhor resposta (valor de retorno): %d\n", melhor_id);
-  printf("média: %d\n", melhor_media);
+  // free das estruturas auxiliares
+  g_list_free (gl);
+
+  PRINT(printf("ID melhor resposta (valor de retorno): %d\n", melhor_id));
+  PRINT(printf("média: %d\n", melhor_media));
 
   return melhor_id;
 }

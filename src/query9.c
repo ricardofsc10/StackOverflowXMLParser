@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "list.h"
 #include "tcd.h"
+#include "debug.h"
 #include "funcoes.h"
 
 // query 9
@@ -13,18 +14,17 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
 
   // testa se ambos os valores foram encontrados
   if(value_user1 == NULL || value_user2 == NULL){
-      LONG_list l = create_list(0);
       if (value_user1 == NULL && value_user2 == NULL){
-          printf("Nenhum dos User's introduzidos existe, tente outros.\n");
-          return l;
+          PRINT(printf("Nenhum dos User's introduzidos existe, tente outros.\n"));
+          return NULL;
       }
       if(value_user1 == NULL && value_user2 != NULL){
-          printf("O User1 nao existe.\n");
-          return l;
+          PRINT(printf("O User1 nao existe.\n"));
+          return NULL;
       }
       if(value_user1 != NULL && value_user2 == NULL){
-          printf("O User2 nao existe.\n");
-          return l;
+          PRINT(printf("O User2 nao existe.\n"));
+          return NULL;
       }
   }
 
@@ -43,6 +43,7 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
       g_date_posts1 = g_list_next(g_date_posts1);
   }
   glista1 = g_list_sort(glista1, compara_strings);
+  GList* gl1aux = glista1;
 
   // coloca numa nova lista os valores dos posts, do utilizador 2
   g_date_posts2 = get_posts_frequentados(value_user2);
@@ -53,6 +54,7 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
       g_date_posts2 = g_list_next(g_date_posts2);
   }
   glista2 = g_list_sort(glista2, compara_strings);
+  GList* gl2aux = glista2;
 
   // neste momento as glists estao ordenadas do mais antigo ao mais recente
 
@@ -82,11 +84,12 @@ LONG_list both_participated(TAD_community com, long id1, long id2, int N){
   // para testar
   for(int i = 0; i < contador; i++){
     if( (void*) get_list(aux,i) == NULL) break;
-    printf("POST_ID: %ld\n", get_list(aux,i) );
+    PRINT(printf("POST_ID: %ld\n", get_list(aux,i) ));
   }
 
   // free das estruturas auxiliares
-  free_list(l);
+  g_list_free(gl1aux);
+  g_list_free(gl2aux);
 
   return aux;
 }

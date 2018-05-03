@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "pair.h"
 #include "tcd.h"
+#include "debug.h"
 #include "query1.h"
 
 // query 1
@@ -43,9 +44,9 @@ STR_pair info_from_post(TAD_community com, long id) {
     }
 
     n_title2 = get_fst_str(par);
-    printf("Título: %s\n",n_title2 );
+    PRINT(printf("Título: %s\n",n_title2 ));
     n_name2 = get_snd_str(par);
-    printf("Nome de utilizador: %s\n", n_name2);
+    PRINT(printf("Nome de utilizador: %s\n", n_name2));
   
     free(n_title);
     free(n_title2);
@@ -55,7 +56,7 @@ STR_pair info_from_post(TAD_community com, long id) {
     return par;
   }
   else{
-    printf("Não existe um post com o Id passado\n");
+    PRINT(printf("Não existe um post com o Id passado\n"));
     return par;
   }
 }
