@@ -1,0 +1,28 @@
+\select@language {portuges}
+\contentsline {section}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{2}
+\contentsline {section}{\numberline {2}Estruturas de Dados}{2}
+\contentsline {subsection}{\numberline {2.1}Estrutura \textit {TCD}}{3}
+\contentsline {subsection}{\numberline {2.2}Estrutura \textit {Utilizador}}{3}
+\contentsline {subsection}{\numberline {2.3}Estrutura \textit {Posts}}{3}
+\contentsline {section}{\numberline {3}Modularidade}{3}
+\contentsline {section}{\numberline {4}Encapsulamento}{4}
+\contentsline {subsection}{\numberline {4.1}Exemplo Encapsulamento \textit {Tags}}{4}
+\contentsline {section}{\numberline {5}Abstra\IeC {\c c}\IeC {\~a}o de Dados}{4}
+\contentsline {subsection}{\numberline {5.1}Exemplo Declara\IeC {\c c}\IeC {\~a}o Abstrata \textit {utilizador}}{5}
+\contentsline {section}{\numberline {6}Estrat\IeC {\'e}gias das Interroga\IeC {\c c}\IeC {\~o}es}{5}
+\contentsline {subsection}{\numberline {6.1}Init}{5}
+\contentsline {subsection}{\numberline {6.2}Load}{5}
+\contentsline {subsection}{\numberline {6.3}Query 1}{5}
+\contentsline {subsection}{\numberline {6.4}Query 2}{5}
+\contentsline {subsection}{\numberline {6.5}Query 3}{6}
+\contentsline {subsection}{\numberline {6.6}Query 4}{6}
+\contentsline {subsection}{\numberline {6.7}Query 5}{6}
+\contentsline {subsection}{\numberline {6.8}Query 6}{6}
+\contentsline {subsection}{\numberline {6.9}Query 7}{7}
+\contentsline {subsection}{\numberline {6.10}Query 8}{7}
+\contentsline {subsection}{\numberline {6.11}Query 9}{7}
+\contentsline {subsection}{\numberline {6.12}Query 10}{7}
+\contentsline {subsection}{\numberline {6.13}Query 11}{8}
+\contentsline {subsection}{\numberline {6.14}Clean}{8}
+\contentsline {section}{\numberline {7}Conclus\IeC {\~o}es}{8}
+\contentsline {section}{\numberline {8}Bibliografia}{8}
