@@ -147,11 +147,11 @@ char* escolhe_ficheiros(){
   scanf("%d", &escolha);
 
   if(escolha == 1){
-    char* path = "../../dumpexemplo/ubuntu/";
+    char* path = "../../../dumpexemplo/ubuntu/";
     return path;
   }
   else{
-    char* path = "../../dumpexemplo/android/";
+    char* path = "../../../dumpexemplo/android/";
     return path;
   }
 }
