@@ -1,9 +1,4 @@
-/**
- * Escreva a descrição da classe Post_pergunta aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
- */
+package common;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

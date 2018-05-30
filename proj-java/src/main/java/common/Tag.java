@@ -1,9 +1,4 @@
-/**
- * Escreva a descrição da classe Tag aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
- */
+package common;
 
 public class Tag{
     private String key_tag_name;

@@ -1,9 +1,4 @@
-/**
- * Escreva a descrição da classe Utilizador aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
- */
+package common;
 
 import java.util.List;
 import java.util.ArrayList;
