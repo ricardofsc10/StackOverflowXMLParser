@@ -1,18 +1,20 @@
 package engine;
 
-import common.TCD_community;
-import common.Utilizador;
+import common.*;
+import org.xml.sax.SAXException;
 import li3.TADCommunity;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.LocalDate;
+import java.time.LocalDate;
 import java.io.FileInputStream;
 
 import javax.xml.namespace.QName;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -25,7 +27,7 @@ import javax.xml.stream.events.XMLEvent;
 
 public class Load{
     
-    public static void getReferenceUser (XMLEventReader xmlEventReader, TCD_community com){
+    public static void getReferenceUser (XMLEventReader xmlEventReader, TCD_community com) throws XMLStreamException{ // por causa do nextEvent
 
             Utilizador user = null;
             int j=0;
@@ -72,14 +74,15 @@ public class Load{
         System.out.println(j + " Users ...");
     }
 
-    public static void getReferencePosts (XMLEventReader xmlEventReader, TCD_community com){
+    public static void getReferencePosts (XMLEventReader xmlEventReader, TCD_community com) throws XMLStreamException{ // por causa do nextEvent
 
             Posts post = null;
             Integer j=0;
-            Long key_id_post,post_type_id,score,owner_user_id,comment_count,parent_id,answer_count;
-            String data_string,body,title;
-            LocalDate data;
-            ArrayList<String> tags;
+            Long key_id_post = null, post_type_id = null, score = null, owner_user_id = null, comment_count = null, parent_id = null, answer_count = null;
+            String data_string = "", body = "", title = "";
+            LocalDate data = null;
+            ArrayList<String> tags = null;
+            Funcoes f = null;
 
             while(xmlEventReader.hasNext()){
                XMLEvent xmlEvent = xmlEventReader.nextEvent();
@@ -90,7 +93,7 @@ public class Load{
                        //Get the 'id' attribute from Utilizador element
                        Attribute id_l = startElement.getAttributeByName(new QName("Id"));
                        if(id_l != null){
-                        key_id_post = Long.parseInt(id_l.getValue());
+                        key_id_post = Long.parseLong(id_l.getValue());
                        }
 
                        Attribute post_type_id_l = startElement.getAttributeByName(new QName("PostTypeId"));
@@ -105,7 +108,7 @@ public class Load{
 
                        Attribute data_l = startElement.getAttributeByName(new QName("CreationDate"));
                        if(data_l != null){
-                         data = data_l.getValue(); // LocalDate
+                         data = f.stringToDias(data_l.getValue()); // LocalDate
                        }
 
                        Attribute score_l = startElement.getAttributeByName(new QName("Score"));
@@ -120,7 +123,7 @@ public class Load{
 
                        Attribute owner_user_id_l = startElement.getAttributeByName(new QName("OwnerUserId"));
                        if(owner_user_id_l != null){
-                         owner_user_id = Long.parseLong(owner_user_id.getValue());
+                         owner_user_id = Long.parseLong(owner_user_id_l.getValue());
                        }
 
                        Attribute comment_count_l = startElement.getAttributeByName(new QName("CommentCount"));
@@ -138,7 +141,7 @@ public class Load{
 
                            Attribute tags_l = startElement.getAttributeByName(new QName("Tags"));
                            if(tags_l != null){
-                             tags = tags_l.getValue();
+                             tags = f.strToTag(tags_l.getValue());
                            }
 
                            Attribute answer_count_l = startElement.getAttributeByName(new QName("AnswerCount"));
@@ -146,7 +149,7 @@ public class Load{
                              answer_count = Long.parseLong(answer_count_l.getValue());
                            }
 
-                        post = new Post_pergunta(key_id_post,data_string,score,owner_user_id,body,post_type_id, comment_count,title,tags,answer_count);
+                        post = new Post_pergunta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,title,tags,answer_count);
                        }
 
                        if(post_type_id == 2){
@@ -156,7 +159,7 @@ public class Load{
                              parent_id = Long.parseLong(parent_id_l.getValue());
                            }
 
-                        post = new Post_resposta(key_id_post,data_string,score,owner_user_id,body,post_type_id, comment_count,parent_id);
+                        post = new Post_resposta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,parent_id);
                        }
                    }
                }
@@ -175,9 +178,9 @@ public class Load{
     }
 
 
-    public static void getReferenceTags (XMLEventReader xmlEventReader, TCD_community com){
+    public static void getReferenceTags (XMLEventReader xmlEventReader, TCD_community com) throws XMLStreamException{ // por causa do nextEvent
 
-            Tags tag = null;
+            Tag tag = null;
             int j=0;
 
             while(xmlEventReader.hasNext()){
@@ -203,7 +206,7 @@ public class Load{
                if(xmlEvent.isEndElement()){
                    EndElement endElement = xmlEvent.asEndElement();
                    if(endElement.getName().getLocalPart().equals("row")){
-                       com.set_tags(tag.get_key_tag_name,tag);
+                       com.set_tag(tag.get_key_tag_name(),tag);
                        j++;
                    }
                }
@@ -213,7 +216,7 @@ public class Load{
     }
 
     public static TCD_community load(TCD_community com, String dump_path)throws ParserConfigurationException,
-        SAXException, IOException{
+            SAXException, IOException {
 
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         
