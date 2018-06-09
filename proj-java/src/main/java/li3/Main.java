@@ -3,7 +3,10 @@ package li3;
 import common.MyLog;
 import common.Pair;
 import engine.TCDExample;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
@@ -31,8 +34,18 @@ public class Main {
         qe.load(args[0]);
         after = System.currentTimeMillis();
         logtime.writeLog("LOAD -> "+(after-before)+" ms");
-        } catch(IndexOutOfBoundsException e){
+        }
+        catch(IndexOutOfBoundsException e){
             System.out.println("Deve passar o caminho do dump como argumento.");
+        }
+        catch(ParserConfigurationException e){
+            System.out.println(e.getMessage());
+        }
+        catch(SAXException e){
+            System.out.println(e.getMessage());
+        }
+        catch(IOException e){
+            System.out.println(e.getMessage());
         }
 
         /*

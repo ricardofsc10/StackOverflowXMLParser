@@ -2,6 +2,7 @@ package engine;
 
 import common.MyLog;
 import common.Pair;
+import common.TCD_community;
 import li3.TADCommunity;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -18,6 +19,7 @@ import java.util.List;
 public class TCDExample implements TADCommunity {
 
     private MyLog qelog;
+    private TCD_community com;
 
     /*
     public void init() {
@@ -25,26 +27,13 @@ public class TCDExample implements TADCommunity {
     }
     */
 
-    public void load(String dumpPath) {
-        File inputFile = new File(dumpPath);
-        try {
+    public void init(){
+        this.com = new TCD_community();
+    }
 
-        DocumentBuilderFactory dbFactory
-                = DocumentBuilderFactory.newInstance();
-
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
-        Document doc = null;
-
-            doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
+    public void load(String dumpPath) throws IOException, SAXException, ParserConfigurationException { // temos que ter em atenção a tratar os erros
+        init();
+        this.com = Load.load(this.com, dumpPath);
     }
 
     // Query 1

@@ -1,11 +1,15 @@
 package li3;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import common.Pair;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 public interface TADCommunity {
-    public void load(String dumpPath);
+    public void load(String dumpPath) throws IOException, SAXException, ParserConfigurationException;
 
     // Query 1
     public Pair<String,String> infoFromPost(long id);

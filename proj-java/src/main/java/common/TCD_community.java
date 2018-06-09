@@ -96,9 +96,7 @@ public class TCD_community{
     }
     
     ////////////////////// Sets
-    public void set_utilizador(long key, Utilizador value){
-	this.utilizador.put(key,value.clone());
-    }
+    public void set_utilizador(long key, Utilizador value){ this.utilizador.put(key,value.clone()); }
     
     public void set_posts(long key, Posts value){
 	this.posts.put(key,value.clone());
