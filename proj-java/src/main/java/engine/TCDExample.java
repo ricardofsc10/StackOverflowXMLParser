@@ -7,13 +7,11 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Comparator;
-import java.util.stream.*;
 
 public class TCDExample implements TADCommunity {
 
@@ -148,7 +146,30 @@ public class TCDExample implements TADCommunity {
 
     // Query 10
     public long betterAnswer(long id) {
-        return 175891;
+        if(this.com.get_posts().containsKey(id)){
+            Posts post = this.com.get_posts().get(id);
+            if(post instanceof Post_pergunta){
+                double melhor_media = 0;
+                long melhor_id = 0;
+                HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
+                for(Posts posts : this.com.get_posts().values()){
+                    if(posts instanceof Post_resposta){
+                        Post_resposta resposta = (Post_resposta) posts;
+                        Utilizador user = utilizadores.get(resposta.get_owner_user_id());
+                        if(resposta.get_parent_id() == id){
+                            double media = (0.65 * resposta.get_score()) + (0.25 * user.get_reputacao()) + (0.1 * resposta.get_comment_count());
+                            if(media > melhor_media){
+                                melhor_media = media;
+                                melhor_id = resposta.get_key_id_post();
+                            }
+                        }
+                    }
+                }
+                return melhor_id;
+            }
+            else return 0;
+        }
+        return 0;
     }
 
     // Query 11
