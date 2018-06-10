@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.Comparator;
+import java.util.stream.*;
 
 public class TCDExample implements TADCommunity {
 
@@ -80,13 +85,55 @@ public class TCDExample implements TADCommunity {
     }
 
     // Query 6
+    public class ComparatorScore implements Comparator<Posts>{
+        public int compare(Posts p1, Posts p2){
+            if(p1.get_score() > p2.get_score()) return -1;
+            else return 1;
+        }
+    }
+
     public List<Long> mostVotedAnswers(int N, LocalDate begin, LocalDate end) {
-        return Arrays.asList(701775L,697197L,694560L,696641L,704208L);
+        Set<Posts> posts = new TreeSet<>(new ComparatorScore());
+        for(Posts p : this.com.get_posts().values()){
+            if (p instanceof Post_resposta) {
+                Post_resposta post = (Post_resposta) p;
+                if (post.get_data().isBefore(end) && post.get_data().isAfter(begin)) {
+                    posts.add(post.clone());
+                }
+            }
+        }
+        posts.stream().limit(N);
+        List<Long> res = new ArrayList<>();
+        for(Posts p : posts) {
+            res.add(p.get_key_id_post());
+        }
+        return res;
     }
 
     // Query 7
+    public class ComparatorAnswer implements Comparator<Post_pergunta>{
+        public int compare(Post_pergunta p1, Post_pergunta p2){
+            if(p1.get_answer_count() > p2.get_answer_count()) return -1;
+            else return 1;
+        }
+    }
+
     public List<Long> mostAnsweredQuestions(int N, LocalDate begin, LocalDate end) {
-        return Arrays.asList(505506L,508221L,506510L,508029L,506824L,505581L,505368L,509498L,509283L,508635L);
+        Set<Post_pergunta> posts = new TreeSet<>(new ComparatorAnswer());
+        for(Posts p : this.com.get_posts().values()) {
+            if (p instanceof Post_pergunta) {
+                Post_pergunta post = (Post_pergunta) p;
+                if (post.get_data().isBefore(end) && post.get_data().isAfter(begin)) {
+                    posts.add(post.clone());
+                }
+            }
+        }
+        posts.stream().limit(N);
+        List<Long> res = new ArrayList<>();
+        for(Posts p : posts) {
+            res.add(p.get_key_id_post());
+        }
+        return res;
     }
 
     // Query 8
