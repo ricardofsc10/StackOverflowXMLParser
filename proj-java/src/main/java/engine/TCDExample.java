@@ -1,16 +1,10 @@
 package engine;
 
-import common.MyLog;
-import common.Pair;
-import common.TCD_community;
+import common.*;
 import li3.TADCommunity;
-import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -38,7 +32,21 @@ public class TCDExample implements TADCommunity {
 
     // Query 1
     public Pair<String,String> infoFromPost(long id) {
-        return new Pair<>("What are the actual risks of giving www-data sudo nopasswd access?", "WebNinja");
+        if(this.com.get_posts().containsKey(id)){
+            Posts post = this.com.get_posts().get(id);
+            if(post instanceof Post_pergunta){
+                Post_pergunta pergunta = (Post_pergunta) post;
+                Long owner = pergunta.get_owner_user_id();
+                return new Pair(pergunta.get_title(), this.com.get_utilizador().get(owner).get_nome());
+            }
+            else{
+                Post_resposta resposta = (Post_resposta) post;
+                Post_pergunta pergunta = (Post_pergunta) this.com.get_posts().get(resposta.get_parent_id());
+                Long owner = pergunta.get_owner_user_id();
+                return new Pair(pergunta.get_title(), this.com.get_utilizador().get(owner).get_nome());
+            }
+        }
+        else return null;
     }
 
     // Query 2
