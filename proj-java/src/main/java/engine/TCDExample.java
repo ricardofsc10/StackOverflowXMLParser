@@ -9,9 +9,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class TCDExample implements TADCommunity {
 
@@ -100,9 +102,9 @@ public class TCDExample implements TADCommunity {
                 }
             }
         }
-        posts.stream().limit(N);
+        List<Posts> aux = posts.stream().limit(N).collect(Collectors.toList());
         List<Long> res = new ArrayList<>();
-        for(Posts p : posts) {
+        for(Posts p : aux) {
             res.add(p.get_key_id_post());
         }
         return res;
@@ -126,13 +128,14 @@ public class TCDExample implements TADCommunity {
                 }
             }
         }
-        posts.stream().limit(N);
+        List<Posts> aux = posts.stream().limit(N).collect(Collectors.toList());
         List<Long> res = new ArrayList<>();
-        for(Posts p : posts) {
+        for(Posts p : aux) {
             res.add(p.get_key_id_post());
         }
         return res;
     }
+
 
     // Query 8
     public List<Long> containsWord(int N, String word) {
