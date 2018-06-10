@@ -1,6 +1,7 @@
 package engine;
 
 import common.*;
+import javafx.geometry.Pos;
 import li3.TADCommunity;
 import org.xml.sax.SAXException;
 
@@ -148,8 +149,36 @@ public class TCDExample implements TADCommunity {
     }
 
     // Query 9
+    public class ComparatorData implements Comparator<Post_pergunta>{
+        public int compare(Post_pergunta p1, Post_pergunta p2){
+            if(p1.get_data().isBefore(p2.get_data()))return -1;
+            else return 1;
+        }
+    }
+
     public List<Long> bothParticipated(int N, long id1, long id2) {
-        return Arrays.asList(594L);
+        if(this.com.get_utilizador().containsKey(id1) && this.com.get_utilizador().containsKey(id2)){
+            ArrayList<Long> posts_id1 = this.com.get_utilizador().get(id1).get_posts_frequentados();
+            ArrayList<Long> posts_id2 = this.com.get_utilizador().get(id2).get_posts_frequentados();
+            HashMap<Long,Posts> posts = this.com.get_posts();
+
+            ArrayList<Long> iguais = new ArrayList<>();
+            for(long id : posts_id1)
+                if(posts_id2.contains(id)) iguais.add(id);
+
+            Set<Post_pergunta> ordenado = new TreeSet<>(new ComparatorData());
+            for(Long id : iguais){
+                Post_pergunta p = (Post_pergunta) posts.get(id);
+                ordenado.add(p.clone());
+            }
+            ordenado = ordenado.stream().limit(N).collect(Collectors.toSet());
+            List<Long> res = new ArrayList<>();
+            for(Post_pergunta pp : ordenado)
+                res.add(pp.get_key_id_post());
+
+            return res;
+        }
+        else return null;
     }
 
     // Query 10

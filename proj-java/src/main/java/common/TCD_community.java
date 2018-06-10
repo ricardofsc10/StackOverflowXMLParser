@@ -109,6 +109,19 @@ public class TCD_community{
     public void set_tag(String key, Tag value){
 	this.tag.put(key,value.clone());
     }
+
+    public void set_posts_freq(Posts post){
+        if(post instanceof Post_pergunta) {
+            Post_pergunta pergunta = (Post_pergunta) post;
+            Utilizador user = this.utilizador.get(post.get_owner_user_id());
+            user.set_posts_frequentados(pergunta.get_key_id_post());
+        }
+        else{
+            Post_resposta resposta = (Post_resposta) post;
+            Utilizador user = this.utilizador.get(post.get_owner_user_id());
+            user.set_posts_frequentados(resposta.get_parent_id());
+        }
+    }
     
     ////////////////////// Métodos essenciais
     public TCD_community clone(){return new TCD_community(this);}

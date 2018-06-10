@@ -83,7 +83,10 @@ public class Utilizador{
     
     public void set_bio(String bio){this.bio = bio;}
     
-    public void set_posts_frequentados(long id_post){this.posts_frequentados.add(id_post);}
+    public void set_posts_frequentados(long id_post){
+        if(!this.posts_frequentados.contains(id_post))
+            this.posts_frequentados.add(id_post);
+    }
     
     public void set_posts_perguntas(Posts p){this.posts_perguntas.add(p.clone());}
     
