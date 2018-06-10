@@ -68,15 +68,27 @@ public class TCDExample implements TADCommunity {
     }
 
     // Query 4
+    public class ComparatorData4 implements Comparator<Post_pergunta>{
+        public int compare(Post_pergunta p1, Post_pergunta p2){
+            if(p1.get_data().isBefore(p2.get_data()))return 1;
+            else return -1;
+        }
+    }
     public List<Long> questionsWithTag(String tag, LocalDate begin, LocalDate end) {
-        List<Long> res = new ArrayList<>();
+        Set<Post_pergunta> aux = new TreeSet<>(new ComparatorData4());
         for(Posts p : this.com.get_posts().values()){
             if(p instanceof Post_pergunta){
                 Post_pergunta post = (Post_pergunta) p;
-                if(post.get_data().isBefore(end) && post.get_data().isAfter(begin) && post.get_title().contains(tag));
-                    res.add(post.get_key_id_post());
+                if(post.get_data().isBefore(end) && post.get_data().isAfter(begin)) {
+                    ArrayList<String> tags = post.get_tags();
+                    if (tags.contains(tag))
+                        aux.add(post.clone());
+                }
             }
         }
+        List<Long> res = new ArrayList<>();
+        for(Posts p : aux)
+            res.add(p.get_key_id_post());
         return res;
     }
 
@@ -92,15 +104,15 @@ public class TCDExample implements TADCommunity {
     }
 
     // Query 6
-    public class ComparatorScore implements Comparator<Posts>{
-        public int compare(Posts p1, Posts p2){
+    public class ComparatorScore implements Comparator<Post_resposta>{
+        public int compare(Post_resposta p1, Post_resposta p2){
             if(p1.get_score() > p2.get_score()) return -1;
             else return 1;
         }
     }
 
     public List<Long> mostVotedAnswers(int N, LocalDate begin, LocalDate end) {
-        Set<Posts> posts = new TreeSet<>(new ComparatorScore());
+        Set<Post_resposta> posts = new TreeSet<>(new ComparatorScore());
         for(Posts p : this.com.get_posts().values()){
             if (p instanceof Post_resposta) {
                 Post_resposta post = (Post_resposta) p;
@@ -145,12 +157,31 @@ public class TCDExample implements TADCommunity {
 
 
     // Query 8
+    public class ComparatorData8 implements Comparator<Post_pergunta>{
+        public int compare(Post_pergunta p1, Post_pergunta p2){
+            if(p1.get_data().isBefore(p2.get_data()))return 1;
+            else return -1;
+        }
+    }
+
     public List<Long> containsWord(int N, String word) {
-        return Arrays.asList(980835L,979082L,974117L,974105L,973832L,971812L,971056L,968451L,964999L,962770L);
+        Set<Post_pergunta> aux = new TreeSet<>(new ComparatorData8());
+        for(Posts p : this.com.get_posts().values()){
+            if(p instanceof Post_pergunta){
+                Post_pergunta post = (Post_pergunta) p;
+                if (post.get_title().contains(word))
+                    aux.add(post.clone());
+            }
+        }
+        aux = aux.stream().limit(N).collect(Collectors.toSet());
+        List<Long> res = new ArrayList<>();
+        for(Posts p : aux)
+            res.add(p.get_key_id_post());
+        return res;
     }
 
     // Query 9
-    public class ComparatorData implements Comparator<Post_pergunta>{
+    public class ComparatorData implements Comparator<Post_pergunta>{ // não será ao contrário ?????
         public int compare(Post_pergunta p1, Post_pergunta p2){
             if(p1.get_data().isBefore(p2.get_data()))return -1;
             else return 1;
