@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Comparator;
-import java.util.stream.Collectors;
+import java.util.stream.*;
+import java.lang.String;
 
 public class TCDExample implements TADCommunity {
 
@@ -66,11 +67,15 @@ public class TCDExample implements TADCommunity {
 
     // Query 4
     public List<Long> questionsWithTag(String tag, LocalDate begin, LocalDate end) {
-        return Arrays.asList(276174L,276029L,274462L,274324L,274316L,274141L,274100L,272937L,
-                272813L,272754L,272666L,272565L,272450L,272313L,271816L,271683L,271647L,270853L,270608L,270528L,270488L,
-                270188L,270014L,269876L,269781L,269095L,268501L,268155L,267746L,267656L,267625L,266742L,266335L,266016L,
-                265531L,265483L,265443L,265347L,265104L,265067L,265028L,264764L,264762L,264616L,264525L,264292L,263816L,
-                263740L,263460L,263405L,263378L,263253L,262733L,262574L);
+        List<Long> res = new ArrayList<>();
+        for(Posts p : this.com.get_posts().values()){
+            if(p instanceof Post_pergunta){
+                Post_pergunta post = (Post_pergunta) p;
+                if(post.get_data().isBefore(end) && post.get_data().isAfter(begin) && post.get_title().contains(tag));
+                    res.add(post.get_key_id_post());
+            }
+        }
+        return res;
     }
 
     // Query 5
@@ -102,9 +107,9 @@ public class TCDExample implements TADCommunity {
                 }
             }
         }
-        List<Posts> aux = posts.stream().limit(N).collect(Collectors.toList());
+        posts = posts.stream().limit(N).collect(Collectors.toSet());
         List<Long> res = new ArrayList<>();
-        for(Posts p : aux) {
+        for(Posts p : posts) {
             res.add(p.get_key_id_post());
         }
         return res;
@@ -128,9 +133,9 @@ public class TCDExample implements TADCommunity {
                 }
             }
         }
-        List<Posts> aux = posts.stream().limit(N).collect(Collectors.toList());
+        posts = posts.stream().limit(N).collect(Collectors.toSet());
         List<Long> res = new ArrayList<>();
-        for(Posts p : aux) {
+        for(Posts p : posts) {
             res.add(p.get_key_id_post());
         }
         return res;
