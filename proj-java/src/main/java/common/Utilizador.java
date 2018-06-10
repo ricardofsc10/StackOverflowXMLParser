@@ -8,7 +8,7 @@ public class Utilizador{
     private String nome;
     private String bio;
     private ArrayList<Long> posts_frequentados; // so contem o id das perguntas em que ele interage
-    private ArrayList<Posts> posts_perguntas; // contem os todas as perguntas que colocou em forma de POSTS
+    private ArrayList<Post_pergunta> posts_perguntas; // contem os todas as perguntas que colocou em forma de POSTS
     private long posts_u;
     private long reputacao;
     
@@ -25,14 +25,14 @@ public class Utilizador{
     }
     
     // construtor parametrizado
-    public Utilizador(long key, String nome, String bio, ArrayList<Long> posts_freq, ArrayList<Posts> posts_per, long posts, long reputacao){
+    public Utilizador(long key, String nome, String bio, ArrayList<Long> posts_freq, ArrayList<Post_pergunta> posts_per, long posts, long reputacao){
         this.key_id = key;
         this.nome = nome;
         this.bio = bio;
         this.posts_frequentados = posts_freq; // nao sei se é assim
         
         this.posts_perguntas = new ArrayList<>();
-        for(Posts p : posts_per){
+        for(Post_pergunta p : posts_per){
             this.posts_perguntas.add(p.clone());
         }
         
@@ -65,9 +65,9 @@ public class Utilizador{
         return res;
     }
     
-    public ArrayList<Posts> get_posts_perguntas(){
-        ArrayList<Posts> res = new ArrayList<>();
-        for(Posts p: this.posts_perguntas) 
+    public ArrayList<Post_pergunta> get_posts_perguntas(){
+        ArrayList<Post_pergunta> res = new ArrayList<>();
+        for(Post_pergunta p: this.posts_perguntas)
             res.add(p.clone());
         return res;
     }
@@ -88,7 +88,7 @@ public class Utilizador{
             this.posts_frequentados.add(id_post);
     }
     
-    public void set_posts_perguntas(Posts p){this.posts_perguntas.add(p.clone());}
+    public void set_posts_perguntas(Post_pergunta p){this.posts_perguntas.add(p.clone());}
     
     public void set_posts_u(long posts){this.posts_u = posts;}
     

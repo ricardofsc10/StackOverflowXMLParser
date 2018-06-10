@@ -110,11 +110,12 @@ public class TCD_community{
 	this.tag.put(key,value.clone());
     }
 
-    public void set_posts_freq(Posts post){
+    public void set_posts_toUser(Posts post){
         if(post instanceof Post_pergunta) {
             Post_pergunta pergunta = (Post_pergunta) post;
             Utilizador user = this.utilizador.get(post.get_owner_user_id());
             user.set_posts_frequentados(pergunta.get_key_id_post());
+            user.set_posts_perguntas(pergunta);
         }
         else{
             Post_resposta resposta = (Post_resposta) post;

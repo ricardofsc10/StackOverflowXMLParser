@@ -16,8 +16,9 @@ public class Funcoes {
         ArrayList<String> res = new ArrayList<String>();
         String delim = "<>";
         StringTokenizer palavra = new StringTokenizer(tags,delim);
-        while (palavra.hasMoreTokens())
+        while (palavra.hasMoreTokens()) {
             res.add(palavra.nextToken());
+        }
         return res;
     }
 }

@@ -1,7 +1,6 @@
 package engine;
 
 import common.*;
-import javafx.geometry.Pos;
 import li3.TADCommunity;
 import org.xml.sax.SAXException;
 
@@ -39,18 +38,20 @@ public class TCDExample implements TADCommunity {
 
     // Query 1
     public Pair<String,String> infoFromPost(long id) {
-        if(this.com.get_posts().containsKey(id)){
-            Posts post = this.com.get_posts().get(id);
+        HashMap<Long,Posts> todos_posts = this.com.get_posts();
+        if(todos_posts.containsKey(id)){
+            Posts post = todos_posts.get(id);
+            HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
             if(post instanceof Post_pergunta){
                 Post_pergunta pergunta = (Post_pergunta) post;
                 Long owner = pergunta.get_owner_user_id();
-                return new Pair(pergunta.get_title(), this.com.get_utilizador().get(owner).get_nome());
+                return new Pair(pergunta.get_title(), utilizadores.get(owner).get_nome());
             }
             else{
                 Post_resposta resposta = (Post_resposta) post;
-                Post_pergunta pergunta = (Post_pergunta) this.com.get_posts().get(resposta.get_parent_id());
+                Post_pergunta pergunta = (Post_pergunta) todos_posts.get(resposta.get_parent_id());
                 Long owner = pergunta.get_owner_user_id();
-                return new Pair(pergunta.get_title(), this.com.get_utilizador().get(owner).get_nome());
+                return new Pair(pergunta.get_title(), utilizadores.get(owner).get_nome());
             }
         }
         else return null;
@@ -157,9 +158,10 @@ public class TCDExample implements TADCommunity {
     }
 
     public List<Long> bothParticipated(int N, long id1, long id2) {
-        if(this.com.get_utilizador().containsKey(id1) && this.com.get_utilizador().containsKey(id2)){
-            ArrayList<Long> posts_id1 = this.com.get_utilizador().get(id1).get_posts_frequentados();
-            ArrayList<Long> posts_id2 = this.com.get_utilizador().get(id2).get_posts_frequentados();
+        HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
+        if(utilizadores.containsKey(id1) && utilizadores.containsKey(id2)){
+            ArrayList<Long> posts_id1 = utilizadores.get(id1).get_posts_frequentados();
+            ArrayList<Long> posts_id2 = utilizadores.get(id2).get_posts_frequentados();
             HashMap<Long,Posts> posts = this.com.get_posts();
 
             ArrayList<Long> iguais = new ArrayList<>();
@@ -183,13 +185,14 @@ public class TCDExample implements TADCommunity {
 
     // Query 10
     public long betterAnswer(long id) {
-        if(this.com.get_posts().containsKey(id)){
-            Posts post = this.com.get_posts().get(id);
+        HashMap<Long,Posts> todos_posts = this.com.get_posts();
+        if(todos_posts.containsKey(id)){
+            Posts post = todos_posts.get(id);
             if(post instanceof Post_pergunta){
                 double melhor_media = 0;
                 long melhor_id = 0;
                 HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
-                for(Posts posts : this.com.get_posts().values()){
+                for(Posts posts : todos_posts.values()){
                     if(posts instanceof Post_resposta){
                         Post_resposta resposta = (Post_resposta) posts;
                         Utilizador user = utilizadores.get(resposta.get_owner_user_id());
@@ -210,8 +213,60 @@ public class TCDExample implements TADCommunity {
     }
 
     // Query 11
+    public class ComparatorOcorrencias implements Comparator<TagUnique>{
+        public int compare(TagUnique tu1, TagUnique tu2){
+            if(tu1.getOcorrencias() > tu2.getOcorrencias()) return 1;
+            else return -1;
+        }
+    }
+
+    public class ComparatorReputacao implements  Comparator<Utilizador>{
+        public int compare(Utilizador u1, Utilizador u2){
+            if(u1.get_reputacao() > u2.get_reputacao()) return  1;
+            else return -1;
+        }
+    }
+
     public List<Long> mostUsedBestRep(int N, LocalDate begin, LocalDate end) {
-        return Arrays.asList(6L,29L,72L,163L,587L);
+        HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
+        Set<Utilizador> melhor_reputacao = new TreeSet<>(new ComparatorReputacao());
+        for(Utilizador u : utilizadores.values()) melhor_reputacao.add(u);
+        melhor_reputacao = melhor_reputacao.stream().limit(N).collect(Collectors.toSet());
+
+        Map<String,TagUnique> todas_tags = new HashMap<>();
+
+        for(Utilizador user : melhor_reputacao){
+            for(Post_pergunta post : user.get_posts_perguntas()){
+                if(post.get_data().isAfter(begin) && post.get_data().isBefore(end)) {
+                    for (String tag : post.get_tags()) {
+                        System.out.println(tag);
+                        if (todas_tags.containsKey(tag)) {
+                            TagUnique tu = todas_tags.get(tag);
+                            tu.setOcorrencias((tu.getOcorrencias()) + 1);
+                        } else {
+                            TagUnique tu = new TagUnique(tag, 1);
+                            todas_tags.put(tag, tu);
+                        }
+                    }
+                }
+            }
+        }
+
+        Set<TagUnique> ordenado = new TreeSet<>(new ComparatorOcorrencias());
+        for(TagUnique tu : todas_tags.values())
+            ordenado.add(tu);
+
+        //ordenado = ordenado.stream().limit(N).collect(Collectors.toSet());
+        HashMap<String,Tag> tags = this.com.get_tag();
+        List<Long> res = new ArrayList<>();
+        for(TagUnique tu : ordenado) {
+            System.out.println(tu.getNome());
+            System.out.println(tu.getOcorrencias());
+            Tag tag = tags.get(tu.getNome());
+            if(tag != null)
+                res.add(tag.get_id_tag());
+        }
+        return res;
     }
 
     public void clear(){
