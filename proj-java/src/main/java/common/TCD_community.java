@@ -124,7 +124,7 @@ public class TCD_community{
         }
     }
 
-    public void set_posts_u(Posts p){
+    public void set_posts_total(Posts p){
         Utilizador user = this.utilizador.get(p.get_owner_user_id());
         user.set_posts_u(user.get_posts_u() + 1);
     }

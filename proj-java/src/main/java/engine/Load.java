@@ -16,7 +16,6 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
@@ -33,7 +32,6 @@ public class Load{
                    if(startElement.getName().getLocalPart().equals("row")){
                        Utilizador user = new Utilizador();
 
-                       //Get the 'id' attribute from Utilizador element
                        Attribute id_l = startElement.getAttributeByName(new QName("Id"));
                        if(id_l != null){
                          user.set_key_id(Long.parseLong(id_l.getValue()));
@@ -58,10 +56,6 @@ public class Load{
                        j++;
                    }
                }
-               //if Utilizador end element is reached, add utilizador object to list
-               if(xmlEvent.isEndElement()){
-                   EndElement endElement = xmlEvent.asEndElement();
-               }
             }
 
         System.out.println(j + " Users ...");
@@ -81,9 +75,7 @@ public class Load{
                if (xmlEvent.isStartElement()){
                    StartElement startElement = xmlEvent.asStartElement();
                    if(startElement.getName().getLocalPart().equals("row")){
-                       Posts post = null;
 
-                       //Get the 'id' attribute from Utilizador element
                        Attribute id_l = startElement.getAttributeByName(new QName("Id"));
                        if(id_l != null){
                         key_id_post = Long.parseLong(id_l.getValue());
@@ -141,11 +133,11 @@ public class Load{
                              answer_count = Long.parseLong(answer_count_l.getValue());
                            }
 
-                           post = new Post_pergunta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,title,tags,answer_count);
+                           Posts post = new Post_pergunta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,title,tags,answer_count);
                            com.set_posts_toUser(post);
                            com.set_posts(post.get_key_id_post(), post);
                            j++;
-                           com.set_posts_u(post);
+                           com.set_posts_total(post);
                        }
 
                        if(post_type_id == 2){
@@ -155,20 +147,14 @@ public class Load{
                              parent_id = Long.parseLong(parent_id_l.getValue());
                            }
 
-                           post = new Post_resposta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,parent_id);
+                           Posts post = new Post_resposta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,parent_id);
                            com.set_posts_toUser(post);
                            com.set_posts(post.get_key_id_post(), post);
                            j++;
-                           com.set_posts_u(post);
+                           com.set_posts_total(post);
                        }
                    }
                }
-
-               //if Posts end element is reached, add utilizador object to list
-               if(xmlEvent.isEndElement()){
-                   EndElement endElement = xmlEvent.asEndElement();
-               }
-
         }
         System.out.println(j + " Posts ...");
     }
@@ -186,7 +172,6 @@ public class Load{
                    if(startElement.getName().getLocalPart().equals("row")){
                        Tag tag = new Tag();
 
-                       //Get the 'id' attribute from Utilizador element
                        Attribute tag_name_l = startElement.getAttributeByName(new QName("TagName"));
                        if(tag_name_l != null){
                          tag.set_key_tag_name(tag_name_l.getValue());
@@ -199,10 +184,6 @@ public class Load{
                        com.set_tag(tag.get_key_tag_name(), tag);
                        j++;
                    }
-               }
-               //if Utilizador end element is reached, add utilizador object to list
-               if(xmlEvent.isEndElement()){
-                   EndElement endElement = xmlEvent.asEndElement();
                }
             }
 

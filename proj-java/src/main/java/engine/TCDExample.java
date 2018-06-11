@@ -86,10 +86,10 @@ public class TCDExample implements TADCommunity {
     public Pair<Long,Long> totalPosts(LocalDate begin, LocalDate end) {
         long perguntas=0,respostas=0;
         for (Posts p : this.com.get_posts().values()){
-            if (p.get_data().isAfter(begin) && p.get_data().isBefore(end)) {
-                if (p.get_post_type_id() == 1)
+            if ((p.get_data().isAfter(begin) || p.get_data().isEqual(begin)) && (p.get_data().isBefore(end) || p.get_data().isEqual(end))) {
+                if (p instanceof Post_pergunta)
                     perguntas++;
-                else if(p.get_post_type_id() == 2)
+                else if(p instanceof  Post_resposta)
                     respostas++;
              }
         }
@@ -108,7 +108,7 @@ public class TCDExample implements TADCommunity {
         for(Posts p : this.com.get_posts().values()){
             if(p instanceof Post_pergunta){
                 Post_pergunta post = (Post_pergunta) p;
-                if(post.get_data().isBefore(end) && post.get_data().isAfter(begin)) {
+                if((post.get_data().isAfter(begin) || post.get_data().isEqual(begin)) && (post.get_data().isBefore(end) || post.get_data().isEqual(end))) {
                     ArrayList<String> tags = post.get_tags();
                     if (tags.contains(tag))
                         aux.add(post.clone());
@@ -131,7 +131,6 @@ public class TCDExample implements TADCommunity {
             else return -1;
         }
     }
-
 
     public Pair<String, List<Long>> getUserInfo(long id) {
 
@@ -167,7 +166,7 @@ public class TCDExample implements TADCommunity {
         for(Posts p : this.com.get_posts().values()){
             if (p instanceof Post_resposta) {
                 Post_resposta post = (Post_resposta) p;
-                if (post.get_data().isBefore(end) && post.get_data().isAfter(begin)) {
+                if ((post.get_data().isAfter(begin) || post.get_data().isEqual(begin)) && (post.get_data().isBefore(end) || post.get_data().isEqual(end))) {
                     posts.add(post.clone());
                 }
             }
@@ -196,7 +195,7 @@ public class TCDExample implements TADCommunity {
         for(Posts p : this.com.get_posts().values()) {
             if (p instanceof Post_pergunta) {
                 Post_pergunta post = (Post_pergunta) p;
-                if (post.get_data().isBefore(end) && post.get_data().isAfter(begin)) {
+                if ((post.get_data().isAfter(begin) || post.get_data().isEqual(begin)) && (post.get_data().isBefore(end) || post.get_data().isEqual(end))) {
                     posts.add(post.clone());
                 }
             }
@@ -324,13 +323,14 @@ public class TCDExample implements TADCommunity {
         Set<Utilizador> melhor_reputacao = new TreeSet<>(new ComparatorReputacao());
         for(Utilizador u : utilizadores.values()) melhor_reputacao.add(u);
 
-        melhor_reputacao = melhor_reputacao.stream().limit(N).collect(Collectors.toSet());
-
         Map<String,TagUnique> todas_tags = new HashMap<>();
 
-        for(Utilizador user : melhor_reputacao){
+        Iterator it1 = melhor_reputacao.iterator();
+        int i=0;
+        while(it1.hasNext() && i<N) {
+            Utilizador user = (Utilizador) it1.next();
             for(Post_pergunta post : user.get_posts_perguntas()){
-                if(post.get_data().isAfter(begin) && post.get_data().isBefore(end)) {
+                if((post.get_data().isAfter(begin) || post.get_data().isEqual(begin)) && (post.get_data().isBefore(end) || post.get_data().isEqual(end))) {
                     for (String tag : post.get_tags()){
                         if (todas_tags.containsKey(tag)) {
                             TagUnique tu = todas_tags.get(tag);
@@ -342,20 +342,22 @@ public class TCDExample implements TADCommunity {
                     }
                 }
             }
+            i++;
         }
 
         Set<TagUnique> ordenado = new TreeSet<>(new ComparatorOcorrencias());
         for(TagUnique tu : todas_tags.values())
             ordenado.add(tu);
 
-        List<TagUnique> ordenado_l = ordenado.stream().limit(N).collect(Collectors.toList());
         HashMap<String,Tag> tags = this.com.get_tag();
         List<Long> res = new ArrayList<>();
 
-        Iterator it = ordenado_l.iterator();
-        while(it.hasNext()) {
+        Iterator it = ordenado.iterator();
+        i=0;
+        while(it.hasNext() && i < N) {
             TagUnique tu = (TagUnique) it.next();
             res.add(tags.get(tu.getNome()).get_id_tag());
+            i++;
         }
         return res;
     }
