@@ -68,30 +68,26 @@ public class TCDExample implements TADCommunity {
         }
     }
     public List<Long> topMostActive(int N) {
+        Set<Utilizador> ativos = new TreeSet<>(new ComparatorPosts());
 
-        TreeSet<Long> ativos = new TreeSet<Long>(new ComparatorPosts());
-
-        for (Utilizador u : this.utilizador.values())
-                ativos.add(u.clone());
-            }
-        }
+        for (Utilizador u : this.com.get_utilizador().values())
+            ativos.add(u.clone());
+        
         return ativos.stream().limit(N).map(Utilizador:: get_key_id).collect(Collectors.toList());
     }
 
     // Query 3
     public Pair<Long,Long> totalPosts(LocalDate begin, LocalDate end) {
-         Pair<Long,Long> res = new Pair<>();
-         int perguntas=0,respostas=0;
-        for (Posts p : this.posts.values()){
-                if (p.isAfter(begin) && p.isBefore(end))
-                    if(p.get_post_type_id().equals(1))
-                        perguntas++;
-                    else
-                        respostas++;
+        long perguntas=0,respostas=0;
+        for (Posts p : this.com.get_posts().values()){
+            if (p.get_data().isAfter(begin) && p.get_data().isBefore(end)) {
+                if (p.get_post_type_id() == 1)
+                    perguntas++;
+                else if(p.get_post_type_id() == 2)
+                    respostas++;
+             }
         }
-        res.setFst(perguntas);
-        res.setSnd(respostas);
-        return res;
+        return new Pair(perguntas,respostas);
     }
 
     // Query 4
@@ -120,16 +116,20 @@ public class TCDExample implements TADCommunity {
     }
 
     // Query 5
-    public class ComparatorData4 implements Comparator<Post_pergunta>{
+    public class ComparatorData5 implements Comparator<Post_pergunta>{
         public int compare(Post_pergunta p1, Post_pergunta p2){
             if(p1.get_data().isBefore(p2.get_data()))return 1;
             else return -1;
         }
     }
+    public Pair<String,List<Long>> getUserInfo(long id){
+        return null;
+    }
+
     /**
     public Pair<String, List<Long>> getUserInfo(long id) {
 
-        List<Long> ids = new List<>(ComparatorData5())
+        List<Long> ids = new ArrayList<>(ComparatorData5())
 
         for (Utilizador u : this.utilizador.values()) {
                 if(id.equals(u.get_key_id)) {

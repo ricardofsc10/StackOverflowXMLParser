@@ -122,6 +122,8 @@ public class Load{
                          comment_count = Long.parseLong(comment_count_l.getValue());
                        }
 
+                       //Utilizador user = com.get_utilizador().get(owner_user_id);
+                       //user.set_posts_u(user.get_posts_u()+1);
 
                        if(post_type_id == 1){
 
