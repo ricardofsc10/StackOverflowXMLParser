@@ -58,13 +58,40 @@ public class TCDExample implements TADCommunity {
     }
 
     // Query 2
+
+    public class ComparatorPosts implements Comparator<Utilizador>{
+        public int compare(Utilizador u1, Utilizador u2) {
+            if(u1.get_posts_u() > u2.get_posts_u()) {
+                return 1;
+            }
+            return -1;
+        }
+    }
     public List<Long> topMostActive(int N) {
-        return Arrays.asList(15811L,449L,158442L,167850L,367165L,295286L,59676L,93977L,35795L,3940L);
+
+        TreeSet<Long> ativos = new TreeSet<Long>(new ComparatorPosts());
+
+        for (Utilizador u : this.utilizador.values())
+                ativos.add(u.clone());
+            }
+        }
+        return ativos.stream().limit(N).map(Utilizador:: get_key_id).collect(Collectors.toList());
     }
 
     // Query 3
     public Pair<Long,Long> totalPosts(LocalDate begin, LocalDate end) {
-        return new Pair<>(3667L,4102L);
+         Pair<Long,Long> res = new Pair<>();
+         int perguntas=0,respostas=0;
+        for (Posts p : this.posts.values()){
+                if (p.isAfter(begin) && p.isBefore(end))
+                    if(p.get_post_type_id().equals(1))
+                        perguntas++;
+                    else
+                        respostas++;
+        }
+        res.setFst(perguntas);
+        res.setSnd(respostas);
+        return res;
     }
 
     // Query 4
@@ -93,16 +120,28 @@ public class TCDExample implements TADCommunity {
     }
 
     // Query 5
+    public class ComparatorData4 implements Comparator<Post_pergunta>{
+        public int compare(Post_pergunta p1, Post_pergunta p2){
+            if(p1.get_data().isBefore(p2.get_data()))return 1;
+            else return -1;
+        }
+    }
+    /**
     public Pair<String, List<Long>> getUserInfo(long id) {
-        String shortBio = "<p>Coder. JS, Perl, Python, Basic<br>Books/movies: SF+F.<br>Dead:" +
-                "dell 9300<br>Dead: dell 1720 as of may 10th 2011.</p>\n" +
-                "<p>Current system: Acer Aspire 7750G.<br>\n" +
-                "Works OOTB as of Ubuntu 12.04.<br></p>";
-        List<Long> ids = Arrays.asList(982507L,982455L,980877L,980197L,980189L,976713L,974412L,
-                974359L,973895L,973838L);
+
+        List<Long> ids = new List<>(ComparatorData5())
+
+        for (Utilizador u : this.utilizador.values()) {
+                if(id.equals(u.get_key_id)) {
+                    res.setFst(u.get_bio());
+                    for(Posts )
+                }
+
+
+        }
         return new Pair<>(shortBio,ids);
     }
-
+**/
     // Query 6
     public class ComparatorScore implements Comparator<Post_resposta>{
         public int compare(Post_resposta p1, Post_resposta p2){
