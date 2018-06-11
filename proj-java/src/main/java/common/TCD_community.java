@@ -15,7 +15,6 @@ import java.util.HashMap;
 public class TCD_community{
     private HashMap<Long,Utilizador> utilizador;
     private HashMap<Long,Posts> posts;
-    private ArrayList<Posts> date_posts;
     private HashMap<String,Tag> tag;
     
     ////////////////////// Construtores
@@ -25,7 +24,6 @@ public class TCD_community{
     public TCD_community(){
         this.utilizador = new HashMap<>();
         this.posts = new HashMap<>();
-        this.date_posts = new ArrayList<>();
         this.tag = new HashMap<>();
     }
 
@@ -34,11 +32,9 @@ public class TCD_community{
      *
      * @param utilizador Estrutura Utilizador
      * @param posts Estrutura Posts
-     * @param date_posts Estrutura Date_posts
      * @param tag Estrutura Tag
      */
-    public TCD_community(HashMap<Long,Utilizador> utilizador, HashMap<Long,Posts> posts, ArrayList<Posts> date_posts,
-                         HashMap<String,Tag> tag){
+    public TCD_community(HashMap<Long,Utilizador> utilizador, HashMap<Long,Posts> posts, HashMap<String,Tag> tag){
         // para o hashmap de utilizador
         this.utilizador = new HashMap<>();
         for(Long l : utilizador.keySet()){
@@ -51,12 +47,6 @@ public class TCD_community{
         for(Long l : posts.keySet()){
             Posts p = posts.get(l);
             this.posts.put(l,p.clone());
-        }
-        
-        // pata o ArrayList date_posts
-        this.date_posts = new ArrayList<>();
-        for(Posts p : date_posts){
-            this.date_posts.add(p.clone());
         }
         
         // para o hashmap de tags
@@ -75,7 +65,6 @@ public class TCD_community{
     public TCD_community(TCD_community umatcd){
         this.utilizador = umatcd.get_utilizador();
         this.posts = umatcd.get_posts();
-        this.date_posts = umatcd.get_date_posts();
         this.tag = umatcd.get_tag();
     }
     
@@ -104,19 +93,6 @@ public class TCD_community{
         for(Long l : this.posts.keySet()){
             Posts p = this.posts.get(l);
             res.put(l,p.clone());
-        }
-        return res;
-    }
-
-    /**
-     * Método que devolve a estrutura Posts(ordenado por datas).
-     *
-     * @return Estrutura Posts(ordenado por datas).
-     */
-    public ArrayList<Posts> get_date_posts(){
-        ArrayList<Posts> res = new ArrayList<>();
-        for(Posts p : this.date_posts){
-            res.add(p.clone());
         }
         return res;
     }
@@ -152,16 +128,6 @@ public class TCD_community{
      */
     public void set_posts(long key, Posts value){
 	this.posts.put(key,value.clone());
-    }
-
-    /**
-     * Atualiza a Estrutura Posts(organizados por data).
-     *
-     * @param key Nova chave da Estrutura Posts(organizados por data)
-     * @param value Novo valor da Estrutura Posts(organizados por data)
-     */
-    public void set_date_posts(Posts value){
-        this.date_posts.add(value.clone());
     }
 
     /**
@@ -223,7 +189,6 @@ public class TCD_community{
         TCD_community tcd = (TCD_community) o;
         return (this.utilizador.equals(tcd.get_utilizador())
                 && this.posts.equals(tcd.get_posts())
-                && this.date_posts.equals(tcd.get_date_posts())
                 && this.tag.equals(tcd.get_tag()));
     }
 
@@ -236,7 +201,6 @@ public class TCD_community{
         StringBuilder sb = new StringBuilder();
         sb.append("Utilizadores: "); sb.append(this.utilizador);
         sb.append(", Posts: "); sb.append(this.posts);
-        sb.append(", Posts ordenados: "); sb.append(this.date_posts);
         sb.append(", Tags: "); sb.append(this.tag);
         return sb.toString();
     }

@@ -12,7 +12,6 @@ import java.time.LocalDate;
 public class Posts{
     private long key_id_post;
     private LocalDate data;
-    private String data_string;
     private long score;
     private long owner_user_id;
     private String body;
@@ -26,7 +25,6 @@ public class Posts{
     public Posts(){
         this.key_id_post = 0;
         this.data = LocalDate.now();
-        this.data_string = "";
         this.score = 0;
         this.owner_user_id = 0;
         this.body = "";
@@ -39,18 +37,16 @@ public class Posts{
      *
      * @param key Chave/Id do Post
      * @param data Data(LocalDate) do Post
-     * @param data_string Data(String) do Post
      * @param score Score do Post
      * @param owner_user Utilizador que fez o Post
      * @param body Corpo do Post
      * @param post_type Tipo do Post
      * @param comment_count Contador de comentários do Post
      */
-    public Posts(long key, LocalDate data, String data_string, long score, long owner_user, String body, long post_type,
+    public Posts(long key, LocalDate data, long score, long owner_user, String body, long post_type,
                  long comment_count){
         this.key_id_post = key;
         this.data = data;
-        this.data_string = data_string;
         this.score = score;
         this.owner_user_id = owner_user;
         this.body = body;
@@ -66,7 +62,6 @@ public class Posts{
     public Posts(Posts umpost){
         this.key_id_post = umpost.get_key_id_post();
         this.data = umpost.get_data();
-        this.data_string = umpost.get_data_string();
         this.score = umpost.get_score();
         this.owner_user_id = umpost.get_owner_user_id();
         this.body = umpost.get_body();
@@ -88,13 +83,6 @@ public class Posts{
      * @return Data(LocalDate) do Post.
      */
     public LocalDate get_data(){return this.data;}
-
-    /**
-     * Método que devolve o Data(String) do Post.
-     *
-     * @return Data(String) do Post.
-     */
-    public String get_data_string(){return this.data_string;}
 
     /**
      * Método que devolve o Score do Post.
@@ -145,13 +133,6 @@ public class Posts{
      * @param d Nova Data(LocalDate) do Post
      */
     public void set_data(LocalDate d){this.data = d;}
-
-    /**
-     * Atualiza a Data(String) do Post.
-     *
-     * @param data Nova Data(String) do Post
-     */
-    public void set_data_string(String data){this.data_string = data;}
 
     /**
      * Atualiza a Score do Post.
@@ -208,7 +189,6 @@ public class Posts{
         Posts p = (Posts) o; 
         return (this.key_id_post == (p.get_key_id_post())
                 && this.data.equals(p.get_data())
-                && this.data_string.equals(p.get_data_string())
                 && this.score == p.get_score()
                 && this.owner_user_id == p.get_owner_user_id()
                 && this.body.equals(p.get_body())
@@ -225,7 +205,6 @@ public class Posts{
         StringBuilder sb = new StringBuilder();
         sb.append("ID: "); sb.append(this.key_id_post);
         sb.append(", Data: "); sb.append(this.data);
-        sb.append(", Data em formato string: "); sb.append(this.data_string);
         sb.append(", Score: "); sb.append(this.score);
         sb.append(", Owner User: "); sb.append(this.owner_user_id);
         sb.append(", Body: "); sb.append(this.body);

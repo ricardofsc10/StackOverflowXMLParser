@@ -27,7 +27,6 @@ public class Post_resposta extends Posts{
      *
      * @param key Chave/Id do Post_resposta
      * @param data Data(LocalDate) do Post_resposta
-     * @param data_string Data(String) do Post_resposta
      * @param score Score do Post_resposta
      * @param owner_user Utilizador que fez o Post_resposta
      * @param body Respetivo Post_resposta
@@ -35,9 +34,9 @@ public class Post_resposta extends Posts{
      * @param comment_count Contador de comentários do Post_resposta
      * @param parent Pergunta a qual o Post_resposta responde
      */
-    public Post_resposta(long key, LocalDate data, String data_string, long score, long owner_user, String body, long post_type,
+    public Post_resposta(long key, LocalDate data, long score, long owner_user, String body, long post_type,
                          long comment_count, long parent){
-        super(key,data,data_string,score,owner_user,body,post_type,comment_count);
+        super(key,data,score,owner_user,body,post_type,comment_count);
         this.parent_id = parent;
     }
 
@@ -47,7 +46,7 @@ public class Post_resposta extends Posts{
      * @param resposta Novo Post_resposta
      */
     public Post_resposta(Post_resposta resposta){
-        super(resposta.get_key_id_post(), resposta.get_data(), resposta.get_data_string(), resposta.get_score(),
+        super(resposta.get_key_id_post(), resposta.get_data(), resposta.get_score(),
               resposta.get_owner_user_id(), resposta.get_body(), resposta.get_post_type_id(), resposta.get_comment_count());
         this.parent_id = resposta.get_parent_id();
     }

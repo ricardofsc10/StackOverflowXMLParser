@@ -31,7 +31,6 @@ public class Post_pergunta extends Posts{
      *
      * @param key Chave/Id do Post_pergunta
      * @param data Data(LocalDate) do Post_pergunta
-     * @param data_string Data(String) do Post_pergunta
      * @param score Score do Post_pergunta
      * @param owner_user Utilizador que fez o Post_pergunta
      * @param body Respetivo Post_pergunta
@@ -41,9 +40,9 @@ public class Post_pergunta extends Posts{
      * @param tags Tags do Post_pergunta
      * @param answer_count Contador de respostas do Post_pergunta
      */
-    public Post_pergunta(long key, LocalDate data, String data_string, long score, long owner_user, String body, long post_type,
+    public Post_pergunta(long key, LocalDate data, long score, long owner_user, String body, long post_type,
                          long comment_count, String title, ArrayList<String> tags, long answer_count){
-        super(key,data,data_string,score,owner_user,body,post_type,comment_count);
+        super(key,data,score,owner_user,body,post_type,comment_count);
         this.title = title;
         this.tags = tags;
         this.answer_count = answer_count;
@@ -55,7 +54,7 @@ public class Post_pergunta extends Posts{
      * @param pergunta Novo Post_pergunta
      */
     public Post_pergunta(Post_pergunta pergunta){
-        super(pergunta.get_key_id_post(), pergunta.get_data(), pergunta.get_data_string(), pergunta.get_score(),
+        super(pergunta.get_key_id_post(), pergunta.get_data(), pergunta.get_score(),
               pergunta.get_owner_user_id(), pergunta.get_body(), pergunta.get_post_type_id(), pergunta.get_comment_count());
         this.title = pergunta.get_title();
         this.tags = pergunta.get_tags();
