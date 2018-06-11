@@ -71,13 +71,16 @@ public class TCDExample implements TADCommunity {
         for (Utilizador u : this.com.get_utilizador().values())
             ativos.add(u.clone());
 
-        ativos = ativos.stream().limit(N).collect(Collectors.toSet());
         List<Long> res = new ArrayList<>();
-        for (Utilizador u : ativos)
-            res.add(u.get_key_id());
+        Iterator it = ativos.iterator();
+        int i=0;
+        while(it.hasNext() && i<N) {
+            Utilizador p = (Utilizador) it.next();
+            res.add(p.get_key_id());
+            i++;
+        }
         return res;
     }
-    //return ativos.stream().limit(N).map(Utilizador:: get_key_id).collect(Collectors.toList());
 
     // Query 3
     public Pair<Long,Long> totalPosts(LocalDate begin, LocalDate end) {
@@ -113,38 +116,44 @@ public class TCDExample implements TADCommunity {
             }
         }
         List<Long> res = new ArrayList<>();
-        for(Posts p : aux)
+        Iterator it = aux.iterator();
+        while(it.hasNext()) {
+            Post_pergunta p = (Post_pergunta) it.next();
             res.add(p.get_key_id_post());
+        }
         return res;
     }
 
     // Query 5
-    public class ComparatorData5 implements Comparator<Post_pergunta>{
-        public int compare(Post_pergunta p1, Post_pergunta p2){
+    public class ComparatorData5 implements Comparator<Posts>{
+        public int compare(Posts p1, Posts p2){
             if(p1.get_data().isBefore(p2.get_data()))return 1;
             else return -1;
         }
     }
-    public Pair<String,List<Long>> getUserInfo(long id){
-        return null;
-    }
 
-    /**
+
     public Pair<String, List<Long>> getUserInfo(long id) {
 
-        List<Long> ids = new ArrayList<>(ComparatorData5())
+        Set<Posts> ids = new TreeSet<>(new ComparatorData5());
 
-        for (Utilizador u : this.utilizador.values()) {
-                if(id.equals(u.get_key_id)) {
-                    res.setFst(u.get_bio());
-                    for(Posts )
-                }
-
-
+        for(Posts p : this.com.get_posts().values()){
+            if(p.get_owner_user_id() == id)
+                ids.add(p.clone());
         }
-        return new Pair<>(shortBio,ids);
+
+        List<Long> res = new ArrayList<>();
+        Iterator it = ids.iterator();
+        int i=0;
+        while(it.hasNext() && i<10) {
+            Posts p = (Posts) it.next();
+            res.add(p.get_key_id_post());
+            i++;
+        }
+
+        return new Pair(this.com.get_utilizador().get(id).get_bio(),res);
     }
-**/
+
     // Query 6
     public class ComparatorScore implements Comparator<Post_resposta>{
         public int compare(Post_resposta p1, Post_resposta p2){
@@ -163,10 +172,13 @@ public class TCDExample implements TADCommunity {
                 }
             }
         }
-        posts = posts.stream().limit(N).collect(Collectors.toSet());
         List<Long> res = new ArrayList<>();
-        for(Posts p : posts) {
+        Iterator it = posts.iterator();
+        int i=0;
+        while(it.hasNext() && i<N) {
+            Post_resposta p = (Post_resposta) it.next();
             res.add(p.get_key_id_post());
+            i++;
         }
         return res;
     }
@@ -189,10 +201,13 @@ public class TCDExample implements TADCommunity {
                 }
             }
         }
-        posts = posts.stream().limit(N).collect(Collectors.toSet());
         List<Long> res = new ArrayList<>();
-        for(Posts p : posts) {
+        Iterator it = posts.iterator();
+        int i=0;
+        while(it.hasNext() && i<N) {
+            Post_pergunta p = (Post_pergunta) it.next();
             res.add(p.get_key_id_post());
+            i++;
         }
         return res;
     }
@@ -215,10 +230,14 @@ public class TCDExample implements TADCommunity {
                     aux.add(post.clone());
             }
         }
-        aux = aux.stream().limit(N).collect(Collectors.toSet());
         List<Long> res = new ArrayList<>();
-        for(Posts p : aux)
+        Iterator it = aux.iterator();
+        int i=0;
+        while(it.hasNext() && i<N) {
+            Post_pergunta p = (Post_pergunta) it.next();
             res.add(p.get_key_id_post());
+            i++;
+        }
         return res;
     }
 

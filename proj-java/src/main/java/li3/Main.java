@@ -109,8 +109,8 @@ public class Main {
            Query 7
         */
         before = System.currentTimeMillis();
-        List<Long> q7 = qe.mostAnsweredQuestions(10, LocalDate.of(2014,Month.AUGUST,1),
-                LocalDate.of(2014,Month.AUGUST,11));
+        List<Long> q7 = qe.mostAnsweredQuestions(10, LocalDate.of(2012,Month.JANUARY,1),
+                LocalDate.of(2012,Month.DECEMBER,31));
         after = System.currentTimeMillis();
         logtime.writeLog("Query 7 -> "+(after-before)+" ms");
         log.writeLog("Query 7 -> "+q7);

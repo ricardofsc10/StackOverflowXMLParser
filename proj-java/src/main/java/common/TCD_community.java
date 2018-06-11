@@ -123,6 +123,11 @@ public class TCD_community{
             user.set_posts_frequentados(resposta.get_parent_id());
         }
     }
+
+    public void set_posts_u(Posts p){
+        Utilizador user = this.utilizador.get(p.get_owner_user_id());
+        user.set_posts_u(user.get_posts_u() + 1);
+    }
     
     ////////////////////// Métodos essenciais
     public TCD_community clone(){return new TCD_community(this);}

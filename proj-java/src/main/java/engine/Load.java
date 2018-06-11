@@ -124,9 +124,6 @@ public class Load{
                          comment_count = Long.parseLong(comment_count_l.getValue());
                        }
 
-                       Utilizador user = utilizadores.get(owner_user_id);
-                       user.set_posts_u(user.get_posts_u()+1);
-
                        if(post_type_id == 1){
 
                            Attribute title_l = startElement.getAttributeByName(new QName("Title"));
@@ -146,6 +143,9 @@ public class Load{
 
                            post = new Post_pergunta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,title,tags,answer_count);
                            com.set_posts_toUser(post);
+                           com.set_posts(post.get_key_id_post(), post);
+                           j++;
+                           com.set_posts_u(post);
                        }
 
                        if(post_type_id == 2){
@@ -157,10 +157,9 @@ public class Load{
 
                            post = new Post_resposta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,parent_id);
                            com.set_posts_toUser(post);
-                       }
-                       if(post!=null) {
                            com.set_posts(post.get_key_id_post(), post);
                            j++;
+                           com.set_posts_u(post);
                        }
                    }
                }
