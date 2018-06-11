@@ -8,6 +8,7 @@ package common;
  */
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ArrayList;
 
 public class Post_resposta extends Posts{

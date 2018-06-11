@@ -14,8 +14,8 @@ public class Utilizador{
     private long key_id;
     private String nome;
     private String bio;
-    private ArrayList<Long> posts_frequentados; // so contem o id das perguntas em que ele interage
-    private ArrayList<Post_pergunta> posts_perguntas; // contem os todas as perguntas que colocou em forma de POSTS
+    private List<Long> posts_frequentados; // so contem o id das perguntas em que ele interage
+    private List<Post_pergunta> posts_perguntas; // contem os todas as perguntas que colocou em forma de POSTS
     private long posts_u;
     private long reputacao;
     
@@ -44,7 +44,7 @@ public class Utilizador{
      * @param posts Número de posts do Utilizador
      * @param reputacao Reputação do Utilizador
      */
-    public Utilizador(long key, String nome, String bio, ArrayList<Long> posts_freq, ArrayList<Post_pergunta> posts_per, long posts, long reputacao){
+    public Utilizador(long key, String nome, String bio, List<Long> posts_freq, List<Post_pergunta> posts_per, long posts, long reputacao){
         this.key_id = key;
         this.nome = nome;
         this.bio = bio;
@@ -101,8 +101,8 @@ public class Utilizador{
      *
      * @return Posts em que o Utilizador interage.
      */
-    public ArrayList<Long> get_posts_frequentados(){
-        ArrayList<Long> res = new ArrayList<>();
+    public List<Long> get_posts_frequentados(){
+        List<Long> res = new ArrayList<>();
         for(Long l: this.posts_frequentados) 
             res.add(l); // nao se pode fazer clone de long acho
         return res;
@@ -113,8 +113,8 @@ public class Utilizador{
      *
      * @return Posts_pergunta em que o Utilizador interage.
      */
-    public ArrayList<Post_pergunta> get_posts_perguntas(){
-        ArrayList<Post_pergunta> res = new ArrayList<>();
+    public List<Post_pergunta> get_posts_perguntas(){
+        List<Post_pergunta> res = new ArrayList<>();
         for(Post_pergunta p: this.posts_perguntas)
             res.add(p.clone());
         return res;

@@ -8,11 +8,12 @@ package common;
  */
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ArrayList;
 
 public class Post_pergunta extends Posts{
     private String title;
-    private ArrayList<String> tags;
+    private List<String> tags;
     private long answer_count;
     
     ////////////////////// Construtores
@@ -41,7 +42,7 @@ public class Post_pergunta extends Posts{
      * @param answer_count Contador de respostas do Post_pergunta
      */
     public Post_pergunta(long key, LocalDate data, long score, long owner_user, String body, long post_type,
-                         long comment_count, String title, ArrayList<String> tags, long answer_count){
+                         long comment_count, String title, List<String> tags, long answer_count){
         super(key,data,score,owner_user,body,post_type,comment_count);
         this.title = title;
         this.tags = tags;
@@ -74,8 +75,8 @@ public class Post_pergunta extends Posts{
      *
      * @return Tags do Post.
      */
-    public ArrayList<String> get_tags(){ // acho que nao é preciso fazer isto tudo uma vez que sao strings
-        ArrayList<String> res = new ArrayList<>();
+    public List<String> get_tags(){ // acho que nao é preciso fazer isto tudo uma vez que sao strings
+        List<String> res = new ArrayList<>();
         for(String t: this.tags) 
             res.add(t); // nao se pode fazer clone de long acho
         return res;

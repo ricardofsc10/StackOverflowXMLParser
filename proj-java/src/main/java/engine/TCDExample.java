@@ -56,10 +56,10 @@ public class TCDExample implements TADCommunity {
      @returns Par com informação do post.
      */
     public Pair<String,String> infoFromPost(long id) {
-        HashMap<Long,Posts> todos_posts = this.com.get_posts();
+        Map<Long,Posts> todos_posts = this.com.get_posts();
         if(todos_posts.containsKey(id)){
             Posts post = todos_posts.get(id);
-            HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
+            Map<Long,Utilizador> utilizadores = this.com.get_utilizador();
             if(post instanceof Post_pergunta){
                 Post_pergunta pergunta = (Post_pergunta) post;
                 Long owner = pergunta.get_owner_user_id();
@@ -162,7 +162,7 @@ public class TCDExample implements TADCommunity {
             if(p instanceof Post_pergunta){
                 Post_pergunta post = (Post_pergunta) p;
                 if((post.get_data().isAfter(begin) || post.get_data().isEqual(begin)) && (post.get_data().isBefore(end) || post.get_data().isEqual(end))) {
-                    ArrayList<String> tags = post.get_tags();
+                    List<String> tags = post.get_tags();
                     if (tags.contains(tag))
                         aux.add(post.clone());
                 }
@@ -344,13 +344,13 @@ public class TCDExample implements TADCommunity {
      @returns Lista com os IDs das perguntas em que ambos participam.
      */
     public List<Long> bothParticipated(int N, long id1, long id2) {
-        HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
+        Map<Long,Utilizador> utilizadores = this.com.get_utilizador();
         if(utilizadores.containsKey(id1) && utilizadores.containsKey(id2)){
-            ArrayList<Long> posts_id1 = utilizadores.get(id1).get_posts_frequentados();
-            ArrayList<Long> posts_id2 = utilizadores.get(id2).get_posts_frequentados();
-            HashMap<Long,Posts> posts = this.com.get_posts();
+            List<Long> posts_id1 = utilizadores.get(id1).get_posts_frequentados();
+            List<Long> posts_id2 = utilizadores.get(id2).get_posts_frequentados();
+            Map<Long,Posts> posts = this.com.get_posts();
 
-            ArrayList<Long> iguais = new ArrayList<>();
+            List<Long> iguais = new ArrayList<>();
             for(long id : posts_id1)
                 if(posts_id2.contains(id)) iguais.add(id);
 
@@ -384,13 +384,13 @@ public class TCDExample implements TADCommunity {
      @returns Id da melhor resposta.
      */
     public long betterAnswer(long id) {
-        HashMap<Long,Posts> todos_posts = this.com.get_posts();
+        Map<Long,Posts> todos_posts = this.com.get_posts();
         if(todos_posts.containsKey(id)){
             Posts post = todos_posts.get(id);
             if(post instanceof Post_pergunta){
                 double melhor_media = 0;
                 long melhor_id = 0;
-                HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
+                Map<Long,Utilizador> utilizadores = this.com.get_utilizador();
                 for(Posts posts : todos_posts.values()){
                     if(posts instanceof Post_resposta){
                         Post_resposta resposta = (Post_resposta) posts;
@@ -443,7 +443,7 @@ public class TCDExample implements TADCommunity {
      @returns Lista com as N tags mais usadas.
      */
     public List<Long> mostUsedBestRep(int N, LocalDate begin, LocalDate end) {
-        HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
+        Map<Long,Utilizador> utilizadores = this.com.get_utilizador();
         Set<Utilizador> melhor_reputacao = new TreeSet<>(new ComparatorReputacao());
         for(Utilizador u : utilizadores.values()) melhor_reputacao.add(u);
 
@@ -473,7 +473,7 @@ public class TCDExample implements TADCommunity {
         for(TagUnique tu : todas_tags.values())
             ordenado.add(tu);
 
-        HashMap<String,Tag> tags = this.com.get_tag();
+        Map<String,Tag> tags = this.com.get_tag();
         List<Long> res = new ArrayList<>();
 
         Iterator it = ordenado.iterator();

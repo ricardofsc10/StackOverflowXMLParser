@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class TCD_community{
-    private HashMap<Long,Utilizador> utilizador;
-    private HashMap<Long,Posts> posts;
-    private HashMap<String,Tag> tag;
+    private Map<Long,Utilizador> utilizador;
+    private Map<Long,Posts> posts;
+    private Map<String,Tag> tag;
     
     ////////////////////// Construtores
     /**
@@ -34,7 +34,7 @@ public class TCD_community{
      * @param posts Estrutura Posts
      * @param tag Estrutura Tag
      */
-    public TCD_community(HashMap<Long,Utilizador> utilizador, HashMap<Long,Posts> posts, HashMap<String,Tag> tag){
+    public TCD_community(Map<Long,Utilizador> utilizador, Map<Long,Posts> posts, Map<String,Tag> tag){
         // para o hashmap de utilizador
         this.utilizador = new HashMap<>();
         for(Long l : utilizador.keySet()){
@@ -74,8 +74,8 @@ public class TCD_community{
      *
      * @return Estrutura Utilizador.
      */
-    public HashMap<Long,Utilizador> get_utilizador(){
-        HashMap<Long,Utilizador> res = new HashMap<>();
+    public Map<Long,Utilizador> get_utilizador(){
+        Map<Long,Utilizador> res = new HashMap<>();
         for(Long l : this.utilizador.keySet()){
             Utilizador u = this.utilizador.get(l);
             res.put(l,u.clone());
@@ -88,8 +88,8 @@ public class TCD_community{
      *
      * @return Estrutura Posts.
      */
-    public HashMap<Long,Posts> get_posts(){
-        HashMap<Long,Posts> res = new HashMap<>();
+    public Map<Long,Posts> get_posts(){
+        Map<Long,Posts> res = new HashMap<>();
         for(Long l : this.posts.keySet()){
             Posts p = this.posts.get(l);
             res.put(l,p.clone());
@@ -102,8 +102,8 @@ public class TCD_community{
      *
      * @return Estrutura Tags.
      */
-    public HashMap<String,Tag> get_tag(){
-        HashMap<String,Tag> res = new HashMap<>();
+    public Map<String,Tag> get_tag(){
+        Map<String,Tag> res = new HashMap<>();
         for(String s : this.tag.keySet()){
             Tag t = this.tag.get(s);
             res.put(s,t.clone());
