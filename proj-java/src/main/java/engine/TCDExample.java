@@ -246,15 +246,15 @@ public class TCDExample implements TADCommunity {
     // Query 11
     public class ComparatorOcorrencias implements Comparator<TagUnique>{
         public int compare(TagUnique tu1, TagUnique tu2){
-            if(tu1.getOcorrencias() > tu2.getOcorrencias()) return 1;
-            else return -1;
+            if(tu1.getOcorrencias() > tu2.getOcorrencias()) return -1;
+            else return 1;
         }
     }
 
     public class ComparatorReputacao implements  Comparator<Utilizador>{
         public int compare(Utilizador u1, Utilizador u2){
-            if(u1.get_reputacao() > u2.get_reputacao()) return  1;
-            else return -1;
+            if(u1.get_reputacao() > u2.get_reputacao()) return  -1;
+            else return 1;
         }
     }
 
@@ -262,6 +262,7 @@ public class TCDExample implements TADCommunity {
         HashMap<Long,Utilizador> utilizadores = this.com.get_utilizador();
         Set<Utilizador> melhor_reputacao = new TreeSet<>(new ComparatorReputacao());
         for(Utilizador u : utilizadores.values()) melhor_reputacao.add(u);
+
         melhor_reputacao = melhor_reputacao.stream().limit(N).collect(Collectors.toSet());
 
         Map<String,TagUnique> todas_tags = new HashMap<>();
@@ -269,8 +270,7 @@ public class TCDExample implements TADCommunity {
         for(Utilizador user : melhor_reputacao){
             for(Post_pergunta post : user.get_posts_perguntas()){
                 if(post.get_data().isAfter(begin) && post.get_data().isBefore(end)) {
-                    for (String tag : post.get_tags()) {
-                        System.out.println(tag);
+                    for (String tag : post.get_tags()){
                         if (todas_tags.containsKey(tag)) {
                             TagUnique tu = todas_tags.get(tag);
                             tu.setOcorrencias((tu.getOcorrencias()) + 1);
@@ -287,15 +287,14 @@ public class TCDExample implements TADCommunity {
         for(TagUnique tu : todas_tags.values())
             ordenado.add(tu);
 
-        //ordenado = ordenado.stream().limit(N).collect(Collectors.toSet());
+        List<TagUnique> ordenado_l = ordenado.stream().limit(N).collect(Collectors.toList());
         HashMap<String,Tag> tags = this.com.get_tag();
         List<Long> res = new ArrayList<>();
-        for(TagUnique tu : ordenado) {
-            System.out.println(tu.getNome());
-            System.out.println(tu.getOcorrencias());
-            Tag tag = tags.get(tu.getNome());
-            if(tag != null)
-                res.add(tag.get_id_tag());
+
+        Iterator it = ordenado_l.iterator();
+        while(it.hasNext()) {
+            TagUnique tu = (TagUnique) it.next();
+            res.add(tags.get(tu.getNome()).get_id_tag());
         }
         return res;
     }

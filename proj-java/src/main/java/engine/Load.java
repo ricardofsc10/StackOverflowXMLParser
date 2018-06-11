@@ -184,12 +184,12 @@ public class Load{
                        Tag tag = new Tag();
 
                        //Get the 'id' attribute from Utilizador element
-                       Attribute tag_name_l = startElement.getAttributeByName(new QName("Id"));
+                       Attribute tag_name_l = startElement.getAttributeByName(new QName("TagName"));
                        if(tag_name_l != null){
                          tag.set_key_tag_name(tag_name_l.getValue());
                        }
 
-                       Attribute id_tag_l = startElement.getAttributeByName(new QName("DisplayName"));
+                       Attribute id_tag_l = startElement.getAttributeByName(new QName("Id"));
                        if(id_tag_l != null){
                          tag.setid_tag(Long.parseLong(id_tag_l.getValue()));
                        }
