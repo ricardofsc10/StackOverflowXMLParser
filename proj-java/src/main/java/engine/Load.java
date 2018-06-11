@@ -6,7 +6,6 @@ import org.xml.sax.SAXException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.time.LocalDate;
 import java.io.FileInputStream;
 
@@ -20,7 +19,16 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 public class Load{
-    
+
+    /**
+     Função que filtra os dados que são necessários do documento Users.xml
+     e coloca nos campos da estrutura.
+
+     @param xmlEventReader eventos dum ficheiro que é possível ler.
+     @param com Estrutura onde vao ser inseridos os dados.
+
+     @returns Estrutura com os dados referentes a cada utilizador.
+     */
     public static void getReferenceUser (XMLEventReader xmlEventReader, TCD_community com) throws XMLStreamException{ // por causa do nextEvent
 
             int j=0;
@@ -61,14 +69,22 @@ public class Load{
         System.out.println(j + " Users ...");
     }
 
+    /**
+     Função que filtra os dados que são necessários do documento Posts.xml
+     e coloca nos campos da estrutura.
+
+     @param xmlEventReader eventos dum ficheiro que é possível ler.
+     @param com Estrutura onde vao ser inseridos os dados.
+
+     @returns Estrutura com os dados referentes a cada post no seu devido campo.
+     */
     public static void getReferencePosts (XMLEventReader xmlEventReader, TCD_community com) throws XMLStreamException{ // por causa do nextEvent
 
             Integer j=0;
             Long key_id_post = null, post_type_id = null, score = null, owner_user_id = null, comment_count = null, parent_id = null, answer_count = null;
-            String data_string = "", body = "", title = "";
+            String body = "", title = "";
             LocalDate data = null;
             ArrayList<String> tags = null;
-            Map<Long,Utilizador> utilizadores = com.get_utilizador();
 
             while(xmlEventReader.hasNext()){
                XMLEvent xmlEvent = xmlEventReader.nextEvent();
@@ -84,11 +100,6 @@ public class Load{
                        Attribute post_type_id_l = startElement.getAttributeByName(new QName("PostTypeId"));
                        if(post_type_id_l != null){
                          post_type_id = Long.parseLong(post_type_id_l.getValue());
-                       }
-
-                       Attribute data_string_l = startElement.getAttributeByName(new QName("CreationDate"));
-                       if(data_string_l != null){
-                         data_string = data_string_l.getValue();
                        }
 
                        Attribute data_l = startElement.getAttributeByName(new QName("CreationDate"));
@@ -133,7 +144,7 @@ public class Load{
                              answer_count = Long.parseLong(answer_count_l.getValue());
                            }
 
-                           Posts post = new Post_pergunta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,title,tags,answer_count);
+                           Posts post = new Post_pergunta(key_id_post,data,score,owner_user_id,body,post_type_id, comment_count,title,tags,answer_count);
                            com.set_posts_toUser(post);
                            com.set_posts(post.get_key_id_post(), post);
                            j++;
@@ -147,7 +158,7 @@ public class Load{
                              parent_id = Long.parseLong(parent_id_l.getValue());
                            }
 
-                           Posts post = new Post_resposta(key_id_post,data,data_string,score,owner_user_id,body,post_type_id, comment_count,parent_id);
+                           Posts post = new Post_resposta(key_id_post,data,score,owner_user_id,body,post_type_id, comment_count,parent_id);
                            com.set_posts_toUser(post);
                            com.set_posts(post.get_key_id_post(), post);
                            j++;
@@ -159,8 +170,15 @@ public class Load{
         System.out.println(j + " Posts ...");
     }
 
+    /**
+     Função que filtra os dados que são necessários do documento Tags.xml
+     e coloca nos campos da estrutura.
 
+     @param xmlEventReader eventos dum ficheiro que é possível ler.
+     @param com Estrutura onde vao ser inseridos os dados.
 
+     @returns Estrutura com as tags referentes a cada post.
+     */
     public static void getReferenceTags (XMLEventReader xmlEventReader, TCD_community com) throws XMLStreamException{ // por causa do nextEvent
 
             int j=0;
@@ -190,6 +208,16 @@ public class Load{
         System.out.println(j + " Tags ...");
     }
 
+    /**
+     Função que realiza todo o processo de parsing dos documentos.
+
+     Utiliza funções da StAX API para fazer o parsing através de eventos (chunks).
+
+     @param com Estrutura inicializada.
+     @param dump_path Contém o caminho para a pasta que contém os documentos .xml.
+
+     @returns Estrutura totamente carregada com os dados filtrados de cada ficheiro.
+     */
     public static TCD_community load(TCD_community com, String dump_path)throws ParserConfigurationException,
             SAXException, IOException {
 

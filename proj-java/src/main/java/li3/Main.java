@@ -128,7 +128,7 @@ public class Main {
            Query 9
         */
         before = System.currentTimeMillis();
-        List<Long> q9 = qe.bothParticipated(10, 253, 455);
+        List<Long> q9 = qe.bothParticipated(10, 15811, 449);
         after = System.currentTimeMillis();
         logtime.writeLog("Query9 -> " + (after - before) + " ms");
         log.writeLog("Query 9 -> " + q9);
