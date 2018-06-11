@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.time.LocalDate;
 import java.io.FileInputStream;
 
@@ -73,6 +74,7 @@ public class Load{
             String data_string = "", body = "", title = "";
             LocalDate data = null;
             ArrayList<String> tags = null;
+            Map<Long,Utilizador> utilizadores = com.get_utilizador();
 
             while(xmlEventReader.hasNext()){
                XMLEvent xmlEvent = xmlEventReader.nextEvent();
@@ -122,8 +124,8 @@ public class Load{
                          comment_count = Long.parseLong(comment_count_l.getValue());
                        }
 
-                       //Utilizador user = com.get_utilizador().get(owner_user_id);
-                       //user.set_posts_u(user.get_posts_u()+1);
+                       Utilizador user = utilizadores.get(owner_user_id);
+                       user.set_posts_u(user.get_posts_u()+1);
 
                        if(post_type_id == 1){
 

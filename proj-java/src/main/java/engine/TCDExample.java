@@ -61,10 +61,8 @@ public class TCDExample implements TADCommunity {
 
     public class ComparatorPosts implements Comparator<Utilizador>{
         public int compare(Utilizador u1, Utilizador u2) {
-            if(u1.get_posts_u() > u2.get_posts_u()) {
-                return 1;
-            }
-            return -1;
+            if(u1.get_posts_u() > u2.get_posts_u()) return 1;
+            else return -1;
         }
     }
     public List<Long> topMostActive(int N) {
@@ -72,9 +70,14 @@ public class TCDExample implements TADCommunity {
 
         for (Utilizador u : this.com.get_utilizador().values())
             ativos.add(u.clone());
-        
-        return ativos.stream().limit(N).map(Utilizador:: get_key_id).collect(Collectors.toList());
+
+        ativos = ativos.stream().limit(N).collect(Collectors.toSet());
+        List<Long> res = new ArrayList<>();
+        for (Utilizador u : ativos)
+            res.add(u.get_key_id());
+        return res;
     }
+    //return ativos.stream().limit(N).map(Utilizador:: get_key_id).collect(Collectors.toList());
 
     // Query 3
     public Pair<Long,Long> totalPosts(LocalDate begin, LocalDate end) {
