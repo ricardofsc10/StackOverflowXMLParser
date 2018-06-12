@@ -144,15 +144,10 @@ estrutura \textbf{utilizador}, denominada de \textbf{UTILIZADOR}, no
 
 \subsection{Init}
 
-//////////////////// FALTA FAZER ////////////////////
 
-Função que cria a \textbf{TCD\_community}. Por consequência, inicializa
-as estruturas relacionadas a essa mesma struct, alocando memória e usando
-a função da \textit{glib}, \textbf{g\_hash\_table\_new}.
+Função que cria a \textbf{TCD\_community}. 
 
 \subsection{Load}
-
-//////////////////// FALTA FAZER ////////////////////
 
 Função que realiza o parse de todos os ficheiros necessários à realização
 do trabalho. Após receber um \textbf{dump\_path} para os ficheiros XML,
@@ -181,31 +176,16 @@ standard output.
 
 \subsection{Query 1}
 
-//////////////////// FALTA FAZER ////////////////////
-
 Dado o identificador de um post, a função retorna o título do post 
 e o nome de utilizador do autor. Se o post for uma resposta, a função
 retorna o título e o id do utilizador da pergunta correspondente.
 
-Nesta questão, sendo o valor do \textbf{id} igual ao da \textbf{key} 
-da tabela de hash, recorremos à função da \textit{glib},
-\textbf{g\_hash\_table\_lookup} que dado uma \textbf{key},
-retorna o \textbf{value} associado. Caso nada seja encontrado,
-é retornado NULL.
+Nesta questão, criamos um  \textbf{Map} onde colocamos todos os posts da comunidade.
+Se o ID que recebemos como parâmetro pertencer ao  \textbf{Map} podemos prosseguir com a realização da query.
 
-Tendo agora todos os valores referentes ao \textbf{post}, caso este
-seja uma pergunta, é atríbuido à primeira coordenada o \textbf{title}
-do post e à segunda o \textbf{nome} de quem realizou a questão.
-Encontramos o \textbf{nome} do autor da questão invocando o parâmetro
-\textbf{owner\_user\_id} na mesma função \textbf{lookup} utilizada 
-anteriormente, passando agora a ser esse o \textbf{key/id} associado.
+Criamos um novo map com todos os utilizadores da comunidade. Caso o post seja uma pergunta, retornamos o par com o título do post e o nome do user.
 
-Caso seja uma resposta, o primeiro parâmetro é calculado usando a mesma 
-função \textbf{g\_hash\_table\_lookup}, mas agora com o 
-parâmetro \textbf{parent\_id}, que numa resposta retorna o \textbf{id} 
-da pergunta ao qual esta respondeu. O segundo parâmetro é igualmente
-calculado como se fosse uma pergunta, mudando apenas o novo 
-\textbf{value} associado.
+Caso contrário, retornamos o par com o título e o ID da pergunta ( \textbf{parent_id}).
 
 \subsection{Query 2}
 
@@ -334,75 +314,52 @@ Dados os IDs de dois utilizadores, devolver as últimas N perguntas, em
 cronologia inversa, em que participaram dois utilizadores específicos, 
 via pergunta ou respostas.
 
-Nesta questão recorremos à criação de um \textbf{Map} com todos os utilizadores. 
-De seguida, verificamos se o ID de ambos os utilizadores pertence a esse Map.
-Caso se verifique, colocamos numa lista (para cada utilizador) os IDs dos posts 
-nos quais estes utilizadores interagiram.
+Nesta questão recorremos à criação de um \textbf{Map} com todos os utilizadores. De seguida, verificamos se o ID de ambos os utilizadores pertence a esse Map.
+Caso se verifique, colocamos numa lista (para cada utilizador) os IDs dos posts nos quais estes utilizadores interagiram.
 
-Assim, basta depois percorrer a primeira lista e comparar com os IDs das segunda
-lista através do método \textbf{contains()} e adicionar a um \textbf{TreeSet} que
-implementa o \textbf{ComparatorData} para os posts estarem por ordem cronológica.
+Assim, basta depois percorrer a primeira lista e comparar com os IDs das segunda lista através do método \textbf{contains()} e adicionar a um \textbf{TreeSet} que implementa o \textbf{ComparatorData} para os posts estarem por ordem cronológica.
 
-Por fim, como em queries anteriores e porque queremos apenas os IDs dos posts,
-criamos um Iterator para percorrer o TreeSet e adicionar a uma List de 
-\textbf{Longs}.
+Por fim, como em queries anteriores e porque queremos apenas os IDs dos posts, criamos um Iterator para percorrer o TreeSet e adicionar a uma List de \textbf{Longs}.
+
+
 
 \subsection{Query 10}
+
 
 Dado o ID de uma pergunta, obter a melhor resposta, tendo em conta
 uma média ponderada.
 
-Nesta questão, utilizamos uma \textbf{Map<Long,Posts>} que contém todos os posts 
-da comunidade.
+Nesta questão, utilizamos uma \textbf{Map<Long,Posts>} que contém todos os posts da comunidade.
 
-Primeiro, verificamos se o ID da pergunta que recebemos como parâmetro pertence 
-ao Map com todos os posts e se é uma pergunta (pois queremos analisar as respostas
-dessa pergunta).
+Primeiro, verificamos se o ID da pergunta que recebemos como parâmetro pertence ao Map com todos os posts e se é uma pergunta (pois queremos analisar as respostas dessa pergunta)
 
-Passando estas verificações, criamos outro Map, desta feita com todos os utilizadores
-da comunidade. Depois, percorremos todos os posts da comunidade, e sempre que for um 
-\textbf{Post\_resposta}, verificamos se o \textbf{parent\_id} da resposta é o ID que
-recebemos como parâmetro. Caso se confirme, calculamos a média através da equação
-fornecida e se esta for melhor que a melhor média calculada até aquela resposta, 
-esta é substituída e colocamos no \textbf{melhor\_id} o ID da resposta.
+Passando estas verificações, criamos outro Map, desta feita com todos os utilizadores da comunidade. Depois, percorremos todos os posts da comunidade, e sempre que for um \textbf{Post_resposta}, verificamos se o \textbf{parent_id} da resposta é o ID que recebemos como parâmetro. Caso se confirme, calculamos a média através da equação fornecida e se esta for melhor que a melhor média calculada até aquela respsota, esta é substituída e colocamos no \textbf{melhor_id} o ID da resposta.
+
+
 
 \subsection{Query 11}
+
 
 Dado um intervalo arbitrário de tempo, devolver os identificadores das N tags
 mais usadas pelos N utilizadores com melhor reputação. Em ordem decrescente 
 do número de vezes em que a tag foi usada.
 
-Nesta questão, implementamos 2 Comparator's, um para compara as ocorrências de 
-cada tag (ComparatorOcorrencias) e outro que compara a reputação dos utilizadores 
-(ComparatorReputacao).
+Nesta questão, implementamos 2 Comparator's, um para compara as ocorrências de cada tag (ComparatorOcorrencias) e outro que compara a reputação dos utilizadores (ComparatorReputacao).
 
-O primeiro passo é a criação das estruturas. Criamos um \textbf{Map} que tem todos
-os utilizadores e um \textbf{TreeSet} de utilizadores que implementa o 
-ComparatorReputacao.
+O primeiro passo é a criação das estruturas. Criamos um \textbf{Map} que tem todos os utilizadores e um \textbf{TreeSet} de utilizadores que implementa o ComparatorReputacao.
 
-Assim no primeiro ciclo for, adicionamos ao \textbf{TreeSet} os utilizadores para
-ficarem organizado por reputação.
+Assim no primeiro ciclo for, adicionamos ao \textbf{TreeSet} os utilizadores para ficarem organizado por reputação.
 
-Depois, criamos um \textbf{Iterator} que vai percorrer o \textbf{TreeSet} dos
-utilizadores ordenados por reputação e, para utilizador, vai percorrer os seus
-posts\_perguntas, verificando se estes se encontram dentro dos parâmetros das datas.
-Caso se verifique, percorremos todas as tags desse post e para cada tag verificamos
-se pertence à estrutura todas\_tags (contém todas as tags) e incrementamos uma 
-variável que conta as ocorrências, se essa tag pertencer. Caso contrário, 
-adicionamos à estrutura todas\_tags essa nova tag.
+Depois, criamos um \textbf{Iterator} que vai percorrer o \textbf{TreeSet} dos utilizadores ordenados por reputação e, para utilizador, vai percorrer os seus posts_perguntas, verificando se estes se encontram dentro dos parâmetros das datas. Caso se verifique, percorremos todas as tags desse post e para cada tag verificamos se pertence à estrutura todas_tags (contém todas as tags) e incrementamos uma variável que conta as ocorrências, se essa tag pertencer. Caso contrário, adicionamos à estrutura todas_tags essa nova tag.
 
-Após analisarmos as tags dos posts, criamos um TreeSet de \textbf{TagUnique} que
-implementa o \textbf{ComparatorOcorrencias} para colocar no TreeSet, de forma
-ordenada por nº de ocorrências cada uma das tags.
+Após analisarmos as tags dos posts, criamos um TreeSet de \textbf{TagUnique} que implementa o \textbf{ComparatorOcorrencias} para colocar no TreeSet, de forma ordenada por nº de ocorrências cada uma das tags.
 
-Por fim, e como queremos retornar os identificadores das N tags mais usadas, 
-criamos uma List de Long  e, através de um Iterator, colocamos nessa List, 
-N ID's de tags.
+Por fim, e como queremos retornar os identificadores das N tags mais usadas, criamos uma List de Long  e, através de um Iterator, colocamos nessa List, N ID's de tags.
 
 \subsection{Clean}
 
-Função que limpa toda a estrutura da comunidade com o auxílio do 
-\textbf{GarbageCollection}.
+
+Função que limpa toda a estrutura da comunidade com o auxílio do \textbf{GarbageCollection}.
 
 \section{Conclusão}
 \label{sec:conclusao}
