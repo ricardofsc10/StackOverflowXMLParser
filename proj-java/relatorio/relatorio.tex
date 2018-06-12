@@ -34,7 +34,7 @@ questões de eficiência entre as duas linguagens.
 \section{Introdução}
 \label{sec:intro}
 
-Este trabalho tem por base o parse de elementos de ficheiros XML
+Este trabalho tem por base o parsing de elementos de ficheiros XML
 relacionados com a informação do website Stack Overflow, de forma
 a seguidamente responder a uma série de questões relacionadas com
 posts, utilizadores e tags do mesmo website. Aliado a tal está o desafio
@@ -138,10 +138,10 @@ como interface para as queries.
 
 \subsection{Init}
 
-Função que cria a \textbf{TCD\_community}. 
+Função que inicializa a \textbf{TCD\_community}. 
 
 \subsection{Load}
-Método que realiza o parser em \textbf{chunks} dos ficheiros necessários à 
+Método que realiza o parsing em \textbf{chunks} dos ficheiros necessários à 
 realização do trabalho, através da API do StAX. Após receber um 
 \textbf{dump\_path} para os ficheiros  XML, caso não existam falhas na 
 estrutura XML são realizadas três funções: o \textbf{getReferenceUser}, 
@@ -371,22 +371,34 @@ uma List de Long e, através de um Iterator, colocamos nessa List, N ID's de tag
 \subsection{Clean}
 
 Função que limpa toda a estrutura da comunidade com o auxílio do 
-\textbf{GarbageCollection}.
+\textbf{GarbageCollection} e do método \textbf{clear()} da interface \textbf{Map}.
 
 \section{Conclusão}
-\label{sec:conclusao}
+\label{sec:conclusao} 
 
-//////////////////// FALTA FAZER ////////////////////
-
-Tendo em conta os objetivos definidos, o grupo acha que os resultados 
-principais foram obtidos. 
-
-Depois da realização deste mesmo projeto podemos declarar várias diferenças
+Depois da realização deste mesmo projeto podemos declarar algumas diferenças
 entre os dois projetos, denomidamente:
 
 \begin{itemize}
-  \item 
+  \item Os tempos obtidos nas queries em cada linguagem são um pouco diferentes, achamos que 
+  tal facto se possa dever ao nível de encapsulamento usado, como em java usamos uma 
+  abordagem \textit{deep clone}, por algumas vezes temos de trazer toda a estrutura o 
+  que implica a cópia de cada elemento dela pelo que se pode perder algum desempenho.
+
+  \item A load é mais eficiente em \textbf{Java} do que em \textbf{C} uma vez que a nossa 
+  abordagem foi diferente. Em Java o nosso parsing foi faseado, através de chunks, e em C 
+  foi total pelo que carregavamos todo o ficheiro para memória, logo nao podemos comparar 
+  tempos neste caso pelo que nao abordamos a load da mesma forma.
+
+  \item O processo de tratamento de leaks e de limpeza de estruturas é facilitado devido 
+  à API fornecida pelo \textbf{Java} que trata duma forma bem mais simples a questão. No 
+  projeto de \textbf{C} esta foi uma tarefa bem mais difícil pois tínhamos de ter em atenção 
+  todas as variáveis e alocações de memória feitas, e não deveríamos esquecer de nenhum 
+  \textbf{free}.
 \end{itemize}
+
+Tendo em conta os objetivos definidos, o grupo acha que os resultados 
+principais foram obtidos.
 
 
 \section{Bibliografia}
