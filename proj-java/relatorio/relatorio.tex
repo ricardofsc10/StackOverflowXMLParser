@@ -330,89 +330,56 @@ esse TreeSet adicionando a uma List de Longs os ID's dos posts.
 
 \subsection{Query 9}
 
-//////////////////// FALTA FAZER ////////////////////
-
 Dados os IDs de dois utilizadores, devolver as últimas N perguntas, em
 cronologia inversa, em que participaram dois utilizadores específicos, 
 via pergunta ou respostas.
 
-Nesta questão recorremos à estrutura \textbf{utilizador} que contém a 
-informação sobre todos os utilizadores, para retirar a informação relativa 
-aos \textbf{posts\_} \textbf{frequentados}, de cada utilizador que nos são 
-passados como argumentos. Resta apenas comparar estas duas 
-\textit{\textbf{GList*}} para retirar os \textbf{id\_post} que coincidem.
+Nesta questão recorremos à criação de um \textbf{Map} com todos os utilizadores. De seguida, verificamos se o ID de ambos os utilizadores pertence a esse Map.
+Caso se verifique, colocamos numa lista (para cada utilizador) os IDs dos posts nos quais estes utilizadores interagiram.
+
+Assim, basta depois percorrer a primeira lista e comparar com os IDs das segunda lista através do método \textbf{contains()} e adicionar a um \textbf{TreeSet} que implementa o \textbf{ComparatorData} para os posts estarem por ordem cronológica.
+
+Por fim, como em queries anteriores e porque queremos apenas os IDs dos posts, criamos um Iterator para percorrer o TreeSet e adicionar a uma List de \textbf{Longs}.
+
+
 
 \subsection{Query 10}
 
-//////////////////// FALTA FAZER ////////////////////
 
 Dado o ID de uma pergunta, obter a melhor resposta, tendo em conta
 uma média ponderada.
 
-Nesta questão, utilizamos uma \textit{\textbf{GList*}} para armazenar 
-os \textbf{values} de cada \textbf{utilizador}, sendo isto realizado
-pela função da \textit{glib}, \textbf{g\_hash\_table\_get\_values}.
+Nesta questão, utilizamos uma \textbf{Map<Long,Posts>} que contém todos os posts da comunidade.
 
-Depois, identificamos a pergunta ao qual o \textbf{post} está a responder,
-através do \textbf{parent\_id}. Caso essa pergunta seja o \textbf{id}
-passado como parâmetro, calculamos a média ponderada tendo em conta o
-\textbf{score}, o \textbf{comment\_count} e a \textbf{reputação}. Este
-último parâmetro é acedido na estrutura do utilizador através da função
-\textbf{g\_hash\_table\_lookup}. Quando encontramos uma média melhor é
-alterado o \textbf{id\_post} a retornar no final.
+Primeiro, verificamos se o ID da pergunta que recebemos como parâmetro pertence ao Map com todos os posts e se é uma pergunta (pois queremos analisar as respostas dessa pergunta)
+
+Passando estas verificações, criamos outro Map, desta feita com todos os utilizadores da comunidade. Depois, percorremos todos os posts da comunidade, e sempre que for um \textbf{Post_resposta}, verificamos se o \textbf{parent_id} da resposta é o ID que recebemos como parâmetro. Caso se confirme, calculamos a média através da equação fornecida e se esta for melhor que a melhor média calculada até aquela respsota, esta é substituída e colocamos no \textbf{melhor_id} o ID da resposta.
+
+
 
 \subsection{Query 11}
 
-//////////////////// FALTA FAZER ////////////////////
 
 Dado um intervalo arbitrário de tempo, devolver os identificadores das N tags
 mais usadas pelos N utilizadores com melhor reputação. Em ordem decrescente 
 do número de vezes em que a tag foi usada.
 
-Nesta questão, utilizamos uma \textit{\textbf{GList*}} denominada 
-\textbf{glista} para armazenar os \textbf{values} de cada \textbf{utilizador},
-sendo isto realizado pela função da \textit{glib}, 
-\textbf{g\_hash\_table\_get\_values}. Esta lista é depois ordenada tendo em
-conta a reputação através da função \textbf{g\_list\_sort}, para depois 
-manter só os \textbf{N utilizadores} necessários, algo que fica guardado
-numa \textit{\textbf{GList*}} de nome \textbf{aux}.
+Nesta questão, implementamos 2 Comparator's, um para compara as ocorrências de cada tag (ComparatorOcorrencias) e outro que compara a reputação dos utilizadores (ComparatorReputacao).
 
-Criamos uma \textit{\textbf{GHashTable*}} que vai conter todos as tags.
-De seguida, percorremos a \textit{\textbf{GList*}} \textbf{posts\_perguntas}
-que só contêm as \textbf{N perguntas} da lista \textbf{aux}.
+O primeiro passo é a criação das estruturas. Criamos um \textbf{Map} que tem todos os utilizadores e um \textbf{TreeSet} de utilizadores que implementa o ComparatorReputacao.
 
-Caso o \textbf{post\_pergunta} esteja entre as datas passadas como argumentos,
-colocamos numa \textit{\textbf{GList*}} denominada \textbf{tags} as tags desse
-mesmo \textbf{post\_pergunta}. Vamos então percorrer esta lista e procurar
-as tags desta lista na \textit{\textbf{GHashTable*}} \textbf{todas\_tags}.
+Assim no primeiro ciclo for, adicionamos ao \textbf{TreeSet} os utilizadores para ficarem organizado por reputação.
 
-Nesse instante, caso a tag não exista na lista é criada uma nova instância
-da estrutura \textbf{Tag\_Unique} e são passados o \textbf{tag\_name} e
-a \textbf{ocorrência}, que será igual a 1. Caso já exista, as 
-\textbf{ocorrências} são incrementas em 1 valor.
+Depois, criamos um \textbf{Iterator} que vai percorrer o \textbf{TreeSet} dos utilizadores ordenados por reputação e, para utilizador, vai percorrer os seus posts_perguntas, verificando se estes se encontram dentro dos parâmetros das datas. Caso se verifique, percorremos todas as tags desse post e para cada tag verificamos se pertence à estrutura todas_tags (contém todas as tags) e incrementamos uma variável que conta as ocorrências, se essa tag pertencer. Caso contrário, adicionamos à estrutura todas_tags essa nova tag.
 
-De seguida, é ordenada a lista com as \textbf{N tags} de acordo com o
-número de ocorrências. 
+Após analisarmos as tags dos posts, criamos um TreeSet de \textbf{TagUnique} que implementa o \textbf{ComparatorOcorrencias} para colocar no TreeSet, de forma ordenada por nº de ocorrências cada uma das tags.
 
-Para finalizar usamos a função \textbf{g\_hash\_table\_lookup} para procurar
-o \textbf{id\_tag} relacionado com o \textbf{tag\_name} no ficheiro Tags.xml.
+Por fim, e como queremos retornar os identificadores das N tags mais usadas, criamos uma List de Long  e, através de um Iterator, colocamos nessa List, N ID's de tags.
 
 \subsection{Clean}
 
-//////////////////// FALTA FAZER ////////////////////
 
-Função que liberta a memória da \textbf{TCD\_community}. Por consequência,
-realiza o \textbf{free} da estrutura \textbf{utilizador}, utilizando a 
-função da \textit{glib}, \textbf{g\_hash\_table} \textbf{\_foreach}. 
-De seguida, libertamos a própria \textit{\textbf{GHashTable*}} através da 
-função \textbf{g\_hash\_table\_destroy}. O mesmo sucede-se com a estrutura
-\textbf{posts} e \textbf{tag}. A estrutura \textbf{date\_posts}, sendo
-uma \textit{\textbf{GList*}} tem uma forma diferente de libertar a 
-memória. Para tal ser efetuado vamos a todos os parâmetros da mesma
-e usamos a função \textbf{g\_list\_remove} para libertar a memória
-de todos os elementos constituintes da lista em questão. De seguida,
-realizamos o \textbf{g\_list\_free} de forma a libertar a própria 
-estrutura.
+Função que limpa toda a estrutura da comunidade com o auxílio do \textbf{GarbageCollection}.
 
 \section{Conclusão}
 \label{sec:conclusao}
