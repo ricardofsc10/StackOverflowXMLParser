@@ -30,7 +30,6 @@ questões de eficiência entre as duas linguagens.
 \end{abstract}
 
 \tableofcontents
-\listoffigures
 
 \section{Introdução}
 \label{sec:intro}
@@ -81,98 +80,87 @@ Esta estrutura possui:
         \end{itemize}
 \end{itemize}
 
-\subsection{Comparação com C}
-
 No projeto anterior tivemos a necessidade de ter uma estrutura com os 
 posts ordenados por data. Em Java fazemos uso da interface 
 \textbf{Comparator} implementada na classe requerida, e em run-time, 
 usando as propriedades dos \textbf{TreeSet}'s, organizamos os posts 
 úteis para a resolução da querie.
 
-
 \section{Modularidade}
 \label{sec:modularidade}
 
-//////////////////// FALTA FAZER ////////////////////
-
 Modularidade, por definição, é a divisão do código fonte em unidades 
-separadas coerentes. É algo que temos em conta no nosso projeto,
-existindo, por base, o ficheiro \textbf{main.c}, e depois todos os
-ficheiros individuais relacionados com as \textbf{estruturas de dados}
-usadas e as \textbf{queries} propostas. Estes possuem os ficheiros 
-\textbf{.c} que contêm o código fonte e os \textbf{.h/header files} que
-definem o que é invocável do exterior.
-
-Modularidade torna-se portanto fundamental para lidar com a complexidade
+separadas coerentes. Esta torna-se fundamental para lidar com a complexidade
 do código, de tal forma que o código dos programas deve ser dividido por
-unidades modulares pequenas e autônomas, devendo-se ter em especial atenção
-a criação dos módulos que representam \textbf{abstração de dados}.
+unidades modulares pequenas e autônomas.
+
+Modularidade é algo que temos em conta no nosso projeto em Java, 
+desta vez através da realização do MVC, constituída por:
+
+\begin{itemize}
+  \item O \textbf{Model} define a camada computacional que contém os dados e os 
+    algoritmos para o seu processamento.
+
+  \item A \textbf{View} define a camada de apresentação e interação com o utilizador.
+
+  \item O \textbf{Controller} define a camada fundamental de controlo do fluxo de
+    execução da aplicação, é o mediador entre o model e a view.
+\end{itemize}
 
 \section{Encapsulamento}
 \label{sec:encapsulamento}
-
-//////////////////// FALTA FAZER ////////////////////
 
 Encapsulamento baseia-se na garantia de \textbf{protecção} e 
 \textbf{acessos controlados aos dados}. É mais um aspeto que temos em 
 conta no nosso projeto de forma a que exista uma divisão entre as operações 
 que são públicas e aquelas que são internas ao módulo. Estas são privadas e,
 portanto, são apenas acessíveis do exterior atráves das funções
-disponibilizadas na \textbf{API}
+disponibilizadas na \textbf{API}.
 
-Desta forma um tipo de dados permite ter várias instanciações,
-visto que os módulos das estruturas e das queries se tornam mais genéricos.
-
-De referir que o encapsulamento não é total, isto é, só são feitos clones
-no caso das strings, atráves da função \textbf{mystrdup}. 
-Ao invês disso utilizamos uma abordagem \textit{shallow}, por uma questão de 
-eficiência tendo sempre o cuidado de não alterar valores das estruturas.
+No projeto de C o encapsulamento não era total, isto é, era utilizada por base
+uma abordagem \textit{shallow}. Em Java, o encapsulamento é total de modo que é
+realizado \textit{deep clone}. Notar que o uso da primeira abordagem torna o 
+programa muito mais rápido devido à não necessidade de clonar totalmente os 
+objetos. Por outro lado, usando esta abordagem em Java, temos a vantagem de que 
+não existe partilha de apontadores.
 
 \section{Abstração de Dados}
 \label{sec:abstracao_de_dados}
 
-//////////////////// FALTA FAZER ////////////////////
-
 A declaração abstrata duma estrutura esconde dos utilizadores do módulo a
 implementação concreta, não tendo desta forma acesso à implementação
 da mesma. Por isso mesmo, previamente, temos a declaração abstrata da 
-estrutura \textbf{utilizador}, denominada de \textbf{UTILIZADOR}, no
-\textit{header file}.
+classe \textbf{TCD\_Community}, denominada de \textbf{TAD\_Community}, usada
+como interface para as queries.
 
 \section{Estratégias das Queries}
 \label{sec:estrategias}
 
 \subsection{Init}
 
-
 Função que cria a \textbf{TCD\_community}. 
 
 \subsection{Load}
-
-Função que realiza o parse de todos os ficheiros necessários à realização
-do trabalho. Após receber um \textbf{dump\_path} para os ficheiros XML,
-caso não existam falhas na estrutura XML são realizadas três funções:
-o \textbf{getReferenceUser}, o \textbf{getReferencePosts} e o
-\textbf{getReferenceTags}.
+Método que realiza o parser em \textbf{chunks} dos ficheiros necessários à 
+realização do trabalho, através da API do StAX. Após receber um 
+\textbf{dump\_path} para os ficheiros  XML, caso não existam falhas na 
+estrutura XML são realizadas três funções: o \textbf{getReferenceUser}, 
+o \textbf{getReferencePosts} e o \textbf{getReferenceTags}.
 
 A primeira realiza todo o parse relacionado com os \textbf{utilizadores}, 
 como por exemplo o \textbf{id} ou a \textbf{reputação}. De seguida são 
-colocados na estrutura todos estes elementos através da função
+colocados na estrutura todos estes elementos através do método
 \textbf{set\_utilizador}.
 
 A segunda realiza todo o parse relacionado com os \textbf{posts}, 
 como por exemplo o \textbf{id\_post} ou o \textbf{post\_type\_id}. 
-De seguida são colocados na estrutura todos estes elementos através da 
-função \textbf{set\_posts}.
+De seguida são colocados na estrutura todos estes elementos através do 
+método \textbf{set\_posts}.
 
 A terceira realiza todo o parse relacionado com as \textbf{tags}, 
 como por exemplo o \textbf{id\_tag} ou o \textbf{tag\_name}. 
-De seguida são colocados na estrutura todos estes elementos através da 
-função \textbf{set\_tag}.
-
-Referir que incluimos um ficheiro \textit{debug.h} em todas as queries 
-de modo a que seja possível, ou não, imprimir as respostas no 
-standard output.
+De seguida são colocados na estrutura todos estes elementos através do 
+método \textbf{set\_tag}.
 
 \subsection{Query 1}
 
@@ -181,11 +169,14 @@ e o nome de utilizador do autor. Se o post for uma resposta, a função
 retorna o título e o id do utilizador da pergunta correspondente.
 
 Nesta questão, criamos um  \textbf{Map} onde colocamos todos os posts da comunidade.
-Se o ID que recebemos como parâmetro pertencer ao  \textbf{Map} podemos prosseguir com a realização da query.
+Se o ID que recebemos como parâmetro pertencer ao  \textbf{Map} podemos prosseguir
+com a realização da query.
 
-Criamos um novo map com todos os utilizadores da comunidade. Caso o post seja uma pergunta, retornamos o par com o título do post e o nome do user.
+Criamos um novo map com todos os utilizadores da comunidade. Caso o post seja 
+uma pergunta, retornamos o par com o título do post e o nome do user.
 
-Caso contrário, retornamos o par com o título e o ID da pergunta ( \textbf{parent_id}).
+Caso contrário, retornamos o par com o título e o ID da pergunta 
+(\textbf{parent\_id}).
 
 \subsection{Query 2}
 
@@ -314,52 +305,73 @@ Dados os IDs de dois utilizadores, devolver as últimas N perguntas, em
 cronologia inversa, em que participaram dois utilizadores específicos, 
 via pergunta ou respostas.
 
-Nesta questão recorremos à criação de um \textbf{Map} com todos os utilizadores. De seguida, verificamos se o ID de ambos os utilizadores pertence a esse Map.
-Caso se verifique, colocamos numa lista (para cada utilizador) os IDs dos posts nos quais estes utilizadores interagiram.
+Nesta questão recorremos à criação de um \textbf{Map} com todos os utilizadores. 
+De seguida, verificamos se o ID de ambos os utilizadores pertence a esse Map.
+Caso se verifique, colocamos numa lista (para cada utilizador) os IDs dos posts 
+nos quais estes utilizadores interagiram.
 
-Assim, basta depois percorrer a primeira lista e comparar com os IDs das segunda lista através do método \textbf{contains()} e adicionar a um \textbf{TreeSet} que implementa o \textbf{ComparatorData} para os posts estarem por ordem cronológica.
+Assim, basta depois percorrer a primeira lista e comparar com os IDs das segunda
+lista através do método \textbf{contains()} e adicionar a um \textbf{TreeSet} que
+implementa o \textbf{ComparatorData} para os posts estarem por ordem cronológica.
 
-Por fim, como em queries anteriores e porque queremos apenas os IDs dos posts, criamos um Iterator para percorrer o TreeSet e adicionar a uma List de \textbf{Longs}.
-
-
+Por fim, como em queries anteriores e porque queremos apenas os IDs dos posts,
+criamos um Iterator para percorrer o TreeSet e adicionar a uma List de \textbf{Longs}.
 
 \subsection{Query 10}
-
 
 Dado o ID de uma pergunta, obter a melhor resposta, tendo em conta
 uma média ponderada.
 
-Nesta questão, utilizamos uma \textbf{Map<Long,Posts>} que contém todos os posts da comunidade.
+Nesta questão, utilizamos uma \textbf{Map<Long,Posts>} que contém todos os posts 
+da comunidade.
 
-Primeiro, verificamos se o ID da pergunta que recebemos como parâmetro pertence ao Map com todos os posts e se é uma pergunta (pois queremos analisar as respostas dessa pergunta)
+Primeiro, verificamos se o ID da pergunta que recebemos como parâmetro pertence ao
+Map com todos os posts e se é uma pergunta (pois queremos analisar as respostas 
+dessa pergunta)
 
-Passando estas verificações, criamos outro Map, desta feita com todos os utilizadores da comunidade. Depois, percorremos todos os posts da comunidade, e sempre que for um \textbf{Post_resposta}, verificamos se o \textbf{parent_id} da resposta é o ID que recebemos como parâmetro. Caso se confirme, calculamos a média através da equação fornecida e se esta for melhor que a melhor média calculada até aquela respsota, esta é substituída e colocamos no \textbf{melhor_id} o ID da resposta.
-
-
+Passando estas verificações, criamos outro Map, desta feita com todos os utilizadores
+da comunidade. Depois, percorremos todos os posts da comunidade, e sempre que for um 
+\textbf{Post\_resposta}, verificamos se o \textbf{parent\_id} da resposta é o ID que
+recebemos como parâmetro. Caso se confirme, calculamos a média através da equação
+fornecida e se esta for melhor que a melhor média calculada até aquela resposta, 
+esta é substituída e colocamos no \textbf{melhor\_id} o ID da resposta.
 
 \subsection{Query 11}
-
 
 Dado um intervalo arbitrário de tempo, devolver os identificadores das N tags
 mais usadas pelos N utilizadores com melhor reputação. Em ordem decrescente 
 do número de vezes em que a tag foi usada.
 
-Nesta questão, implementamos 2 Comparator's, um para compara as ocorrências de cada tag (ComparatorOcorrencias) e outro que compara a reputação dos utilizadores (ComparatorReputacao).
+Nesta questão, implementamos 2 Comparator's, um para compara as ocorrências de 
+cada tag (ComparatorOcorrencias) e outro que compara a reputação dos utilizadores 
+(ComparatorReputacao).
 
-O primeiro passo é a criação das estruturas. Criamos um \textbf{Map} que tem todos os utilizadores e um \textbf{TreeSet} de utilizadores que implementa o ComparatorReputacao.
+O primeiro passo é a criação das estruturas. Criamos um \textbf{Map} que tem todos 
+os utilizadores e um \textbf{TreeSet} de utilizadores que implementa o 
+ComparatorReputacao.
 
-Assim no primeiro ciclo for, adicionamos ao \textbf{TreeSet} os utilizadores para ficarem organizado por reputação.
+Assim no primeiro ciclo for, adicionamos ao \textbf{TreeSet} os utilizadores para 
+ficarem organizado por reputação.
 
-Depois, criamos um \textbf{Iterator} que vai percorrer o \textbf{TreeSet} dos utilizadores ordenados por reputação e, para utilizador, vai percorrer os seus posts_perguntas, verificando se estes se encontram dentro dos parâmetros das datas. Caso se verifique, percorremos todas as tags desse post e para cada tag verificamos se pertence à estrutura todas_tags (contém todas as tags) e incrementamos uma variável que conta as ocorrências, se essa tag pertencer. Caso contrário, adicionamos à estrutura todas_tags essa nova tag.
+Depois, criamos um \textbf{Iterator} que vai percorrer o \textbf{TreeSet} dos
+utilizadores ordenados por reputação e, para utilizador, vai percorrer os seus
+posts\_perguntas, verificando se estes se encontram dentro dos parâmetros das datas.
+Caso se verifique, percorremos todas as tags desse post e para cada tag verificamos
+se pertence à estrutura todas\_tags (contém todas as tags) e incrementamos uma
+variável que conta as ocorrências, se essa tag pertencer. Caso contrário, 
+adicionamos à estrutura todas\_tags essa nova tag.
 
-Após analisarmos as tags dos posts, criamos um TreeSet de \textbf{TagUnique} que implementa o \textbf{ComparatorOcorrencias} para colocar no TreeSet, de forma ordenada por nº de ocorrências cada uma das tags.
+Após analisarmos as tags dos posts, criamos um TreeSet de \textbf{TagUnique} que
+implementa o \textbf{ComparatorOcorrencias} para colocar no TreeSet, de forma
+ordenada por nº de ocorrências cada uma das tags.
 
-Por fim, e como queremos retornar os identificadores das N tags mais usadas, criamos uma List de Long  e, através de um Iterator, colocamos nessa List, N ID's de tags.
+Por fim, e como queremos retornar os identificadores das N tags mais usadas, criamos
+uma List de Long e, através de um Iterator, colocamos nessa List, N ID's de tags.
 
 \subsection{Clean}
 
-
-Função que limpa toda a estrutura da comunidade com o auxílio do \textbf{GarbageCollection}.
+Função que limpa toda a estrutura da comunidade com o auxílio do 
+\textbf{GarbageCollection}.
 
 \section{Conclusão}
 \label{sec:conclusao}
@@ -367,28 +379,22 @@ Função que limpa toda a estrutura da comunidade com o auxílio do \textbf{Garb
 //////////////////// FALTA FAZER ////////////////////
 
 Tendo em conta os objetivos definidos, o grupo acha que os resultados 
-principais foram obtidos. Além de aprender a trabalhar com ficheiros 
-do tipo \textbf{XML}, aprendemos a trabalhar com a biblioteca \textbf{GLib}.
-Aliamos também uma evolução da nossa aprendizagem no tema do 
-\textbf{encapsulamento}, da \textbf{modularidade} e 
-da \textbf{abstração de dados}.
+principais foram obtidos. 
 
-Outros objetivos alcançados são a resolução total das queries e a eficiência
-que se faz notar nestas mesmas, assim como a libertação total de memória 
-alocada pelo programa.
+Depois da realização deste mesmo projeto podemos declarar várias diferenças
+entre os dois projetos, denomidamente:
 
-De uma forma natural, o grupo sentiu dificuldades durante o projeto, sendo 
-uma, por exemplo, a necessidade de alterar a base total do trabalho devido
-a termos inicialmente considerado a ordenação dos ficheiros, quando só nos
-faltava resolver a query 11.
+\begin{itemize}
+  \item 
+\end{itemize}
+
 
 \section{Bibliografia}
-
-//////////////////// FALTA FAZER ////////////////////
 
 \begin{enumerate} 
 	\item Prof. F. Mário Martins, \textit{Programação Modular em C};
 	\item Prof. F. Mário Martins, \textit{Tipos Incompletos em C}.
+  \item Prof. F. Mário Martins, \textit{Modelo MVC}.
 \end{enumerate}
 
 \end{document}

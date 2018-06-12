@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.4.17)  12 JUN 2018 21:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.4.17)  12 JUN 2018 23:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -482,61 +482,68 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 15.
  (./relatorio.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 4.
+(Font)              <7> on input line 8.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 4.
+(Font)              <5> on input line 8.
  [1
 
 {/usr/local/texlive/2017basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
 \tf@toc=\write3
 \openout3 = `relatorio.toc'.
 
- (./relatorio.lof)
-\tf@lof=\write4
-\openout4 = `relatorio.lof'.
 
-
-Overfull \hbox (18.6678pt too wide) in paragraph at lines 59--61
+Overfull \hbox (18.6678pt too wide) in paragraph at lines 58--60
 []\OT1/cmr/m/n/10 Este tra-ba-lho tem por base uma classe prin-ci-pal de-no-mi-
 nada \OT1/cmr/bx/n/10 TCD[]community\OT1/cmr/m/n/10 . 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 64.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 63.
 (/usr/local/texlive/2017basic/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 64.
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 68.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 63.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 67.
 
 (/usr/local/texlive/2017basic/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 68.
- [2] [3]
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 67.
+ [2]
+Overfull \hbox (7.89503pt too wide) in paragraph at lines 106--108
+[]\OT1/cmr/m/n/10 O \OT1/cmr/bx/n/10 Con-trol-ler \OT1/cmr/m/n/10 de-fine a ca-
+mada fun-da-men-tal de con-trolo do fluxo de execu^^Xc~ao
+ []
+
+[3]
+Overfull \hbox (4.38914pt too wide) in paragraph at lines 178--180
+[]\OT1/cmr/m/n/10 Caso contr^^Sario, re-tor-na-mos o par com o t^^S^^Ptulo e o 
+ID da per-gunta (\OT1/cmr/bx/n/10 parent[]id\OT1/cmr/m/n/10 ). 
+ []
+
 [4] [5]
-Overfull \hbox (1.58391pt too wide) in paragraph at lines 324--327
+Overfull \hbox (1.58391pt too wide) in paragraph at lines 295--298
 \OT1/cmr/m/n/10 gunta, ve-ri-fi-ca-mos se o t^^S^^Ptulo desse post cont^^Sem a 
 String re-ce-bida nos par^ametros.
  []
 
 [6]
-Overfull \hbox (14.83398pt too wide) in paragraph at lines 375--378
+Overfull \hbox (14.83398pt too wide) in paragraph at lines 345--348
 []\OT1/cmr/m/n/10 Nesta quest~ao, im-ple-men-ta-mos 2 Com-pa-ra-tor's, um para 
 com-para as ocorr^encias
  []
 
 
-Overfull \hbox (1.3784pt too wide) in paragraph at lines 386--393
+Overfull \hbox (1.3784pt too wide) in paragraph at lines 356--363
 \OT1/cmr/m/n/10 or-de-na-dos por re-puta^^Xc~ao e, para uti-li-za-dor, vai per-
 cor-rer os seus posts[]perguntas,
  []
 
 [7] [8] (./relatorio.aux) ) 
 Here is how much of TeX's memory you used:
- 2396 strings out of 494437
- 32420 string characters out of 6166645
+ 2393 strings out of 494437
+ 32388 string characters out of 6166645
  98361 words of memory out of 5000000
  5701 multiletter control sequences out of 15000+600000
  8848 words of font info for 31 fonts, out of 8000000 for 9000
@@ -554,7 +561,7 @@ c/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2017ba
 sic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017
 basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
 2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on relatorio.pdf (8 pages, 161880 bytes).
+Output written on relatorio.pdf (8 pages, 159395 bytes).
 PDF statistics:
  75 PDF objects out of 1000 (max. 8388607)
  53 compressed objects within 1 object stream
