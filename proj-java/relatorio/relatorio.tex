@@ -225,11 +225,11 @@ como parâmetro na query.
 
 \subsection{Query 3}
 
-
 Dado um intervalo de tempo arbitrário, obtemos o número total de posts 
 (identificando perguntas e respostas separadamente) neste período.
 
-Nesta questão, inicializamos \textbf{2 variáveis que vão contar o número de perguntas e o número de respostas} que estão dentro da data recebida.
+Nesta questão, inicializamos \textbf{2 variáveis que vão contar o número de 
+perguntas e o número de respostas} que estão dentro da data recebida.
 Assim, percorremos todos os posts e verificamos se é pergunta ou resposta,
 incrementando a respetiva variável.
 
@@ -237,17 +237,24 @@ Por fim, basta colocar na estrutura \textbf{Pair}, as respetivas variáveis.
 
 \subsection{Query 4}
 
-
 Dado um intervalo de tempo arbitrário, retornamos todas as perguntas 
 contendo uma determinada tag. O retorno da função é uma lista com os IDs 
 das perguntas ordenadas em cronologia inversa.
 
-Nesta questão, criamos um \textbf{TreeSet} que implementa o \textbf{Comparator} de Datas com a intenção de retornar uma lista de ID's ordenada cronologicamente.
+Nesta questão, criamos um \textbf{TreeSet} que implementa o \textbf{Comparator} 
+de Datas com a intenção de retornar uma lista de ID's ordenada cronologicamente.
 
-Ou seja, através de um ciclo for, percorremos todos os posts da comunidade e, para cada um, após verificar que é um \textbf{Post} do tipo pergunta, verificamos também se este se encontra dentro das datas recebidas. Caso verifique ambas as condições é criada uma \textbf{lista de strings} na qual são colocadas as \textbf{tags} do respetivo post.
+Ou seja, através de um ciclo for, percorremos todos os posts da comunidade e, para
+cada um, após verificar que é um \textbf{Post} do tipo pergunta, verificamos também
+se este se encontra dentro das datas recebidas. Caso verifique ambas as condições é
+criada uma \textbf{lista de strings} na qual são colocadas as \textbf{tags} do
+respetivo post.
 
-Finalizando, verificamos se essa lista de tags contém a tag que queremos verificar se existe na pergunta e caso se confirme, o post é clonado e adicionado ao TreeSet. Como queremos retornar os ID's das perguntas criamos uma lista de Long's e um Iterator que percorre o TreeSet e coloca os ID's na lista a ser retornada como resultado.
-
+Finalizando, verificamos se essa lista de tags contém a tag que queremos verificar 
+se existe na pergunta e caso se confirme, o post é clonado e adicionado ao TreeSet.
+Como queremos retornar os ID's das perguntas criamos uma lista de Long's e um 
+Iterator que percorre o TreeSet e coloca os ID's na lista a ser retornada como
+resultado.
 
 \subsection{Query 5}
 
@@ -255,11 +262,16 @@ Dado um ID de utilizador, devolvemos a informação do seu perfil (short
 bio) e os IDs dos seus 10 últimos posts (perguntas ou respostas), 
 ordenados por cronologia inversa.
 
-Nesta questão, criamos um \textbf{TreeSet} que implementa o \textbf{ComparadorData} que permite inserir os \textbf{Posts} no Set ordenados cronologicamente.
+Nesta questão, criamos um \textbf{TreeSet} que implementa o \textbf{ComparadorData}
+que permite inserir os \textbf{Posts} no Set ordenados cronologicamente.
 
-Assim, o primeiro passo é percorrer todos os posts da comunidade e colocar no TreeSet todos os posts cujo \textbf{owner_user_id} seja o do utilizador que recebemos.
+Assim, o primeiro passo é percorrer todos os posts da comunidade e colocar no TreeSet
+todos os posts cujo \textbf{owner\_user\_id} seja o do utilizador que recebemos.
 
-Depois, criamos um \textbf{ArrayList} e um \textbf{Iterator} que vai percorrer o TreeSet e adicionar os ID's à lista até um total de 10 ID's de utilizadores. Por fim, retornamos o Pair com a bio do utilizador e a lista dos ID's dos seus últimos 10 posts.
+Depois, criamos um \textbf{ArrayList} e um \textbf{Iterator} que vai percorrer o
+TreeSet e adicionar os ID's à lista até um total de 10 ID's de utilizadores. 
+Por fim, retornamos o Pair com a bio do utilizador e a lista dos ID's dos seus
+últimos 10 posts.
 
 \subsection{Query 6}
 
@@ -269,16 +281,20 @@ com mais votos, em ordem decrescente do número de votos.
 De referir que tivemos em conta o score das perguntas, ao invês da
 diferença de votos.
 
-Nesta questão, recorremos mais uma vez à implementação de um Comparator, neste caso, o \textbf{ComparatorScore} que vai permitir, na função, colocar no \textbf{TreeSet} os posts em ordem decrescente.
+Nesta questão, recorremos mais uma vez à implementação de um Comparator, neste caso,
+o \textbf{ComparatorScore} que vai permitir, na função, colocar no \textbf{TreeSet}
+os posts em ordem decrescente.
 
-Então, depois de criar o TreeSet que implementa este Comparator, percorremos todos os posts da comunidade e, depois de verificar se é um post do tipo resposta e se está entre as datas recebidas como parâmetros, colocamos no TreeSet.
+Então, depois de criar o TreeSet que implementa este Comparator, percorremos todos 
+os posts da comunidade e, depois de verificar se é um post do tipo resposta e se 
+está entre as datas recebidas como parâmetros, colocamos no TreeSet.
 
-Por fim, utilizando o mesmo método de queries anteriores, criamos uma lista que vai conter os ID's e um iterator para percorrer o Set com os posts. 
+Por fim, utilizando o mesmo método de queries anteriores, criamos uma lista que vai
+conter os ID's e um iterator para percorrer o Set com os posts. 
 
 Retornamos assim, uma lista com os IDs das N respostas com mais votos.
 
 \subsection{Query 7}
-
 
 Dado um intervalo de tempo arbitrário, devolver os IDs das N perguntas 
 com mais respostas, em ordem decrescente do número de votos.
@@ -286,25 +302,31 @@ com mais respostas, em ordem decrescente do número de votos.
 De referir que as respostas tidas em conta abordam o tempo total, e
 não o intervalo de tempo passado como parâmetro.
 
-Nesta questão, implementamos o \textbf{ComparatorAnswer}, para permitir a organização decrescentes das perguntas tendo em conta o número de respostas.
+Nesta questão, implementamos o \textbf{ComparatorAnswer}, para permitir a 
+organização decrescente das perguntas tendo em conta o número de respostas.
 
-Depois de criarmos o TreeSet que implementa este Comparator, percorremos todos os posts, verificando se é uma pergunta e está dentro das datas dos parâmetros e, caso se verifique,  a pergunta é adicionada ao TreeSet.
+Depois de criarmos o TreeSet que implementa este Comparator, percorremos todos os
+posts, verificando se é uma pergunta e se está dentro das datas dos parâmetros e,
+caso se verifique, a pergunta é adicionada ao TreeSet.
 
-Pelo mesmo método de queries anteriores, criamos um  ArrayList de Longs que vai conter os IDs dessas perguntas, que irão ser adicionados através de um while, implementando um Iterator.
-
+Pelo mesmo método de queries anteriores, criamos um  ArrayList de Longs que vai
+conter os IDs dessas perguntas, que irão ser adicionados através de um while,
+implementando um Iterator.
 
 \subsection{Query 8}
-
 
 Dado uma palavra, devolver uma lista com os IDs de N perguntas
 cujos títulos a contenham, ordenados por cronologia inversa.
 
-Nesta questão, criamos um TreeSet que implementa o \textbf{ComparatorData} (já utilizado anteriormente) que permite a ordenação cronológica dos posts num TreeSet.
+Nesta questão, criamos um TreeSet que implementa o \textbf{ComparatorData} (já
+utilizado anteriormente) que permite a ordenação cronológica dos posts num TreeSet.
 
 Percorremos todos os posts da comunidade e, após verificar que é uma pergunta,
-verificamos se o título desse post contém a String recebida nos parâmetros. Caso isso se verifique o post é clonado e adicionado ao TreeSet auxiliar.
+verificamos se o título desse post contém a String recebida nos parâmetros. Caso 
+isso se verifique o post é clonado e adicionado ao TreeSet auxiliar.
 
-Depois, através do método já usado em outras queries, com um Iterator, percorremos esse TreeSet adicionando a uma List de Longs os ID's dos posts.
+Depois, através do método já usado em outras queries, com um Iterator, percorremos
+esse TreeSet adicionando a uma List de Longs os ID's dos posts.
 
 \subsection{Query 9}
 

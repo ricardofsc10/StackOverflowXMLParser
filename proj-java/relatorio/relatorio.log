@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.4.17)  12 JUN 2018 01:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.4.17)  12 JUN 2018 04:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -516,27 +516,26 @@ LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 68.
  [2] [3]
 [4] [5]
-Overfull \hbox (0.17651pt too wide) in paragraph at lines 340--345
-\OT1/cmr/m/n/10 fun^^Xc~ao da \OT1/cmr/m/it/10 glib\OT1/cmr/m/n/10 , \OT1/cmr/b
-x/n/10 g[]list[]sort\OT1/cmr/m/n/10 , que usa uma fun^^Xc~ao de com-para^^Xc~ao
- \OT1/cmr/bx/n/10 com-para[]score\OT1/cmr/m/n/10 ,
+Overfull \hbox (1.58391pt too wide) in paragraph at lines 301--303
+\OT1/cmr/m/n/10 gunta, ve-ri-fi-ca-mos se o t^^S^^Ptulo desse post cont^^Sem a 
+String re-ce-bida nos par^ametros.
  []
 
-[6] [7]
-Overfull \hbox (2.30402pt too wide) in paragraph at lines 468--470
+[6]
+Overfull \hbox (2.30402pt too wide) in paragraph at lines 372--374
 []\OT1/cmr/m/n/10 Para fi-na-li-zar usa-mos a fun^^Xc~ao \OT1/cmr/bx/n/10 g[]ha
 sh[]table[]lookup \OT1/cmr/m/n/10 para pro-cu-rar o \OT1/cmr/bx/n/10 id[]tag
  []
 
-[8] [9] (./relatorio.aux) ) 
+[7] [8] (./relatorio.aux) ) 
 Here is how much of TeX's memory you used:
  2397 strings out of 494437
  32424 string characters out of 6166645
- 99361 words of memory out of 5000000
+ 98361 words of memory out of 5000000
  5701 multiletter control sequences out of 15000+600000
  9207 words of font info for 32 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 39i,7n,25p,239b,208s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,7n,25p,385b,199s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017basic/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017basic/texmf-dist/fon
@@ -549,10 +548,10 @@ asic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/20
 17basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/
 2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
 ive/2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on relatorio.pdf (9 pages, 169420 bytes).
+Output written on relatorio.pdf (8 pages, 165729 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
+ 75 PDF objects out of 1000 (max. 8388607)
+ 53 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
