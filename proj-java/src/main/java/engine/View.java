@@ -1,5 +1,12 @@
 package engine;
 
+/**
+ * Classe View que define a camada de apresentação e interação com o utilizador.
+ *
+ * @author Grupo21
+ * @version 20180610
+ */
+
 import common.Pair;
 
 import java.time.LocalDate;
@@ -9,6 +16,11 @@ import java.util.Scanner;
 
 public class View {
 
+    /**
+     * Método de IO que escolhe uma query.
+     *
+     * @return Número da Query.
+     */
     public int escolhe_query(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Que query deseja resolver (-1 para abandonar o programa): ");
@@ -21,6 +33,13 @@ public class View {
         return query;
     }
 
+    /**
+     * Método de IO que cria uma instância de Data.
+     *
+     * @param inicio_fim 0 se é data inicial, 1 se é data final
+     *
+     * @return Data.
+     */
     public LocalDate insere_data(int inicio_fim){
 
         if(inicio_fim == 0) System.out.println("Data de ínicio:");
@@ -37,6 +56,13 @@ public class View {
         return data;
     }
 
+    /**
+     * Método de IO que retorna um tamanho consoante a query passada como parâmetro.
+     *
+     * @param query Número da query
+     *
+     * @return Tamanho.
+     */
     public int insere_tamanho(int query){
 
         switch(query){
@@ -58,6 +84,13 @@ public class View {
         return tamanho;
     }
 
+    /**
+     * Método de IO que retorna um ID consoante a query passada como parâmetro.
+     *
+     * @param query Número da query
+     *
+     * @return ID.
+     */
     public long insere_ID(int query){
         switch(query){
             case 1: System.out.print("ID do post: ");
@@ -74,6 +107,13 @@ public class View {
         return id;
     }
 
+    /**
+     * Método de IO que retorna uma String consoante a query passada como parâmetro.
+     *
+     * @param query Número da query
+     *
+     * @return String.
+     */
     public String insere_string(int query){
         switch(query){
             case 4: System.out.print("Tag a procurar: ");
@@ -86,10 +126,21 @@ public class View {
         return palavra;
     }
 
+    /**
+     * Método de IO que imprime um long consoante o resultado passado como parâmetro.
+     *
+     * @param resultado Resultado passado como parâmetro
+     */
     public void imprime_long(long resultado){
         System.out.println("ID da melhor resposta: " + resultado);
     }
 
+    /**
+     * Método de IO que imprime um par consoante a query passada como parâmetro.
+     *
+     * @param par Par passado como parâmetro
+     * @param query Número da query
+     */
     public void imprime_pair(Pair par, int query){
         switch(query){
             case 1: System.out.println("Título do post: " + par.getFst());
@@ -106,6 +157,12 @@ public class View {
         }
     }
 
+    /**
+     * Método de IO que imprime uma lista consoante a query passada como parâmetro.
+     *
+     * @param lista Lista passado como parâmetro
+     * @param query Número da query
+     */
     public void imprime_list(List<Long> lista, int query){
         switch(query){
             case 2: System.out.println("Lista com top correspondente: ");
