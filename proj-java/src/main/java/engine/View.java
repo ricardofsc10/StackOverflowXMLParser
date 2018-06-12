@@ -67,7 +67,15 @@ public class View {
             System.out.println("Inputs errados.");
             return null;
         }
-        LocalDate data = LocalDate.of(ano,mes,dia);
+
+        LocalDate data = null;
+        try {
+            data = LocalDate.of(ano, mes, dia);
+        }
+        catch(java.time.DateTimeException e){
+            System.out.println("Inputs errados.");
+            return null;
+        }
         return data;
     }
 
