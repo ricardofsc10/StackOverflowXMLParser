@@ -8,6 +8,7 @@ package engine;
  */
 
 import common.Pair;
+import common.Utilizador;
 
 import java.time.LocalDate;
 import java.util.Iterator;
@@ -24,7 +25,14 @@ public class View {
     public int escolhe_query(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Que query deseja resolver (-1 para abandonar o programa): ");
-        int query = sc.nextInt();
+        int query = 0;
+        try {
+            query = sc.nextInt();
+        }
+        catch (java.util.InputMismatchException e) {
+            System.out.println("Query inexistente.");
+            return 0;
+        }
         if(query == -1) return -1;
         if(query > 11 || query < 1){
             System.out.println("Query inexistente.");
@@ -46,12 +54,19 @@ public class View {
         else System.out.println("Data de fim:");
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Dia: ");
-        int dia = sc.nextInt();
-        System.out.print("Mês: ");
-        int mes = sc.nextInt();
-        System.out.print("Ano: ");
-        int ano = sc.nextInt();
+        int dia = 0,mes = 0,ano = 0;
+        try {
+            System.out.print("Dia: ");
+            dia = sc.nextInt();
+            System.out.print("Mês: ");
+            mes = sc.nextInt();
+            System.out.print("Ano: ");
+            ano = sc.nextInt();
+        }
+        catch (java.util.InputMismatchException e) {
+            System.out.println("Inputs errados.");
+            return null;
+        }
         LocalDate data = LocalDate.of(ano,mes,dia);
         return data;
     }
@@ -80,7 +95,15 @@ public class View {
                     break;
         }
         Scanner sc = new Scanner(System.in);
-        int tamanho = sc.nextInt();
+        int tamanho = -1;
+        try{
+            tamanho = sc.nextInt();
+        }
+        catch (java.util.InputMismatchException e) {
+            System.out.println("Inputs errados.");
+            return -1;
+        }
+        if (tamanho < 0) tamanho = -1;
         return tamanho;
     }
 
@@ -103,7 +126,15 @@ public class View {
                     break;
         }
         Scanner sc = new Scanner(System.in);
-        long id = sc.nextInt();
+        long id = -2;
+        try {
+            id = sc.nextInt();
+        }
+        catch (java.util.InputMismatchException e) {
+            System.out.println("Inputs errados.");
+            return -2;
+        }
+        if(id < -1) id = -2;
         return id;
     }
 
@@ -122,7 +153,14 @@ public class View {
                     break;
         }
         Scanner sc = new Scanner(System.in);
-        String palavra = sc.next();
+        String palavra = null;
+        try {
+           palavra = sc.next();
+        }
+        catch (java.util.InputMismatchException e) {
+            System.out.println("Inputs errados.");
+            return null;
+        }
         return palavra;
     }
 
@@ -187,6 +225,24 @@ public class View {
             System.out.println(i + "º ID: " + id);
             i++;
         }
+    }
+
+    /**
+     * Método de IO que imprime um erro dado por PostInexistenteException.
+     *
+     * @param e Mensagem do erro
+     */
+    public void imprime_erro_post(PostInexistenteException e){
+        System.out.println("Post não existe.");
+    }
+
+    /**
+     * Método de IO que imprime um erro dado por UtilizadorInexistenteException.
+     *
+     * @param e Mensagem do erro
+     */
+    public void imprime_erro_user(UtilizadorInexistenteException e){
+        System.out.println("Utilizador não existe.");
     }
 
 }

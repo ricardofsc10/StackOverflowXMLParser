@@ -54,7 +54,7 @@ public class Model implements TADCommunity {
      *
      * @returns Par com informação do post.
      */
-    public Pair<String,String> infoFromPost(long id) {
+    public Pair<String,String> infoFromPost(long id) throws PostInexistenteException{
         Map<Long,Posts> todos_posts = this.com.get_posts();
         if(todos_posts.containsKey(id)){
             Posts post = todos_posts.get(id);
@@ -71,7 +71,7 @@ public class Model implements TADCommunity {
                 return new Pair(pergunta.get_title(), utilizadores.get(owner).get_nome());
             }
         }
-        else return null;
+        else throw new PostInexistenteException();
     }
 
     // Query 2
@@ -195,7 +195,7 @@ public class Model implements TADCommunity {
      *
      * @returns Utilizador com informação pedida.
      */
-    public Pair<String, List<Long>> getUserInfo(long id) {
+    public Pair<String, List<Long>> getUserInfo(long id) throws UtilizadorInexistenteException{
 
         Set<Posts> ids = new TreeSet<>(new ComparatorData5());
 
@@ -213,7 +213,9 @@ public class Model implements TADCommunity {
             i++;
         }
 
-        return new Pair(this.com.get_utilizador().get(id).get_bio(),res);
+        Utilizador user = this.com.get_utilizador().get(id);
+        if(user == null) throw new UtilizadorInexistenteException();
+        return new Pair(user.get_bio(),res);
     }
 
     // Query 6
@@ -342,11 +344,14 @@ public class Model implements TADCommunity {
      *
      * @returns Lista com os IDs das perguntas em que ambos participam.
      */
-    public List<Long> bothParticipated(int N, long id1, long id2) {
+    public List<Long> bothParticipated(int N, long id1, long id2) throws UtilizadorInexistenteException{
         Map<Long,Utilizador> utilizadores = this.com.get_utilizador();
         if(utilizadores.containsKey(id1) && utilizadores.containsKey(id2)){
-            List<Long> posts_id1 = utilizadores.get(id1).get_posts_frequentados();
-            List<Long> posts_id2 = utilizadores.get(id2).get_posts_frequentados();
+            Utilizador user_id1 = utilizadores.get(id1);
+            List<Long> posts_id1 = user_id1.get_posts_frequentados();
+            Utilizador user_id2 = utilizadores.get(id2);
+            List<Long> posts_id2 = user_id2.get_posts_frequentados();
+
             Map<Long,Posts> posts = this.com.get_posts();
 
             List<Long> iguais = new ArrayList<>();
@@ -369,7 +374,7 @@ public class Model implements TADCommunity {
             }
             return res;
         }
-        else return null;
+        else throw new UtilizadorInexistenteException();
     }
 
     // Query 10
@@ -382,7 +387,7 @@ public class Model implements TADCommunity {
      *
      * @returns Id da melhor resposta.
      */
-    public long betterAnswer(long id) {
+    public long betterAnswer(long id) throws PostInexistenteException{
         Map<Long,Posts> todos_posts = this.com.get_posts();
         if(todos_posts.containsKey(id)){
             Posts post = todos_posts.get(id);
@@ -405,9 +410,9 @@ public class Model implements TADCommunity {
                 }
                 return melhor_id;
             }
-            else return 0;
+            else return -1;
         }
-        return 0;
+        else throw new PostInexistenteException();
     }
 
     // Query 11

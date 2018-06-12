@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import common.Pair;
+import engine.PostInexistenteException;
+import engine.UtilizadorInexistenteException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -12,7 +14,7 @@ public interface TADCommunity {
     public void load(String dumpPath) throws IOException, SAXException, ParserConfigurationException;
 
     // Query 1
-    public Pair<String,String> infoFromPost(long id);
+    public Pair<String,String> infoFromPost(long id) throws PostInexistenteException;
 
     // Query 2
     public List<Long> topMostActive(int N);
@@ -24,7 +26,7 @@ public interface TADCommunity {
     public List<Long> questionsWithTag(String tag, LocalDate begin, LocalDate end);
 
     // Query 5
-    public Pair<String, List<Long>> getUserInfo(long id);
+    public Pair<String, List<Long>> getUserInfo(long id) throws UtilizadorInexistenteException;
 
     // Query 6
     public List<Long> mostVotedAnswers(int N, LocalDate begin, LocalDate end);
@@ -36,10 +38,10 @@ public interface TADCommunity {
     public List<Long> containsWord(int N, String word);
 
     // Query 9
-    public List<Long> bothParticipated(int N, long id1, long id2);
+    public List<Long> bothParticipated(int N, long id1, long id2) throws UtilizadorInexistenteException;
 
     // Query 10
-    public long betterAnswer(long id);
+    public long betterAnswer(long id) throws PostInexistenteException;
 
     // Query 11
     public List<Long> mostUsedBestRep(int N, LocalDate begin, LocalDate end);
