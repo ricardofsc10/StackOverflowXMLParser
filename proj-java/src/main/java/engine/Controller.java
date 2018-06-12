@@ -12,8 +12,8 @@ import java.time.Month;
 import java.util.List;
 
 public class Controller {
-    Model m = new Model();
-    View v = new View();
+    private TADCommunity m;
+    private View v;
 
     public void setModel(Model model){
         this.m = model;
@@ -32,6 +32,28 @@ public class Controller {
         /* -------------------------------------------------------------------------------------------*/
 
         long before, after;
+
+        /*
+            LOAD PHASE
+         */
+        try {
+            before = System.currentTimeMillis();
+            m.load(args[0]);
+            after = System.currentTimeMillis();
+            logtime.writeLog("LOAD -> "+(after-before)+" ms");
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Deve passar o caminho do dump como argumento.");
+        }
+        catch(ParserConfigurationException e){
+            System.out.println(e.getMessage());
+        }
+        catch(SAXException e){
+            System.out.println(e.getMessage());
+        }
+        catch(IOException e){
+            System.out.println(e.getMessage());
+        }
 
         /*
            Query 1
@@ -147,52 +169,89 @@ public class Controller {
 
     }
 
-    public void load(String[] args){
-         /*
-            LOG CONFIGURATION
-        */
-        MyLog log = new MyLog("results");
-        MyLog logtime = new MyLog("times");
-        /* -------------------------------------------------------------------------------------------*/
-
-        long before, after;
-
-        /*
-            LOAD PHASE
-         */
-        try {
-            before = System.currentTimeMillis();
-            m.load(args[0]);
-            after = System.currentTimeMillis();
-            logtime.writeLog("LOAD -> "+(after-before)+" ms");
-        }
-        catch(IndexOutOfBoundsException e){
-            System.out.println("Deve passar o caminho do dump como argumento.");
-        }
-        catch(ParserConfigurationException e){
-            System.out.println(e.getMessage());
-        }
-        catch(SAXException e){
-            System.out.println(e.getMessage());
-        }
-        catch(IOException e){
-            System.out.println(e.getMessage());
-        }
-    }
 
     public void control_fluxo(String[] args){
-        load(args);
+
+        escreve_ficheiros(args);
 
         do{
             int query = v.escolhe_query();
             if(query == -1) break;
 
-            switch(query){
-                case 1: long id = v.insere_ID(1);
-                        Pair<String,String> par = m.infoFromPost(id);
-                        v.imprime_pair(par,1);
+            long id,id1,id2,res;
+            Pair par = null;
+            LocalDate inicio=null,fim=null;
+            int tamanho;
+            List<Long> list = null;
+            String tag,palavra;
 
-                case 2:
+            switch(query){
+                case 1: id = v.insere_ID(1);
+                        par = m.infoFromPost(id);
+                        v.imprime_pair(par,1);
+                        break;
+
+                case 2: tamanho = v.insere_tamanho(2);
+                        list = m.topMostActive(tamanho);
+                        v.imprime_list(list,2);
+                        break;
+
+                case 3: inicio = v.insere_data(0);
+                        fim = v.insere_data(1);
+                        par = m.totalPosts(inicio,fim);
+                        v.imprime_pair(par,3);
+                        break;
+
+                case 4: tag = v.insere_string(4);
+                        inicio = v.insere_data(0);
+                        fim = v.insere_data(1);
+                        list = m.questionsWithTag(tag,inicio,fim);
+                        v.imprime_list(list,4);
+                        break;
+
+                case 5: id = v.insere_ID(5);
+                        par = m.getUserInfo(id);
+                        v.imprime_pair(par,5);
+                        break;
+
+                case 6: tamanho = v.insere_tamanho(6);
+                        inicio = v.insere_data(0);
+                        fim = v.insere_data(1);
+                        list = m.mostVotedAnswers(tamanho,inicio,fim);
+                        v.imprime_list(list,6);
+                        break;
+
+                case 7: tamanho = v.insere_tamanho(7);
+                        inicio = v.insere_data(0);
+                        fim = v.insere_data(1);
+                        list = m.mostAnsweredQuestions(tamanho,inicio,fim);
+                        v.imprime_list(list,7);
+                        break;
+
+                case 8: tamanho = v.insere_tamanho(8);
+                        palavra = v.insere_string(8);
+                        list = m.containsWord(tamanho,palavra);
+                        v.imprime_list(list,8);
+                        break;
+
+                case 9: tamanho = v.insere_tamanho(9);
+                        id1 = v.insere_ID(9);
+                        id2 = v.insere_ID(9);
+                        list = m.bothParticipated(tamanho,id1,id2);
+                        v.imprime_list(list,9);
+                        break;
+
+                case 10: id = v.insere_ID(10);
+                         res = m.betterAnswer(id);
+                         v.imprime_long(10);
+                         break;
+
+                case 11: tamanho = v.insere_tamanho(11);
+                         inicio = v.insere_data(0);
+                         fim = v.insere_data(1);
+                         list = m.mostUsedBestRep(tamanho,inicio,fim);
+                         v.imprime_list(list,11);
+                         break;
             }
 
         } while(true);

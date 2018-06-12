@@ -41,11 +41,17 @@ public class View {
 
         switch(query){
             case 2: System.out.print("Tamanho da lista de Utilizadores: ");
+                    break;
             case 6: System.out.print("Tamanho da lista de Respostas: ");
+                    break;
             case 7: System.out.print("Tamanho da lista de Perguntas: ");
+                    break;
             case 8: System.out.print("Tamanho da lista de Perguntas: ");
+                    break;
             case 9: System.out.print("Tamanho da lista de Perguntas: ");
+                    break;
             case 11: System.out.print("Tamanho da lista de Tags/Utilizadores: ");
+                    break;
         }
         Scanner sc = new Scanner(System.in);
         int tamanho = sc.nextInt();
@@ -55,9 +61,13 @@ public class View {
     public long insere_ID(int query){
         switch(query){
             case 1: System.out.print("ID do post: ");
+                    break;
             case 5: System.out.print("ID do utilizador: ");
+                    break;
             case 9: System.out.print("ID do utilizador: ");
+                    break;
             case 10: System.out.print("ID pergunta: ");
+                    break;
         }
         Scanner sc = new Scanner(System.in);
         long id = sc.nextInt();
@@ -67,7 +77,9 @@ public class View {
     public String insere_string(int query){
         switch(query){
             case 4: System.out.print("Tag a procurar: ");
+                    break;
             case 8: System.out.print("Palavra a comparar: ");
+                    break;
         }
         Scanner sc = new Scanner(System.in);
         String palavra = sc.next();
@@ -82,24 +94,34 @@ public class View {
         switch(query){
             case 1: System.out.println("Título do post: " + par.getFst());
                     System.out.println("Nome do autor: " + par.getSnd());
+                    break;
 
             case 3: System.out.println("Número de perguntas: " + par.getFst());
                     System.out.println("Número de respostas: " + par.getSnd());
+                    break;
 
             case 5: System.out.println("Biografia do autor: " + par.getFst());
                     System.out.println("Últimos 10 posts: " + par.getSnd());
+                    break;
         }
     }
 
     public void imprime_list(List<Long> lista, int query){
         switch(query){
             case 2: System.out.println("Lista com top correspondente: ");
+                    break;
             case 4: System.out.println("Lista com ID´s das perguntas: ");
+                    break;
             case 6: System.out.print("Lista com ID´s das respostas: ");
+                    break;
             case 7: System.out.print("Lista com ID´s das perguntas: ");
+                    break;
             case 8: System.out.print("Lista com ID´s das perguntas: ");
+                    break;
             case 9: System.out.print("Lista com ID´s das perguntas: ");
+                    break;
             case 11: System.out.print("Lista com ID´s das tags: ");
+                    break;
         }
         Iterator it = lista.iterator();
         int i = 1;
