@@ -1,5 +1,12 @@
 package engine;
 
+/**
+ * Classe Model que define a camada computacional que contém os dados e os algoritmos para o seu processamento.
+ *
+ * @author Grupo21
+ * @version 20180610
+ */
+
 import common.*;
 import li3.TADCommunity;
 import org.xml.sax.SAXException;

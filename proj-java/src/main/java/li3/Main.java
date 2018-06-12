@@ -1,7 +1,13 @@
 package li3;
 
-import engine.*;
+/**
+ * Classe Main que define o método principal do projeto.
+ *
+ * @author Grupo21
+ * @version 20180610
+ */
 
+import engine.*;
 
 public class Main {
 

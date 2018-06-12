@@ -1,5 +1,13 @@
 package engine;
 
+/**
+ * Classe Controller que define a camada fundamental de controlo do fluxo de execução
+ * da aplicação, é o mediador entre o model e a view.
+ *
+ * @author Grupo21
+ * @version 20180610
+ */
+
 import common.MyLog;
 import common.Pair;
 import li3.TADCommunity;
@@ -14,15 +22,29 @@ public class Controller {
     private TADCommunity m;
     private View v;
 
+    /**
+     * Atualiza a Model do Controller.
+     *
+     * @param model Nova Model do Controller
+     */
     public void setModel(Model model){
         this.m = model;
     }
 
+    /**
+     * Atualiza a View do Controller.
+     *
+     * @param view Nova View do Controller
+     */
     public void setView(View view){
         this.v = view;
     }
 
-
+    /**
+     * Método que controla o fluxo de todas as queries entre o Model e a View do projeto.
+     *
+     * @param args Argumentos passados na realização do executável
+     */
     public void control_fluxo(String[] args){
 
         /*

@@ -1,5 +1,12 @@
 package engine;
 
+/**
+ * Classe Load que realiza o parser das informações necessárias às resoluções das queries.
+ *
+ * @author Grupo21
+ * @version 20180610
+ */
+
 import common.*;
 import org.xml.sax.SAXException;
 
