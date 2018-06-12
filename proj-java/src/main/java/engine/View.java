@@ -112,15 +112,15 @@ public class View {
                     break;
             case 4: System.out.println("Lista com ID´s das perguntas: ");
                     break;
-            case 6: System.out.print("Lista com ID´s das respostas: ");
+            case 6: System.out.println("Lista com ID´s das respostas: ");
                     break;
-            case 7: System.out.print("Lista com ID´s das perguntas: ");
+            case 7: System.out.println("Lista com ID´s das perguntas: ");
                     break;
-            case 8: System.out.print("Lista com ID´s das perguntas: ");
+            case 8: System.out.println("Lista com ID´s das perguntas: ");
                     break;
-            case 9: System.out.print("Lista com ID´s das perguntas: ");
+            case 9: System.out.println("Lista com ID´s das perguntas: ");
                     break;
-            case 11: System.out.print("Lista com ID´s das tags: ");
+            case 11: System.out.println("Lista com ID´s das tags: ");
                     break;
         }
         Iterator it = lista.iterator();
