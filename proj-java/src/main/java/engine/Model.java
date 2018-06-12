@@ -15,16 +15,9 @@ import java.util.TreeSet;
 import java.util.Comparator;
 import java.lang.String;
 
-public class TCDExample implements TADCommunity {
+public class Model implements TADCommunity {
 
-    private MyLog qelog;
     private TCD_community com;
-
-    /*
-    public void init() {
-        this.qelog = new MyLog("queryengine");
-    }
-    */
 
     /**
      * Função que faz a primeira inicialização da estrutura.

@@ -2,6 +2,7 @@ package li3;
 
 import common.MyLog;
 import common.Pair;
+import engine.Model;
 import engine.TCDExample;
 import org.xml.sax.SAXException;
 
@@ -24,7 +25,7 @@ public class Main {
         /* -------------------------------------------------------------------------------------------*/
 
         long before, after;
-        TADCommunity qe = new TCDExample();
+        TADCommunity qe = new Model();
 
         /*
             LOAD PHASE
