@@ -21,13 +21,13 @@ import javax.xml.stream.events.XMLEvent;
 public class Load{
 
     /**
-     Função que filtra os dados que são necessários do documento Users.xml
-     e coloca nos campos da estrutura.
-
-     @param xmlEventReader eventos dum ficheiro que é possível ler.
-     @param com Estrutura onde vao ser inseridos os dados.
-
-     @returns Estrutura com os dados referentes a cada utilizador.
+     * Função que filtra os dados que são necessários do documento Users.xml
+     * e coloca nos campos da estrutura.
+     *
+     * @param xmlEventReader eventos dum ficheiro que é possível ler.
+     * @param com Estrutura onde vao ser inseridos os dados.
+     *
+     * @returns Estrutura com os dados referentes a cada utilizador.
      */
     public static void getReferenceUser (XMLEventReader xmlEventReader, TCD_community com) throws XMLStreamException{ // por causa do nextEvent
 
@@ -70,14 +70,14 @@ public class Load{
     }
 
     /**
-     Função que filtra os dados que são necessários do documento Posts.xml
-     e coloca nos campos da estrutura.
-
-     @param xmlEventReader eventos dum ficheiro que é possível ler.
-     @param com Estrutura onde vao ser inseridos os dados.
-
-     @returns Estrutura com os dados referentes a cada post no seu devido campo.
-     */
+     * Função que filtra os dados que são necessários do documento Posts.xml
+     * e coloca nos campos da estrutura.
+     *
+     * @param xmlEventReader eventos dum ficheiro que é possível ler.
+     * @param com Estrutura onde vao ser inseridos os dados.
+     *
+     * @returns Estrutura com os dados referentes a cada post no seu devido campo.
+     * */
     public static void getReferencePosts (XMLEventReader xmlEventReader, TCD_community com) throws XMLStreamException{ // por causa do nextEvent
 
             Integer j=0;
@@ -171,13 +171,13 @@ public class Load{
     }
 
     /**
-     Função que filtra os dados que são necessários do documento Tags.xml
-     e coloca nos campos da estrutura.
-
-     @param xmlEventReader eventos dum ficheiro que é possível ler.
-     @param com Estrutura onde vao ser inseridos os dados.
-
-     @returns Estrutura com as tags referentes a cada post.
+     * Função que filtra os dados que são necessários do documento Tags.xml
+     * e coloca nos campos da estrutura.
+     *
+     * @param xmlEventReader eventos dum ficheiro que é possível ler.
+     * @param com Estrutura onde vao ser inseridos os dados.
+     *
+     * @returns Estrutura com as tags referentes a cada post.
      */
     public static void getReferenceTags (XMLEventReader xmlEventReader, TCD_community com) throws XMLStreamException{ // por causa do nextEvent
 
@@ -209,14 +209,14 @@ public class Load{
     }
 
     /**
-     Função que realiza todo o processo de parsing dos documentos.
-
-     Utiliza funções da StAX API para fazer o parsing através de eventos (chunks).
-
-     @param com Estrutura inicializada.
-     @param dump_path Contém o caminho para a pasta que contém os documentos .xml.
-
-     @returns Estrutura totamente carregada com os dados filtrados de cada ficheiro.
+     * Função que realiza todo o processo de parsing dos documentos.
+     *
+     * Utiliza funções da StAX API para fazer o parsing através de eventos (chunks).
+     *
+     * @param com Estrutura inicializada.
+     * @param dump_path Contém o caminho para a pasta que contém os documentos .xml.
+     *
+     * @returns Estrutura totamente carregada com os dados filtrados de cada ficheiro.
      */
     public static TCD_community load(TCD_community com, String dump_path)throws ParserConfigurationException,
             SAXException, IOException {

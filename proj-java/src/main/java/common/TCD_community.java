@@ -204,4 +204,14 @@ public class TCD_community{
         sb.append(", Tags: "); sb.append(this.tag);
         return sb.toString();
     }
+
+    /**
+     * Função que procede à limpeza da estrutura TCD_community, com auxílio do GarbageCollection.
+     * */
+    public void clearTCD(){
+        this.utilizador.clear();
+        this.posts.clear();
+        this.tag.clear();
+        System.gc();
+    }
 }
