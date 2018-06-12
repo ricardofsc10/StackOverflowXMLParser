@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.4.17)  12 JUN 2018 23:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.4.17)  12 JUN 2018 23:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -528,6 +528,8 @@ Overfull \hbox (1.58391pt too wide) in paragraph at lines 295--298
 String re-ce-bida nos par^ametros.
  []
 
+LaTeX Font Info:    Font shape `OML/cmr/bx/n' in size <10> not available
+(Font)              Font shape `OML/cmm/b/it' tried instead on input line 325.
 [6]
 Overfull \hbox (14.83398pt too wide) in paragraph at lines 345--348
 []\OT1/cmr/m/n/10 Nesta quest~ao, im-ple-men-ta-mos 2 Com-pa-ra-tor's, um para 
@@ -542,11 +544,11 @@ cor-rer os seus posts[]perguntas,
 
 [7] [8] (./relatorio.aux) ) 
 Here is how much of TeX's memory you used:
- 2393 strings out of 494437
- 32388 string characters out of 6166645
+ 2396 strings out of 494437
+ 32425 string characters out of 6166645
  98361 words of memory out of 5000000
- 5701 multiletter control sequences out of 15000+600000
- 8848 words of font info for 31 fonts, out of 8000000 for 9000
+ 5703 multiletter control sequences out of 15000+600000
+ 9206 words of font info for 32 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  39i,7n,25p,239b,199s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017basic/texmf-dist/fonts/type1
@@ -554,17 +556,18 @@ Here is how much of TeX's memory you used:
 ype1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017basic/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2017basic/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2017basic/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017basic/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017basic/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017basi
-c/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2017ba
-sic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017
-basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
-2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on relatorio.pdf (8 pages, 159395 bytes).
+ist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2017basic/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017basic
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017ba
+sic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/201
+7basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2
+017basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive
+/2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
+live/2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on relatorio.pdf (8 pages, 166181 bytes).
 PDF statistics:
- 75 PDF objects out of 1000 (max. 8388607)
- 53 compressed objects within 1 object stream
+ 79 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
