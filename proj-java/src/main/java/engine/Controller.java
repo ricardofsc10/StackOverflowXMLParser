@@ -8,7 +8,6 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 public class Controller {
@@ -23,7 +22,9 @@ public class Controller {
         this.v = view;
     }
 
-    public void escreve_ficheiros(String[] args){
+
+    public void control_fluxo(String[] args){
+
         /*
             LOG CONFIGURATION
         */
@@ -55,125 +56,6 @@ public class Controller {
             System.out.println(e.getMessage());
         }
 
-        /*
-           Query 1
-        */
-        before = System.currentTimeMillis();
-        Pair<String,String> q1 = m.infoFromPost(796430);
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query 1: -> "+(after-before)+" ms");
-        log.writeLog("Query1 -> " + q1);
-
-        /*
-           Query 2
-        */
-        before = System.currentTimeMillis();
-        List<Long> q2 = m.topMostActive(10);
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query 2 -> "+(after-before)+" ms");
-        log.writeLog("Query 2 -> "+q2);
-
-        /*
-           Query 3
-        */
-        before = System.currentTimeMillis();
-        Pair<Long,Long> q3 = m.totalPosts(LocalDate.of(2016, Month.JULY,1),
-                LocalDate.of(2016,Month.JULY,31));
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query 3 -> "+(after-before)+" ms");
-        log.writeLog("Query 3 -> "+q3);
-
-        /*
-           Query 4
-        */
-        before = System.currentTimeMillis();
-        List<Long> query4 = m.questionsWithTag("package-management", LocalDate.of(2013, Month.MARCH, 1),
-                LocalDate.of(2013, Month.MARCH,31));
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query 4 -> " + (after - before) + " ms");
-        log.writeLog("Query 4 -> " + query4);
-
-        /*
-           Query 5
-        */
-        before = System.currentTimeMillis();
-        Pair<String, List<Long>> q5 = m.getUserInfo(15811);
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query 5 -> "+(after-before)+" ms");
-        log.writeLog("Query 5 -> "+q5);
-
-        /*
-           Query 6
-        */
-        before = System.currentTimeMillis();
-        List<Long> q6 = m.mostVotedAnswers(5, LocalDate.of(2015, Month.NOVEMBER, 1),
-                LocalDate.of(2015, Month.NOVEMBER,30));
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query6 -> " + (after - before) + " ms");
-        log.writeLog("Query6 -> " + q6);
-
-        /*
-           Query 7
-        */
-        before = System.currentTimeMillis();
-        List<Long> q7 = m.mostAnsweredQuestions(10, LocalDate.of(2012,Month.JANUARY,1),
-                LocalDate.of(2012,Month.DECEMBER,31));
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query 7 -> "+(after-before)+" ms");
-        log.writeLog("Query 7 -> "+q7);
-
-        /*
-           Query 8
-        */
-        before = System.currentTimeMillis();
-        List<Long> q8 = m.containsWord(10, "kde");
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query 8 -> " + (after - before) + " ms");
-        log.writeLog("Query 8 -> " + q8);
-
-        /*
-           Query 9
-        */
-        before = System.currentTimeMillis();
-        List<Long> q9 = m.bothParticipated(10, 15811, 449);
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query9 -> " + (after - before) + " ms");
-        log.writeLog("Query 9 -> " + q9);
-
-        /*
-           Query 10
-        */
-        before = System.currentTimeMillis();
-        long q10 = m.betterAnswer(30334);
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query 10 -> "+(after-before)+" ms");
-        log.writeLog("Query 10 -> "+q10);
-
-        /*
-            Query 11
-        */
-        before = System.currentTimeMillis();
-        List<Long> q11 = m.mostUsedBestRep(10, LocalDate.of(2014,Month.JANUARY,1),
-                LocalDate.of(2014,Month.DECEMBER,31));
-        after = System.currentTimeMillis();
-        logtime.writeLog("Query 11 -> "+(after-before)+" ms");
-        log.writeLog("Query 11 -> "+q11);
-
-        /*
-            CLEAN PHASE
-         */
-        before = System.currentTimeMillis();
-        m.clear();
-        after = System.currentTimeMillis();
-        logtime.writeLog("CLEAN -> "+(after-before)+" ms");
-
-    }
-
-
-    public void control_fluxo(String[] args){
-
-        escreve_ficheiros(args);
-
         do{
             int query = v.escolhe_query();
             if(query == -1) break;
@@ -187,74 +69,123 @@ public class Controller {
 
             switch(query){
                 case 1: id = v.insere_ID(1);
+                        before = System.currentTimeMillis();
                         par = m.infoFromPost(id);
+                        after = System.currentTimeMillis();
+                        logtime.writeLog("Query 1: -> "+(after-before)+" ms");
+                        log.writeLog("Query1 -> " + par);
                         v.imprime_pair(par,1);
                         break;
 
                 case 2: tamanho = v.insere_tamanho(2);
+                        before = System.currentTimeMillis();
                         list = m.topMostActive(tamanho);
+                        after = System.currentTimeMillis();
+                        logtime.writeLog("Query 2 -> "+(after-before)+" ms");
+                        log.writeLog("Query 2 -> "+list);
                         v.imprime_list(list,2);
                         break;
 
                 case 3: inicio = v.insere_data(0);
                         fim = v.insere_data(1);
+                        before = System.currentTimeMillis();
                         par = m.totalPosts(inicio,fim);
+                        after = System.currentTimeMillis();
+                        logtime.writeLog("Query 3 -> "+(after-before)+" ms");
+                        log.writeLog("Query 3 -> "+par);
                         v.imprime_pair(par,3);
                         break;
 
                 case 4: tag = v.insere_string(4);
                         inicio = v.insere_data(0);
                         fim = v.insere_data(1);
+                        before = System.currentTimeMillis();
                         list = m.questionsWithTag(tag,inicio,fim);
+                        after = System.currentTimeMillis();
+                        logtime.writeLog("Query 4 -> " + (after - before) + " ms");
+                        log.writeLog("Query 4 -> " + list);
                         v.imprime_list(list,4);
                         break;
 
                 case 5: id = v.insere_ID(5);
+                        before = System.currentTimeMillis();
                         par = m.getUserInfo(id);
+                        after = System.currentTimeMillis();
+                        logtime.writeLog("Query 5 -> "+(after-before)+" ms");
+                        log.writeLog("Query 5 -> "+par);
                         v.imprime_pair(par,5);
                         break;
 
                 case 6: tamanho = v.insere_tamanho(6);
                         inicio = v.insere_data(0);
                         fim = v.insere_data(1);
-                        list = m.mostVotedAnswers(tamanho,inicio,fim);
+                        before = System.currentTimeMillis();
+                        list = m.mostVotedAnswers(tamanho, inicio,fim);
+                        after = System.currentTimeMillis();
+                        logtime.writeLog("Query6 -> " + (after - before) + " ms");
+                        log.writeLog("Query6 -> " + list);
                         v.imprime_list(list,6);
                         break;
 
                 case 7: tamanho = v.insere_tamanho(7);
                         inicio = v.insere_data(0);
                         fim = v.insere_data(1);
+                        before = System.currentTimeMillis();
                         list = m.mostAnsweredQuestions(tamanho,inicio,fim);
+                        after = System.currentTimeMillis();
+                        logtime.writeLog("Query 7 -> "+(after-before)+" ms");
+                        log.writeLog("Query 7 -> "+list);
                         v.imprime_list(list,7);
                         break;
 
                 case 8: tamanho = v.insere_tamanho(8);
                         palavra = v.insere_string(8);
+                        before = System.currentTimeMillis();
                         list = m.containsWord(tamanho,palavra);
+                        after = System.currentTimeMillis();
+                        logtime.writeLog("Query 8 -> " + (after - before) + " ms");
+                        log.writeLog("Query 8 -> " + list);
                         v.imprime_list(list,8);
                         break;
 
                 case 9: tamanho = v.insere_tamanho(9);
                         id1 = v.insere_ID(9);
                         id2 = v.insere_ID(9);
+                        before = System.currentTimeMillis();
                         list = m.bothParticipated(tamanho,id1,id2);
+                        after = System.currentTimeMillis();
+                        logtime.writeLog("Query9 -> " + (after - before) + " ms");
+                        log.writeLog("Query 9 -> " + list);
                         v.imprime_list(list,9);
                         break;
 
                 case 10: id = v.insere_ID(10);
-                         res = m.betterAnswer(id);
-                         v.imprime_long(10);
+                         before = System.currentTimeMillis();
+                         res= m.betterAnswer(id);
+                         after = System.currentTimeMillis();
+                         logtime.writeLog("Query 10 -> "+(after-before)+" ms");
+                         log.writeLog("Query 10 -> "+res);
+                         v.imprime_long(res);
                          break;
 
                 case 11: tamanho = v.insere_tamanho(11);
                          inicio = v.insere_data(0);
                          fim = v.insere_data(1);
+                         before = System.currentTimeMillis();
                          list = m.mostUsedBestRep(tamanho,inicio,fim);
+                         after = System.currentTimeMillis();
+                         logtime.writeLog("Query 11 -> "+(after-before)+" ms");
+                         log.writeLog("Query 11 -> "+list);
                          v.imprime_list(list,11);
                          break;
             }
 
         } while(true);
+
+        before = System.currentTimeMillis();
+        m.clear();
+        after = System.currentTimeMillis();
+        logtime.writeLog("CLEAN -> "+(after-before)+" ms");
     }
 
 }
