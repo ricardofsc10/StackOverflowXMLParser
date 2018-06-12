@@ -11,7 +11,11 @@ import engine.*;
 
 public class Main {
 
-
+    /**
+     * Método principal que controla o fluxo de todas as queries, o Model e a View do projeto.
+     *
+     * @param args Argumentos passados na realização do executável
+     */
     public static void main(String[] args){
 
         Model model = new Model();
@@ -25,5 +29,4 @@ public class Main {
     }
 
 }
-
 

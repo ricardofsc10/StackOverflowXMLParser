@@ -1,5 +1,12 @@
 package li3;
 
+/**
+ * Interface TADCommunity que contêm as queries do projeto.
+ *
+ * @author Grupo21
+ * @version 20180610
+ */
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -48,6 +55,3 @@ public interface TADCommunity {
 
     public void clear();
 }
-
-
-

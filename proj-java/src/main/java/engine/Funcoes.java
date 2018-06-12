@@ -1,5 +1,13 @@
 package engine;
 
+/**
+ * Classe Funcoes que contêm funções auxiliares do projeto.
+ *
+ * @author Grupo21
+ * @version 20180610
+ */
+
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
