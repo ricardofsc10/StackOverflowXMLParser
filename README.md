@@ -6,3 +6,5 @@ Once this information has been processed, it is intended to be able to execute a
 in an efficient way.
 
 The same project is developed in C and JAVA, with each part in its respective folder.
+
+Made with Diogo Braga - (https://github.com/diogofbraga) and João Silva - (https://github.com/joaop21).
